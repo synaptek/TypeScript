@@ -4,7 +4,7 @@
 /// <reference path="session.ts" />
 /// <reference path="node.d.ts" />
 
-module ts.server {
+namespace ts.server {
     export interface Logger {
         close(): void;
         isVerbose(): boolean;
@@ -303,6 +303,11 @@ module ts.server {
 
         openReferencedFile(filename: string) {
             return this.projectService.openFile(filename, false);
+        }
+
+        getFileNameList() {
+            let sourceFiles = this.program.getSourceFiles();
+            return sourceFiles.map(sourceFile => sourceFile.fileName);
         }
 
         getSourceFile(info: ScriptInfo) {

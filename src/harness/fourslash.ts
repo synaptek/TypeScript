@@ -343,7 +343,8 @@ module FourSlash {
                 if (!resolvedResult.isLibFile) {
                     this.languageServiceAdapterHost.addScript(Harness.Compiler.defaultLibFileName, Harness.Compiler.defaultLibSourceFile.text);
                 }
-            } else {
+            }
+            else {
                 // resolveReference file-option is not specified then do not resolve any files and include all inputFiles
                 ts.forEachKey(this.inputFiles, fileName => {
                     if (!Harness.isLibraryFile(fileName)) {
@@ -798,8 +799,17 @@ module FourSlash {
             return "\nActual " + name + ":\n\t" + actualValue + "\nExpected value:\n\t" + expectedValue;
         }
 
+        public getSyntacticDiagnostics(expected: string) {
+            var diagnostics = this.languageService.getSyntacticDiagnostics(this.activeFile.fileName);
+            this.testDiagnostics(expected, diagnostics);
+        }
+
         public getSemanticDiagnostics(expected: string) {
             var diagnostics = this.languageService.getSemanticDiagnostics(this.activeFile.fileName);
+            this.testDiagnostics(expected, diagnostics);
+        }
+
+        private testDiagnostics(expected: string, diagnostics: ts.Diagnostic[]) {
             var realized = ts.realizeDiagnostics(diagnostics, "\r\n");
             var actual = JSON.stringify(realized, null, "  ");
             assert.equal(actual, expected);
@@ -1806,6 +1816,21 @@ module FourSlash {
                 return ts.sys.newLine +
                     "expected: '" + ts.sys.newLine + JSON.stringify(expected, (k, v) => v, 2) + "'" + ts.sys.newLine +
                     "actual:   '" + ts.sys.newLine + JSON.stringify(actual, (k, v) => v, 2) + "'";
+            }
+        }
+
+        private verifyProjectInfo(expected: string[]) {
+            if (this.testType == FourSlashTestType.Server) {
+                let actual = (<ts.server.SessionClient>this.languageService).getProjectInfo(
+                    this.activeFile.fileName,
+                    /* needFileNameList */ true
+                    );
+                assert.equal(
+                    expected.join(","),
+                    actual.fileNameList.map( file => {
+                        return file.replace(this.basePath + "/", "")
+                        }).join(",")
+                    );
             }
         }
 

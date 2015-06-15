@@ -10,7 +10,7 @@
 /// <reference path='formatting\formatting.ts' />
 /// <reference path='formatting\smartIndenter.ts' />
 
-module ts {
+namespace ts {
     /** The version of the language service API */
     export let servicesVersion = "0.4"
 
@@ -735,7 +735,7 @@ module ts {
         public endOfFileToken: Node;
 
         public amdDependencies: { name: string; path: string }[];
-        public amdModuleName: string;
+        public moduleName: string;
         public referencedFiles: FileReference[];
 
         public syntacticDiagnostics: Diagnostic[];
@@ -743,6 +743,7 @@ module ts {
         public parseDiagnostics: Diagnostic[];
         public bindDiagnostics: Diagnostic[];
 
+        public isDefaultLib: boolean;
         public hasNoDefaultLib: boolean;
         public externalModuleIndicator: Node; // The first node that causes this file to be an external module
         public nodeCount: number;
@@ -961,6 +962,7 @@ module ts {
         log? (s: string): void;
         trace? (s: string): void;
         error? (s: string): void;
+        useCaseSensitiveFileNames? (): boolean;
     }
 
     //
@@ -1511,6 +1513,7 @@ module ts {
         public static typeParameterName = "type parameter name";
         public static typeAliasName = "type alias name";
         public static parameterName = "parameter name";
+        public static docCommentTagName = "doc comment tag name";
     }
 
     export const enum ClassificationType {
@@ -1530,7 +1533,8 @@ module ts {
         moduleName = 14,
         typeParameterName = 15,
         typeAliasName = 16,
-        parameterName = 17
+        parameterName = 17,
+        docCommentTagName = 18,
     }
 
     /// Language Service
@@ -1631,12 +1635,12 @@ module ts {
     // at each language service public entry point, since we don't know when 
     // set of scripts handled by the host changes.
     class HostCache {
-        private fileNameToEntry: Map<HostFileInformation>;
+        private fileNameToEntry: FileMap<HostFileInformation>;
         private _compilationSettings: CompilerOptions;
 
-        constructor(private host: LanguageServiceHost, private getCanonicalFileName: (fileName: string) => string) {
+        constructor(private host: LanguageServiceHost, getCanonicalFileName: (fileName: string) => string) {
             // script id => script index
-            this.fileNameToEntry = {};
+            this.fileNameToEntry = createFileMap<HostFileInformation>(getCanonicalFileName);
 
             // Initialize the list with the root file names
             let rootFileNames = host.getScriptFileNames();
@@ -1652,10 +1656,6 @@ module ts {
             return this._compilationSettings;
         }
 
-        private normalizeFileName(fileName: string): string {
-            return this.getCanonicalFileName(normalizeSlashes(fileName));
-        }
-
         private createEntry(fileName: string) {
             let entry: HostFileInformation;
             let scriptSnapshot = this.host.getScriptSnapshot(fileName);
@@ -1667,15 +1667,16 @@ module ts {
                 };
             }
 
-            return this.fileNameToEntry[this.normalizeFileName(fileName)] = entry;
+            this.fileNameToEntry.set(fileName, entry);
+            return entry;
         }
 
         private getEntry(fileName: string): HostFileInformation {
-            return lookUp(this.fileNameToEntry, this.normalizeFileName(fileName));
+            return this.fileNameToEntry.get(fileName);
         }
 
         private contains(fileName: string): boolean {
-            return hasProperty(this.fileNameToEntry, this.normalizeFileName(fileName));
+            return this.fileNameToEntry.contains(fileName);
         }
 
         public getOrCreateEntry(fileName: string): HostFileInformation {
@@ -1689,10 +1690,9 @@ module ts {
         public getRootFileNames(): string[] {
             let fileNames: string[] = [];
 
-            forEachKey(this.fileNameToEntry, key => {
-                let entry = this.getEntry(key);
-                if (entry) {
-                    fileNames.push(entry.hostFileName);
+            this.fileNameToEntry.forEachValue(value => {
+                if (value) {
+                    fileNames.push(value.hostFileName);
                 }
             });
 
@@ -1762,25 +1762,40 @@ module ts {
      * This function will compile source text from 'input' argument using specified compiler options.
      * If not options are provided - it will use a set of default compiler options.
      * Extra compiler options that will unconditionally be used bu this function are:
-     * - separateCompilation = true
+     * - isolatedModules = true
      * - allowNonTsExtensions = true
+     * - noLib = true
+     * - noResolve = true
      */
-    export function transpile(input: string, compilerOptions?: CompilerOptions, fileName?: string, diagnostics?: Diagnostic[]): string {
+    export function transpile(input: string, compilerOptions?: CompilerOptions, fileName?: string, diagnostics?: Diagnostic[], moduleName?: string): string {
         let options = compilerOptions ? clone(compilerOptions) : getDefaultCompilerOptions();
 
-        options.separateCompilation = true;
+        options.isolatedModules = true;
 
         // Filename can be non-ts file.
         options.allowNonTsExtensions = true;
 
+        // We are not returning a sourceFile for lib file when asked by the program, 
+        // so pass --noLib to avoid reporting a file not found error.
+        options.noLib = true;
+
+        // We are not doing a full typecheck, we are not resolving the whole context,
+        // so pass --noResolve to avoid reporting missing file errors.
+        options.noResolve = true;
+
         // Parse
-        var inputFileName = fileName || "module.ts";
-        var sourceFile = createSourceFile(inputFileName, input, options.target);
+        let inputFileName = fileName || "module.ts";
+        let sourceFile = createSourceFile(inputFileName, input, options.target);
+        if (moduleName) {
+            sourceFile.moduleName = moduleName;
+        }
 
         // Store syntactic diagnostics
         if (diagnostics && sourceFile.parseDiagnostics) {
             diagnostics.push(...sourceFile.parseDiagnostics);
         }
+
+        let newLine = getNewLineCharacter(options);
 
         // Output
         let outputText: string;
@@ -1796,13 +1811,13 @@ module ts {
             useCaseSensitiveFileNames: () => false,
             getCanonicalFileName: fileName => fileName,
             getCurrentDirectory: () => "",
-            getNewLine: () => (sys && sys.newLine) || "\r\n"
+            getNewLine: () => newLine
         };
 
         var program = createProgram([inputFileName], options, compilerHost);
 
         if (diagnostics) {
-            diagnostics.push(...program.getGlobalDiagnostics());
+            diagnostics.push(...program.getCompilerOptionsDiagnostics());
         }
 
         // Emit
@@ -1814,7 +1829,8 @@ module ts {
     }
 
     export function createLanguageServiceSourceFile(fileName: string, scriptSnapshot: IScriptSnapshot, scriptTarget: ScriptTarget, version: string, setNodeParents: boolean): SourceFile {
-        let sourceFile = createSourceFile(fileName, scriptSnapshot.getText(0, scriptSnapshot.getLength()), scriptTarget, setNodeParents);
+        let text = scriptSnapshot.getText(0, scriptSnapshot.getLength());
+        let sourceFile = createSourceFile(fileName, text, scriptTarget, setNodeParents);
         setSourceFileFields(sourceFile, scriptSnapshot, version);
         // after full parsing we can use table with interned strings as name table
         sourceFile.nameTable = sourceFile.identifiers;
@@ -1871,20 +1887,28 @@ module ts {
         return createLanguageServiceSourceFile(sourceFile.fileName, scriptSnapshot, sourceFile.languageVersion, version, /*setNodeParents:*/ true);
     }
 
-    export function createDocumentRegistry(): DocumentRegistry {
+    function createGetCanonicalFileName(useCaseSensitivefileNames: boolean): (fileName: string) => string {
+        return useCaseSensitivefileNames
+            ? ((fileName) => fileName)
+            : ((fileName) => fileName.toLowerCase());
+    }
+
+
+    export function createDocumentRegistry(useCaseSensitiveFileNames?: boolean): DocumentRegistry {
         // Maps from compiler setting target (ES3, ES5, etc.) to all the cached documents we have
         // for those settings.
-        let buckets: Map<Map<DocumentRegistryEntry>> = {};
+        let buckets: Map<FileMap<DocumentRegistryEntry>> = {};
+        let getCanonicalFileName = createGetCanonicalFileName(!!useCaseSensitiveFileNames);
 
         function getKeyFromCompilationSettings(settings: CompilerOptions): string {
             return "_" + settings.target; //  + "|" + settings.propagateEnumConstantoString()
         }
 
-        function getBucketForCompilationSettings(settings: CompilerOptions, createIfMissing: boolean): Map<DocumentRegistryEntry> {
+        function getBucketForCompilationSettings(settings: CompilerOptions, createIfMissing: boolean): FileMap<DocumentRegistryEntry> {
             let key = getKeyFromCompilationSettings(settings);
             let bucket = lookUp(buckets, key);
             if (!bucket && createIfMissing) {
-                buckets[key] = bucket = {};
+                buckets[key] = bucket = createFileMap<DocumentRegistryEntry>(getCanonicalFileName);
             }
             return bucket;
         }
@@ -1894,7 +1918,7 @@ module ts {
                 let entries = lookUp(buckets, name);
                 let sourceFiles: { name: string; refCount: number; references: string[]; }[] = [];
                 for (let i in entries) {
-                    let entry = entries[i];
+                    let entry = entries.get(i);
                     sourceFiles.push({
                         name: i,
                         refCount: entry.languageServiceRefCount,
@@ -1926,18 +1950,19 @@ module ts {
             acquiring: boolean): SourceFile {
 
             let bucket = getBucketForCompilationSettings(compilationSettings, /*createIfMissing*/ true);
-            let entry = lookUp(bucket, fileName);
+            let entry = bucket.get(fileName);
             if (!entry) {
                 Debug.assert(acquiring, "How could we be trying to update a document that the registry doesn't have?");
 
                 // Have never seen this file with these settings.  Create a new source file for it.
                 let sourceFile = createLanguageServiceSourceFile(fileName, scriptSnapshot, compilationSettings.target, version, /*setNodeParents:*/ false);
 
-                bucket[fileName] = entry = {
+                entry = {
                     sourceFile: sourceFile,
                     languageServiceRefCount: 0,
                     owners: []
                 };
+                bucket.set(fileName, entry);
             }
             else {
                 // We have an entry for this file.  However, it may be for a different version of 
@@ -1965,12 +1990,12 @@ module ts {
             let bucket = getBucketForCompilationSettings(compilationSettings, false);
             Debug.assert(bucket !== undefined);
 
-            let entry = lookUp(bucket, fileName);
+            let entry = bucket.get(fileName);
             entry.languageServiceRefCount--;
 
             Debug.assert(entry.languageServiceRefCount >= 0);
             if (entry.languageServiceRefCount === 0) {
-                delete bucket[fileName];
+                bucket.remove(fileName);
             }
         }
 
@@ -2398,9 +2423,7 @@ module ts {
             }
         }
 
-        function getCanonicalFileName(fileName: string) {
-            return useCaseSensitivefileNames ? fileName : fileName.toLowerCase();
-        }
+        let getCanonicalFileName = createGetCanonicalFileName(useCaseSensitivefileNames);
 
         function getValidSourceFile(fileName: string): SourceFile {
             fileName = normalizeSlashes(fileName);
@@ -2476,6 +2499,10 @@ module ts {
                 }
             }
 
+            // hostCache is captured in the closure for 'getOrCreateSourceFile' but it should not be used past this point.
+            // It needs to be cleared to allow all collected snapshots to be released
+            hostCache = undefined;
+
             program = newProgram;
 
             // Make sure all the nodes in the program are both bound, and have their parent 
@@ -2484,6 +2511,7 @@ module ts {
             return;
 
             function getOrCreateSourceFile(fileName: string): SourceFile {
+                Debug.assert(hostCache !== undefined);
                 // The program is asking for this file, check first if the host can locate it.
                 // If the host can not locate the file, then it does not exist. return undefined
                 // to the program to allow reporting of errors for missing files.
@@ -2699,7 +2727,7 @@ module ts {
                             return true;
                         }
                         if (parameter.questionToken) {
-                            diagnostics.push(createDiagnosticForNode(parameter.questionToken, Diagnostics.can_only_be_used_in_a_ts_file));
+                            diagnostics.push(createDiagnosticForNode(parameter.questionToken, Diagnostics._0_can_only_be_used_in_a_ts_file, '?'));
                             return true;
                         }
                         if (parameter.type) {
@@ -2833,6 +2861,7 @@ module ts {
             let typeChecker = program.getTypeChecker();
             let syntacticStart = new Date().getTime();
             let sourceFile = getValidSourceFile(fileName);
+            let isJavaScriptFile = isJavaScript(fileName);
 
             let start = new Date().getTime();
             let currentToken = getTokenAtPosition(sourceFile, position);
@@ -2933,13 +2962,29 @@ module ts {
                 }
 
                 let type = typeChecker.getTypeAtLocation(node);
+                addTypeProperties(type);
+            }
+
+            function addTypeProperties(type: Type) {
                 if (type) {
                     // Filter private properties
-                    forEach(type.getApparentProperties(), symbol => {
+                    for (let symbol of type.getApparentProperties()) {
                         if (typeChecker.isValidPropertyAccess(<PropertyAccessExpression>(node.parent), symbol.name)) {
                             symbols.push(symbol);
                         }
-                    });
+                    }
+
+                    if (isJavaScriptFile && type.flags & TypeFlags.Union) {
+                        // In javascript files, for union types, we don't just get the members that 
+                        // the individual types have in common, we also include all the members that
+                        // each individual type has.  This is because we're going to add all identifiers
+                        // anyways.  So we might as well elevate the members that were at least part
+                        // of the individual types to a higher status since we know what they are.
+                        let unionType = <UnionType>type;
+                        for (let elementType of unionType.types) {
+                            addTypeProperties(elementType);
+                        }
+                    }
                 }
             }
 
@@ -3126,16 +3171,20 @@ module ts {
                 if (previousToken.kind === SyntaxKind.StringLiteral
                     || previousToken.kind === SyntaxKind.RegularExpressionLiteral
                     || isTemplateLiteralKind(previousToken.kind)) {
-                    // The position has to be either: 1. entirely within the token text, or 
-                    // 2. at the end position of an unterminated token.
                     let start = previousToken.getStart();
                     let end = previousToken.getEnd();
 
+                    // To be "in" one of these literals, the position has to be:
+                    //   1. entirely within the token text.
+                    //   2. at the end position of an unterminated token.
+                    //   3. at the end of a regular expression (due to trailing flags like '/foo/g').
                     if (start < position && position < end) {
                         return true;
                     }
-                    else if (position === end) {
-                        return !!(<LiteralExpression>previousToken).isUnterminated;
+
+                    if (position === end) {
+                        return !!(<LiteralExpression>previousToken).isUnterminated ||
+                            previousToken.kind === SyntaxKind.RegularExpressionLiteral;
                     }
                 }
 
@@ -5944,6 +5993,7 @@ module ts {
             let typeChecker = program.getTypeChecker();
 
             let result: number[] = [];
+            let classifiableNames = program.getClassifiableNames();
             processNode(sourceFile);
 
             return { spans: result, endOfLineState: EndOfLineState.None };
@@ -5956,6 +6006,9 @@ module ts {
 
             function classifySymbol(symbol: Symbol, meaningAtPosition: SemanticMeaning): ClassificationType {
                 let flags = symbol.getFlags();
+                if ((flags & SymbolFlags.Classifiable) === SymbolFlags.None) {
+                    return;
+                }
 
                 if (flags & SymbolFlags.Class) {
                     return ClassificationType.className;
@@ -5998,13 +6051,20 @@ module ts {
 
             function processNode(node: Node) {
                 // Only walk into nodes that intersect the requested span.
-                if (node && textSpanIntersectsWith(span, node.getStart(), node.getWidth())) {
-                    if (node.kind === SyntaxKind.Identifier && node.getWidth() > 0) {
-                        let symbol = typeChecker.getSymbolAtLocation(node);
-                        if (symbol) {
-                            let type = classifySymbol(symbol, getMeaningFromLocation(node));
-                            if (type) {
-                                pushClassification(node.getStart(), node.getWidth(), type);
+                if (node && textSpanIntersectsWith(span, node.getFullStart(), node.getFullWidth())) {
+                    if (node.kind === SyntaxKind.Identifier && !nodeIsMissing(node)) {
+                        let identifier = <Identifier>node;
+
+                        // Only bother calling into the typechecker if this is an identifier that
+                        // could possibly resolve to a type name.  This makes classification run
+                        // in a third of the time it would normally take.
+                        if (classifiableNames[identifier.text]) {
+                            let symbol = typeChecker.getSymbolAtLocation(node);
+                            if (symbol) {
+                                let type = classifySymbol(symbol, getMeaningFromLocation(node));
+                                if (type) {
+                                    pushClassification(node.getStart(), node.getWidth(), type);
+                                }
                             }
                         }
                     }
@@ -6032,6 +6092,7 @@ module ts {
                 case ClassificationType.typeParameterName: return ClassificationTypeNames.typeParameterName;
                 case ClassificationType.typeAliasName: return ClassificationTypeNames.typeAliasName;
                 case ClassificationType.parameterName: return ClassificationTypeNames.parameterName;
+                case ClassificationType.docCommentTagName: return ClassificationTypeNames.docCommentTagName;
             }
         }
 
@@ -6094,8 +6155,7 @@ module ts {
                     // Only bother with the trivia if it at least intersects the span of interest.
                     if (textSpanIntersectsWith(span, start, width)) {
                         if (isComment(kind)) {
-                            // Simple comment.  Just add as is.
-                            pushClassification(start, width, ClassificationType.comment);
+                            classifyComment(token, kind, start, width);
                             continue;
                         }
 
@@ -6116,6 +6176,92 @@ module ts {
                             classifyDisabledMergeCode(text, start, end);
                         }
                     }
+                }
+            }
+
+            function classifyComment(token: Node, kind: SyntaxKind, start: number, width: number) {
+                if (kind === SyntaxKind.MultiLineCommentTrivia) {
+                    // See if this is a doc comment.  If so, we'll classify certain portions of it
+                    // specially.
+                    let docCommentAndDiagnostics = parseIsolatedJSDocComment(sourceFile.text, start, width);
+                    if (docCommentAndDiagnostics && docCommentAndDiagnostics.jsDocComment) {
+                        docCommentAndDiagnostics.jsDocComment.parent = token;
+                        classifyJSDocComment(docCommentAndDiagnostics.jsDocComment);
+                        return;
+                    }
+                }
+
+                // Simple comment.  Just add as is.
+                pushCommentRange(start, width);
+            }
+
+            function pushCommentRange(start: number, width: number) {
+                pushClassification(start, width, ClassificationType.comment);
+            }
+
+            function classifyJSDocComment(docComment: JSDocComment) {
+                let pos = docComment.pos;
+
+                for (let tag of docComment.tags) {
+                    // As we walk through each tag, classify the portion of text from the end of
+                    // the last tag (or the start of the entire doc comment) as 'comment'.  
+                    if (tag.pos !== pos) {
+                        pushCommentRange(pos, tag.pos - pos);
+                    }
+
+                    pushClassification(tag.atToken.pos, tag.atToken.end - tag.atToken.pos, ClassificationType.punctuation);
+                    pushClassification(tag.tagName.pos, tag.tagName.end - tag.tagName.pos, ClassificationType.docCommentTagName);
+
+                    pos = tag.tagName.end;
+
+                    switch (tag.kind) {
+                        case SyntaxKind.JSDocParameterTag:
+                            processJSDocParameterTag(<JSDocParameterTag>tag);
+                            break;
+                        case SyntaxKind.JSDocTemplateTag:
+                            processJSDocTemplateTag(<JSDocTemplateTag>tag);
+                            break;
+                        case SyntaxKind.JSDocTypeTag:
+                            processElement((<JSDocTypeTag>tag).typeExpression);
+                            break;
+                        case SyntaxKind.JSDocReturnTag:
+                            processElement((<JSDocReturnTag>tag).typeExpression);
+                            break;
+                    }
+
+                    pos = tag.end;
+                }
+
+                if (pos !== docComment.end) {
+                    pushCommentRange(pos, docComment.end - pos);
+                }
+
+                return;
+
+                function processJSDocParameterTag(tag: JSDocParameterTag) {
+                    if (tag.preParameterName) {
+                        pushCommentRange(pos, tag.preParameterName.pos - pos);
+                        pushClassification(tag.preParameterName.pos, tag.preParameterName.end - tag.preParameterName.pos, ClassificationType.parameterName);
+                        pos = tag.preParameterName.end;
+                    }
+
+                    if (tag.typeExpression) {
+                        pushCommentRange(pos, tag.typeExpression.pos - pos);
+                        processElement(tag.typeExpression);
+                        pos = tag.typeExpression.end;
+                    }
+
+                    if (tag.postParameterName) {
+                        pushCommentRange(pos, tag.postParameterName.pos - pos);
+                        pushClassification(tag.postParameterName.pos, tag.postParameterName.end - tag.postParameterName.pos, ClassificationType.parameterName);
+                        pos = tag.postParameterName.end;
+                    }
+                }
+            }
+
+            function processJSDocTemplateTag(tag: JSDocTemplateTag) {
+                for (let child of tag.getChildren()) {
+                    processElement(child);
                 }
             }
 
@@ -6252,9 +6398,13 @@ module ts {
             }
 
             function processElement(element: Node) {
+                if (!element) {
+                    return;
+                }
+
                 // Ignore nodes that don't intersect the original span to classify.
                 if (textSpanIntersectsWith(span, element.getFullStart(), element.getFullWidth())) {
-                    let children = element.getChildren();
+                    let children = element.getChildren(sourceFile);
                     for (let child of children) {
                         if (isToken(child)) {
                             classifyToken(child);

@@ -1,6 +1,6 @@
 /// <reference path="session.ts" />
  
-module ts.server {
+namespace ts.server {
 
     export interface SessionClientHost extends LanguageServiceHost {
         writeMessage(message: string): void;
@@ -169,6 +169,21 @@ module ts.server {
                 textSpan: ts.createTextSpanFromBounds(start, end),
                 displayParts: [{ kind: "text", text: response.body.displayString }],
                 documentation: [{ kind: "text", text: response.body.documentation }]
+            };
+        }
+
+        getProjectInfo(fileName: string, needFileNameList: boolean): protocol.ProjectInfo {
+            var args: protocol.ProjectInfoRequestArgs = {
+                file: fileName,
+                needFileNameList: needFileNameList
+            };
+
+            var request = this.processRequest<protocol.ProjectInfoRequest>(CommandNames.ProjectInfo, args);
+            var response = this.processResponse<protocol.ProjectInfoResponse>(request);
+
+            return {
+                configFileName: response.body.configFileName,
+                fileNameList: response.body.fileNameList
             };
         }
         
