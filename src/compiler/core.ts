@@ -468,26 +468,21 @@ namespace ts {
     }
 
     export function sortAndDeduplicateDiagnostics(diagnostics: Diagnostic[]): Diagnostic[]{
-        return deduplicateSortedDiagnostics(diagnostics.sort(compareDiagnostics));
+        return deduplicateSortedArray(diagnostics.sort(compareDiagnostics), (a, b) => compareDiagnostics(a, b) === Comparison.EqualTo);
     }
 
-    export function deduplicateSortedDiagnostics(diagnostics: Diagnostic[]): Diagnostic[] {
-        if (diagnostics.length < 2) {
-            return diagnostics;
+    export function deduplicateSortedArray<T>(items: T[], comparer: (a: T, b: T) => boolean): T[]{
+        if (items.length < 2) {
+            return items;
         }
 
-        let newDiagnostics = [diagnostics[0]];
-        let previousDiagnostic = diagnostics[0];
-        for (let i = 1; i < diagnostics.length; i++) {
-            let currentDiagnostic = diagnostics[i];
-            let isDupe = compareDiagnostics(currentDiagnostic, previousDiagnostic) === Comparison.EqualTo;
-            if (!isDupe) {
-                newDiagnostics.push(currentDiagnostic);
-                previousDiagnostic = currentDiagnostic;
+        let result = [items[0]]
+        for (let i = 1; i < items.length; ++i) {
+            if (!comparer(items[i - 1], items[i])) {
+                result.push(items[i]);
             }
         }
-
-        return newDiagnostics;
+        return result;
     }
 
     export function normalizeSlashes(path: string): string {

@@ -1180,10 +1180,13 @@ namespace ts {
         // Stores a line map for the file.
         // This field should never be used directly to obtain line map, use getLineMap function instead.
         /* @internal */ lineMap: number[];
+        /* @internal */ classifiableNames?: Map<string>;
+
         // Stores a mapping 'external module reference text' -> 'resolved file name' | undefined
         // Content of this fiels should never be used directly - use getResolvedModuleFileName/setResolvedModuleFileName functions instead
         /* @internal */ resolvedModules: Map<string>;
-        /* @internal */ classifiableNames?: Map<string>;
+        
+        /* @internal */ imports: LiteralExpression[];
     }
 
     export interface ScriptReferenceHost {
@@ -1201,6 +1204,12 @@ namespace ts {
     }
 
     export interface Program extends ScriptReferenceHost {
+        
+        /**
+         * Get a list of root file names that were passed to a 'createProgram'
+         */
+        getRootFileNames(): string[]
+        
         /**
          * Get a list of files in the program
          */
@@ -2073,6 +2082,7 @@ namespace ts {
         getCanonicalFileName(fileName: string): string;
         useCaseSensitiveFileNames(): boolean;
         getNewLine(): string;
+        hasChanges?(oldFile: SourceFile): boolean;
     }
 
     export interface TextSpan {

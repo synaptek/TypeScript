@@ -140,7 +140,7 @@ namespace ts {
         }
     }
 
-    export function createProgram(rootNames: string[], options: CompilerOptions, host?: CompilerHost): Program {
+    export function createProgram(rootNames: string[], options: CompilerOptions, host?: CompilerHost, oldProgram?: Program): Program {
         let program: Program;
         let files: SourceFile[] = [];
         let diagnostics = createDiagnosticCollection();
@@ -157,15 +157,18 @@ namespace ts {
         host = host || createCompilerHost(options);
 
         let filesByName = createFileMap<SourceFile>(fileName => host.getCanonicalFileName(fileName));
+        
+        let structureIsReused = oldProgram && host.hasChanges && tryReuseStructureFromOldProgram();
 
-        forEach(rootNames, name => processRootFile(name, /*isDefaultLib:*/ false));
-
-        // Do not process the default library if:
-        //  - The '--noLib' flag is used.
-        //  - A 'no-default-lib' reference comment is encountered in
-        //      processing the root files.
-        if (!skipDefaultLib) {
-            processRootFile(host.getDefaultLibFileName(options), /*isDefaultLib:*/ true);
+        if (!structureIsReused) {
+            forEach(rootNames, name => processRootFile(name, false));
+            // Do not process the default library if:
+            //  - The '--noLib' flag is used.
+            //  - A 'no-default-lib' reference comment is encountered in
+            //      processing the root files.
+            if (!skipDefaultLib) {
+                processRootFile(host.getDefaultLibFileName(options), true);
+            }
         }
 
         verifyCompilerOptions();
@@ -173,6 +176,7 @@ namespace ts {
         programTime += new Date().getTime() - start;
 
         program = {
+            getRootFileNames: () => rootNames,
             getSourceFile: getSourceFile,
             getSourceFiles: () => files,
             getCompilerOptions: () => options,
@@ -206,6 +210,68 @@ namespace ts {
             }
 
             return classifiableNames;
+        }
+
+        function tryReuseStructureFromOldProgram(): boolean {
+            if (!oldProgram) {
+                return false;
+            }
+
+            // there is an old program, check if we can reuse its structure
+            let oldRootNames = oldProgram.getRootFileNames();
+            if (rootNames.length !== oldRootNames.length) {
+                // different amount of root names - structure cannot be reused
+                return false;
+            }
+            
+            for (let i = 0; i < rootNames.length; i++) {
+                if (oldRootNames[i] !== rootNames[i]) {
+                    // different order of root names - structure cannot be reused
+                    return false;
+                }
+            }
+            
+            // check if program source files has changed in the way that can affect structure of the program
+            let newSourceFiles: SourceFile[] = [];
+            for (let oldSourceFile of oldProgram.getSourceFiles()) {
+                let newSourceFile: SourceFile;
+                if (host.hasChanges(oldSourceFile)) {
+                    newSourceFile = host.getSourceFile(oldSourceFile.fileName, options.target);
+                    if (!newSourceFile) {
+                        return false;
+                    }
+                    
+                    // check tripleslash references
+                    if (!arrayIsEqualTo(oldSourceFile.referencedFiles, newSourceFile.referencedFiles, fileReferenceIsEqualTo)) {
+                        // tripleslash references has changed
+                        return false;
+                    }
+                    
+                    // check imports                    
+                    let newImports = collectExternalModuleReferences(newSourceFile);
+                    let oldImports = oldSourceFile.imports;
+                    if (!arrayIsEqualTo(oldImports, newImports, moduleNameIsEqualTo)) {
+                        // imports has changed
+                        return false;
+                    }
+                }
+                else {
+                    // file has no changes - use it as is
+                    newSourceFile = oldSourceFile;
+                }
+                
+                // if file has passed all checks it should be safe to reuse it
+                newSourceFiles.push(newSourceFile);
+            }
+            
+            // update fileName -> file mapping
+            for (let file of newSourceFiles) {
+                filesByName.set(file.fileName, file);
+            }
+            
+            files = newSourceFiles;
+            
+            return true;
         }
 
         function getEmitHost(writeFileCallback?: WriteFileCallback): EmitHost {
@@ -334,6 +400,78 @@ namespace ts {
         function processRootFile(fileName: string, isDefaultLib: boolean) {
             processSourceFile(normalizePath(fileName), isDefaultLib);
         }
+        
+        function arrayIsEqualTo<T>(arr1: T[], arr2: T[], comparer: (a: T, b: T) => boolean): boolean {
+            if (!arr1 || !arr2) {
+                return arr1 === arr2;
+            }
+            
+            if (arr1.length !== arr2.length) {
+                return false;
+            }
+            
+            for (let i = 0; i < arr1.length; ++i) {
+                let e1 = arr1[i];
+                let e2 = arr2[i];
+                if (!comparer(e1, e2)) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        function fileReferenceIsEqualTo(a: FileReference, b: FileReference): boolean {
+            return a.fileName === b.fileName;
+        }
+        
+        function moduleNameIsEqualTo(a: LiteralExpression, b: LiteralExpression): boolean {
+            return a.text ===b.text;
+        }
+        
+        function collectExternalModuleReferences(file: SourceFile): LiteralExpression[] {
+            let imports: LiteralExpression[];
+            for (let node of file.statements) {
+                switch (node.kind) {
+                    case SyntaxKind.ImportDeclaration:
+                    case SyntaxKind.ImportEqualsDeclaration:
+                    case SyntaxKind.ExportDeclaration:
+                        let moduleNameExpr = getExternalModuleName(node);
+                        if (!moduleNameExpr || moduleNameExpr.kind !== SyntaxKind.StringLiteral) {
+                            return;
+                        }
+                        if (!(<LiteralExpression>moduleNameExpr).text) {
+                            return;
+                        }
+
+                        (imports || (imports = [])).push(<LiteralExpression>moduleNameExpr);
+                        break;
+                    case SyntaxKind.ModuleDeclaration:
+                        if ((<ModuleDeclaration>node).name.kind === SyntaxKind.StringLiteral && (node.flags & NodeFlags.Ambient || isDeclarationFile(file))) {
+                            // TypeScript 1.0 spec (April 2014): 12.1.6
+                            // An AmbientExternalModuleDeclaration declares an external module. 
+                            // This type of declaration is permitted only in the global module.
+                            // The StringLiteral must specify a top - level external module name.
+                            // Relative external module names are not permitted
+                            forEachChild((<ModuleDeclaration>node).body, node => {
+                                if (isExternalModuleImportEqualsDeclaration(node) &&
+                                    getExternalModuleImportEqualsDeclarationExpression(node).kind === SyntaxKind.StringLiteral) {
+                                    let moduleName = <LiteralExpression>getExternalModuleImportEqualsDeclarationExpression(node);
+                                    // TypeScript 1.0 spec (April 2014): 12.1.6
+                                    // An ExternalImportDeclaration in anAmbientExternalModuleDeclaration may reference other external modules 
+                                    // only through top - level external module names. Relative external module names are not permitted.
+                                    if (moduleName) {
+                                        (imports || (imports = [])).push(moduleName);
+                                    }
+                                }
+                            });
+                        }
+                        break;
+                }
+            }
+
+            return imports;
+        }
 
         function processSourceFile(fileName: string, isDefaultLib: boolean, refFile?: SourceFile, refPos?: number, refEnd?: number) {
             let start: number;
@@ -453,11 +591,10 @@ namespace ts {
         }
 
         function processImportedModules(file: SourceFile, basePath: string) {
-            let imports: LiteralExpression[];
-            forEach(file.statements, collectImports);
-            if (imports) {
-                ensureResolvedModuleNamesAreUptoDate(file, imports);
-                for (let importNode of imports) {
+            file.imports = collectExternalModuleReferences(file);            
+            if (file.imports) {
+                ensureResolvedModuleNamesAreUptoDate(file, file.imports);
+                for (let importNode of file.imports) {
                     resolveModule(importNode);
                 }
             }
@@ -468,46 +605,6 @@ namespace ts {
 
             function findModuleSourceFile(fileName: string, nameLiteral: Expression) {
                 return findSourceFile(fileName, /* isDefaultLib */ false, file, nameLiteral.pos, nameLiteral.end - nameLiteral.pos);
-            }
-
-            function collectImports(node: Node): void  {
-                switch (node.kind) {
-                    case SyntaxKind.ImportDeclaration:
-                    case SyntaxKind.ImportEqualsDeclaration:
-                    case SyntaxKind.ExportDeclaration:
-                        let moduleNameExpr = getExternalModuleName(node);
-                        if (!moduleNameExpr || moduleNameExpr.kind !== SyntaxKind.StringLiteral) {
-                            return;
-                        }
-                        let moduleNameText = (<LiteralExpression>moduleNameExpr).text;
-                        if (!moduleNameText) {
-                            return;
-                        }
-
-                        (imports || (imports = [])).push(<LiteralExpression>moduleNameExpr);
-                        break;
-                    case SyntaxKind.ModuleDeclaration:
-                        if ((<ModuleDeclaration>node).name.kind === SyntaxKind.StringLiteral && (node.flags & NodeFlags.Ambient || isDeclarationFile(file))) {
-                            // TypeScript 1.0 spec (April 2014): 12.1.6
-                            // An AmbientExternalModuleDeclaration declares an external module. 
-                            // This type of declaration is permitted only in the global module.
-                            // The StringLiteral must specify a top - level external module name.
-                            // Relative external module names are not permitted
-                            forEachChild((<ModuleDeclaration>node).body, node => {
-                                if (isExternalModuleImportEqualsDeclaration(node) &&
-                                    getExternalModuleImportEqualsDeclarationExpression(node).kind === SyntaxKind.StringLiteral) {
-                                    let moduleName = <LiteralExpression>getExternalModuleImportEqualsDeclarationExpression(node);
-                                    // TypeScript 1.0 spec (April 2014): 12.1.6
-                                    // An ExternalImportDeclaration in anAmbientExternalModuleDeclaration may reference other external modules 
-                                    // only through top - level external module names. Relative external module names are not permitted.
-                                    if (moduleName) {
-                                        (imports || (imports = [])).push(moduleName);
-                                    }
-                                }
-                            });
-                        }
-                        break;
-                }
             }
 
             function resolveModule(moduleNameExpr: LiteralExpression): void {
@@ -526,7 +623,7 @@ namespace ts {
                     searchName = normalizePath(combinePaths(searchPath, moduleNameExpr.text));
                     let referencedSourceFile = forEach(supportedExtensions, extension => findModuleSourceFile(searchName + extension, moduleNameExpr));
                     if (referencedSourceFile) {
-                        setResolvedModuleName(file, <LiteralExpression>moduleNameExpr, referencedSourceFile.fileName);
+                        setResolvedModuleName(file, moduleNameExpr, referencedSourceFile.fileName);
                         return;
                     }
 
@@ -537,7 +634,7 @@ namespace ts {
                     searchPath = parentPath;
                 }
                 // mark reference as non-resolved
-                setResolvedModuleName(file, <LiteralExpression>moduleNameExpr, undefined);
+                setResolvedModuleName(file, moduleNameExpr, undefined);
             }
         }
 
