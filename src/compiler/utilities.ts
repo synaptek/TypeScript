@@ -42,7 +42,7 @@ namespace ts {
     // Pool writers to avoid needing to allocate them for every symbol we write.
     let stringWriters: StringSymbolWriter[] = [];
     export function getSingleLineStringWriter(): StringSymbolWriter {
-        if (stringWriters.length == 0) {
+        if (stringWriters.length === 0) {
             let str = "";
 
             let writeText: (text: string) => void = text => str += text;
@@ -450,7 +450,7 @@ namespace ts {
                 // Specialized signatures can have string literals as their parameters' type names
                 return node.parent.kind === SyntaxKind.Parameter;
             case SyntaxKind.ExpressionWithTypeArguments:
-                return true;
+                return !isExpressionWithTypeArgumentsInClassExtendsClause(node);
 
             // Identifiers and qualified names may be type nodes, depending on their context. Climb
             // above them to find the lowest container
@@ -484,7 +484,7 @@ namespace ts {
                 }
                 switch (parent.kind) {
                     case SyntaxKind.ExpressionWithTypeArguments:
-                        return true;
+                        return !isExpressionWithTypeArgumentsInClassExtendsClause(parent);
                     case SyntaxKind.TypeParameter:
                         return node === (<TypeParameterDeclaration>parent).constraint;
                     case SyntaxKind.PropertyDeclaration:
@@ -896,7 +896,6 @@ namespace ts {
                 while (node.parent.kind === SyntaxKind.QualifiedName) {
                     node = node.parent;
                 }
-
                 return node.parent.kind === SyntaxKind.TypeQuery;
             case SyntaxKind.Identifier:
                 if (node.parent.kind === SyntaxKind.TypeQuery) {
@@ -944,6 +943,8 @@ namespace ts {
                         return node === (<ComputedPropertyName>parent).expression;
                     case SyntaxKind.Decorator:
                         return true;
+                    case SyntaxKind.ExpressionWithTypeArguments:
+                        return (<ExpressionWithTypeArguments>parent).expression === node && isExpressionWithTypeArgumentsInClassExtendsClause(parent);
                     default:
                         if (isExpression(parent)) {
                             return true;
@@ -1937,6 +1938,12 @@ namespace ts {
         return token >= SyntaxKind.FirstAssignment && token <= SyntaxKind.LastAssignment;
     }
 
+    export function isExpressionWithTypeArgumentsInClassExtendsClause(node: Node): boolean {
+        return node.kind === SyntaxKind.ExpressionWithTypeArguments &&
+            (<HeritageClause>node.parent).token === SyntaxKind.ExtendsKeyword &&
+            node.parent.parent.kind === SyntaxKind.ClassDeclaration;
+    }
+
     // Returns false if this heritage clause element's expression contains something unsupported
     // (i.e. not a name or dotted name).
     export function isSupportedExpressionWithTypeArguments(node: ExpressionWithTypeArguments): boolean {
@@ -2105,6 +2112,12 @@ namespace ts {
     export function textSpanIntersectsWith(span: TextSpan, start: number, length: number) {
         let end = start + length;
         return start <= textSpanEnd(span) && end >= span.start;
+    }
+
+    export function decodedTextSpanIntersectsWith(start1: number, length1: number, start2: number, length2: number) {
+        let end1 = start1 + length1;
+        let end2 = start2 + length2;
+        return start2 <= end1 && end2 >= start1;
     }
 
     export function textSpanIntersectsWithPosition(span: TextSpan, position: number) {

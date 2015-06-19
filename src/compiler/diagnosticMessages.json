@@ -671,6 +671,14 @@
         "category": "Error",
         "code": 1213
     },
+    "Identifier expected. '{0}' is a reserved word in strict mode. Modules are automatically in strict mode.": {
+        "category": "Error",
+        "code": 1214
+    },
+    "Invalid use of '{0}'. Modules are automatically in strict mode.": {
+        "category": "Error",
+        "code": 1215
+    },
     "Export assignment is not supported when '--module' flag is 'system'.": {
         "category": "Error",
         "code": 1218
@@ -1516,6 +1524,26 @@
     "A generator cannot have a 'void' type annotation.": {
         "category": "Error",
         "code": 2505
+    },
+    "'{0}' is referenced directly or indirectly in its own base expression.": {
+        "category": "Error",
+        "code": 2506
+    },
+    "Type '{0}' is not a constructor function type.": {
+        "category": "Error",
+        "code": 2507
+    },
+    "No base constructor has the specified number of type arguments.": {
+        "category": "Error",
+        "code": 2508
+    },
+    "Base constructor return type '{0}' is not a class or interface type.": {
+        "category": "Error",
+        "code": 2509
+    },
+    "Base constructors must all have the same return type.": {
+        "category": "Error",
+        "code": 2510
     },
 
     "Import declaration '{0}' is using private name '{1}'.": {
