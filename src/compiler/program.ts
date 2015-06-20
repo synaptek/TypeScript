@@ -9,7 +9,9 @@ namespace ts {
 
     /** The version of the TypeScript compiler release */
     export const version = "1.5.3";
-
+    
+    var emptyArray: any[] = [];
+    
     export function findConfigFile(searchPath: string): string {
         var fileName = "tsconfig.json";
         while (true) {
@@ -250,10 +252,9 @@ namespace ts {
                         return false;
                     }
                     
-                    // check imports                    
-                    let newImports = collectExternalModuleReferences(newSourceFile);
-                    let oldImports = oldSourceFile.imports;
-                    if (!arrayIsEqualTo(oldImports, newImports, moduleNameIsEqualTo)) {
+                    // check imports
+                    collectExternalModuleReferences(newSourceFile);                    
+                    if (!arrayIsEqualTo(oldSourceFile.imports, newSourceFile.imports, moduleNameIsEqualTo)) {
                         // imports has changed
                         return false;
                     }
@@ -428,7 +429,11 @@ namespace ts {
             return a.text ===b.text;
         }
         
-        function collectExternalModuleReferences(file: SourceFile): LiteralExpression[] {
+        function collectExternalModuleReferences(file: SourceFile): void {
+            if (file.imports) {
+                return;
+            }
+            
             let imports: LiteralExpression[];
             for (let node of file.statements) {
                 switch (node.kind) {
@@ -437,10 +442,10 @@ namespace ts {
                     case SyntaxKind.ExportDeclaration:
                         let moduleNameExpr = getExternalModuleName(node);
                         if (!moduleNameExpr || moduleNameExpr.kind !== SyntaxKind.StringLiteral) {
-                            return;
+                            break;
                         }
                         if (!(<LiteralExpression>moduleNameExpr).text) {
-                            return;
+                            break;
                         }
 
                         (imports || (imports = [])).push(<LiteralExpression>moduleNameExpr);
@@ -469,7 +474,7 @@ namespace ts {
                 }
             }
 
-            return imports;
+            file.imports = imports || emptyArray;
         }
 
         function processSourceFile(fileName: string, isDefaultLib: boolean, refFile?: SourceFile, refPos?: number, refEnd?: number) {
@@ -589,15 +594,18 @@ namespace ts {
             });
         }
 
-        function processImportedModules(file: SourceFile, basePath: string) {
-            file.imports = collectExternalModuleReferences(file);            
-            if (file.imports) {
-                ensureResolvedModuleNamesAreUptoDate(file, file.imports);
-                for (let importNode of file.imports) {
-                    resolveModule(importNode);
+        function processImportedModules(file: SourceFile, basePath: string) {            
+            collectExternalModuleReferences(file);            
+            if (file.imports.length) {
+                if (shouldUpdateCachedResolvedModuleNames(file, file.imports)) {
+                    file.resolvedModules = undefined;
+                    for (let importNode of file.imports) {
+                        resolveModule(importNode);
+                    }                   
                 }
             }
             else {
+                // no imports - drop cached module resolutions
                 file.resolvedModules = undefined;
             }
             return;

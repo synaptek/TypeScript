@@ -78,11 +78,29 @@ namespace ts {
         return node.end - node.pos;
     }
 
-    export function ensureResolvedModuleNamesAreUptoDate(sourceFile: SourceFile, imports: LiteralExpression[]): void {
+    export function shouldUpdateCachedResolvedModuleNames(sourceFile: SourceFile, imports: LiteralExpression[]): boolean {
         if (!sourceFile.resolvedModules) {
-            return;
+            return true;
         }
-        // TOOD: check that imports are consistent
+        
+        let size = 0;
+        for (let m in sourceFile.resolvedModules) {
+            size++;
+        }
+        
+        if (size !== imports.length) {
+            sourceFile.resolvedModules = undefined;
+            return true;
+        }
+        
+        for (let moduleNameExpr of imports) {
+            if (!hasProperty(sourceFile.resolvedModules, moduleNameExpr.text)) {
+                sourceFile.resolvedModules = undefined;
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     export function hasResolvedModuleName(sourceFile: SourceFile, moduleName: LiteralExpression): boolean {
