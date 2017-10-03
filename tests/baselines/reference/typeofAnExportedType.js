@@ -52,40 +52,41 @@ export module foo {
 export var r13: typeof foo;
 
 //// [typeofAnExportedType.js]
+"use strict";
+exports.__esModule = true;
 exports.x = 1;
 exports.y = { foo: '' };
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 exports.C = C;
 var c2;
 var i2;
 var M;
 (function (M) {
     M.foo = '';
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
+    }());
     M.C = C;
 })(M = exports.M || (exports.M = {}));
 exports.Z = M;
+var E;
 (function (E) {
     E[E["A"] = 0] = "A";
-})(exports.E || (exports.E = {}));
-var E = exports.E;
+})(E = exports.E || (exports.E = {}));
 function foo() { }
 exports.foo = foo;
-var foo;
 (function (foo) {
     foo.y = 1;
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
+    }());
     foo.C = C;
 })(foo = exports.foo || (exports.foo = {}));

@@ -2,14 +2,12 @@
 
 ////let p, b;
 ////
-////p, [{ [|a|]: p, b }] = [{ [|a|]: 10, b: true }];
+////p, [{ [|{| "isWriteAccess": true, "isDefinition": true |}a|]: p, b }] = [{ [|{| "isWriteAccess": true, "isDefinition": true |}a|]: 10, b: true }];
 
-let ranges = test.ranges();
-for (let range of ranges) {
-    goTo.position(range.start);
-
-    verify.referencesCountIs(ranges.length);
-    for (let expectedRange of ranges) {
-        verify.referencesAtPositionContains(expectedRange);
-    }
-}
+const ranges = test.ranges();
+const [r0, r1] = ranges;
+verify.referenceGroups(r0, [{ definition: "(property) a: any", ranges }]);
+verify.referenceGroups(r1, [
+    { definition: "(property) a: any", ranges: [r0] },
+    { definition: "(property) a: number", ranges: [r1] }
+]);

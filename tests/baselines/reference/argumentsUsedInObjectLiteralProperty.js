@@ -8,7 +8,7 @@ class A {
 }
 
 //// [argumentsUsedInObjectLiteralProperty.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.createSelectableViewModel = function (initialState, selectedValue) {
@@ -17,4 +17,4 @@ var A = (function () {
         };
     };
     return A;
-})();
+}());

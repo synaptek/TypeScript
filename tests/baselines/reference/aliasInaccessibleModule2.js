@@ -14,11 +14,11 @@ var M;
 (function (M) {
     var N;
     (function (N) {
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             return C;
-        })();
+        }());
     })(N || (N = {}));
     var R = N;
     M.X = R;

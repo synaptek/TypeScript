@@ -1,5 +1,4 @@
 //// [declFileModuleAssignmentInObjectLiteralProperty.ts]
-
 module m1 {
     export class c {
     }
@@ -12,11 +11,11 @@ var d = {
 //// [declFileModuleAssignmentInObjectLiteralProperty.js]
 var m1;
 (function (m1) {
-    var c = (function () {
+    var c = /** @class */ (function () {
         function c() {
         }
         return c;
-    })();
+    }());
     m1.c = c;
 })(m1 || (m1 = {}));
 var d = {

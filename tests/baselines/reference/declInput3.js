@@ -11,7 +11,7 @@ class bar {
 
 
 //// [declInput3.js]
-var bar = (function () {
+var bar = /** @class */ (function () {
     function bar() {
     }
     bar.prototype.f = function () { return ''; };
@@ -23,7 +23,7 @@ var bar = (function () {
         x++;
     };
     return bar;
-})();
+}());
 
 
 //// [declInput3.d.ts]

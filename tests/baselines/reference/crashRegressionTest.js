@@ -33,7 +33,7 @@ var MsPortal;
         var TemplateEngine;
         (function (TemplateEngine) {
             "use strict";
-            var StringTemplate = (function () {
+            var StringTemplate = /** @class */ (function () {
                 function StringTemplate(templateStorage) {
                     this._templateStorage = templateStorage;
                 }
@@ -41,14 +41,14 @@ var MsPortal;
                     this._templateStorage.templateSources[this._name] = value;
                 };
                 return StringTemplate;
-            })();
-            var TemplateStorage = (function () {
+            }());
+            var TemplateStorage = /** @class */ (function () {
                 function TemplateStorage() {
                     this.templateSources = {};
                     this.templateData = {};
                 }
                 return TemplateStorage;
-            })();
+            }());
             TemplateEngine.TemplateStorage = TemplateStorage;
         })(TemplateEngine = Util.TemplateEngine || (Util.TemplateEngine = {}));
     })(Util = MsPortal.Util || (MsPortal.Util = {}));

@@ -1,18 +1,18 @@
 //// [es5ExportDefaultClassDeclaration.ts]
-
 export default class C {
     method() { }
 }
 
 
 //// [es5ExportDefaultClassDeclaration.js]
-var C = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.method = function () { };
     return C;
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
+}());
 exports.default = C;
 
 

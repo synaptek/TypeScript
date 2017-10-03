@@ -5,11 +5,13 @@ export class Game {
 }
 
 //// [parser0_004152.js]
-var Game = (function () {
+"use strict";
+exports.__esModule = true;
+var Game = /** @class */ (function () {
     function Game() {
         this.position = new DisplayPosition([]);
     }
     ;
     return Game;
-})();
+}());
 exports.Game = Game;

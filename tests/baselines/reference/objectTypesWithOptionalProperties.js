@@ -10,7 +10,7 @@ interface I {
 }
 
 class C {
-    x?: number; // error
+    x?: number; // ok
 }
 
 interface I2<T> {
@@ -18,7 +18,7 @@ interface I2<T> {
 }
 
 class C2<T> {
-    x?: T; // error
+    x?: T; // ok
 }
 
 var b = {
@@ -28,16 +28,16 @@ var b = {
 //// [objectTypesWithOptionalProperties.js]
 // Basic uses of optional properties
 var a;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-var C2 = (function () {
+}());
+var C2 = /** @class */ (function () {
     function C2() {
     }
     return C2;
-})();
+}());
 var b = {
     x: 1 // error
 };

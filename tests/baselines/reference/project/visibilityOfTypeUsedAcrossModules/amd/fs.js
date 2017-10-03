@@ -1,5 +1,7 @@
 define(["require", "exports"], function (require, exports) {
-    var RM = (function () {
+    "use strict";
+    exports.__esModule = true;
+    var RM = /** @class */ (function () {
         function RM() {
         }
         RM.prototype.getName = function () {
@@ -12,6 +14,6 @@ define(["require", "exports"], function (require, exports) {
             var absoluteWorkspacePath = configuration.workspace.toAbsolutePath(configuration.server);
         };
         return RM;
-    })();
+    }());
     exports.RM = RM;
 });

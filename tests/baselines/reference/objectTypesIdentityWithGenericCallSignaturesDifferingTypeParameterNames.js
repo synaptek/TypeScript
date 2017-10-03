@@ -102,24 +102,24 @@ function foo15(x: any) { }
 
 //// [objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterNames.js]
 // object types are identical structurally
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.foo = function (x) { return null; };
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
     }
     B.prototype.foo = function (x) { return null; };
     return B;
-})();
-var C = (function () {
+}());
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x) { return null; };
     return C;
-})();
+}());
 var a;
 var b = { foo: function (x) { return x; } };
 function foo1(x) { }

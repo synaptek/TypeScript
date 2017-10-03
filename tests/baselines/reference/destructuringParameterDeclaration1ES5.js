@@ -178,7 +178,7 @@ function d0(x) { }
 function d0(x) {
     if (x === void 0) { x = 10; }
 }
-var C2 = (function () {
+var C2 = /** @class */ (function () {
     function C2() {
     }
     C2.prototype.d3 = function () { };
@@ -187,8 +187,8 @@ var C2 = (function () {
         var a = _a[0], b = _a[1], c = _a[2];
     };
     return C2;
-})();
-var C3 = (function () {
+}());
+var C3 = /** @class */ (function () {
     function C3() {
     }
     C3.prototype.d3 = function (_a) {
@@ -201,7 +201,7 @@ var C3 = (function () {
         var a = _a[0], b = _a[1], c = _a[2];
     };
     return C3;
-})();
+}());
 function d5(_a) {
     var _b = _a === void 0 ? { x: 1, y: 2 } : _a, x = _b.x, y = _b.y;
 }

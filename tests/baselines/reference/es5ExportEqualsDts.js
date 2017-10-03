@@ -1,5 +1,4 @@
 //// [es5ExportEqualsDts.ts]
-
 class A {
     foo() {
         var aVal: A.B;
@@ -14,7 +13,8 @@ module A {
 export = A
 
 //// [es5ExportEqualsDts.js]
-var A = (function () {
+"use strict";
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.foo = function () {
@@ -22,7 +22,7 @@ var A = (function () {
         return aVal;
     };
     return A;
-})();
+}());
 module.exports = A;
 
 

@@ -33,14 +33,14 @@ function foo(x) {
 }
 foo(1);
 foo();
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x) {
         if (x === void 0) { x = 1; }
     };
     return C;
-})();
+}());
 var c;
 c.foo();
 c.foo(1);

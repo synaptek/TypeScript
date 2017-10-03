@@ -11,7 +11,7 @@ class C {
 
 //// [computedPropertyNames17_ES5.js]
 var b;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, b, {
@@ -45,4 +45,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

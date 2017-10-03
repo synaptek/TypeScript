@@ -21,22 +21,22 @@ var A;
 (function (A) {
     var M;
     (function (M) {
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             return C;
-        })();
+        }());
     })(M = A.M || (A.M = {}));
 })(A || (A = {}));
 var B;
 (function (B) {
     var M;
     (function (M) {
-        var D = (function () {
+        var D = /** @class */ (function () {
             function D() {
             }
             return D;
-        })();
+        }());
         M.D = D;
     })(M = B.M || (B.M = {}));
 })(B || (B = {}));

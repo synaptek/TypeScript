@@ -8,14 +8,14 @@ class B {
 }
 
 //// [classAbstractMethodInNonAbstractClass.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
     }
     B.prototype.foo = function () { };
     return B;
-})();
+}());

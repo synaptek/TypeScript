@@ -227,16 +227,16 @@ module TypeScript {
 ///<reference path='typescript.ts' />
 var TypeScript;
 (function (TypeScript) {
-    var TypeCollectionContext = (function () {
+    var TypeCollectionContext = /** @class */ (function () {
         function TypeCollectionContext(scopeChain, checker) {
             this.scopeChain = scopeChain;
             this.checker = checker;
             this.script = null;
         }
         return TypeCollectionContext;
-    })();
+    }());
     TypeScript.TypeCollectionContext = TypeCollectionContext;
-    var MemberScopeContext = (function () {
+    var MemberScopeContext = /** @class */ (function () {
         function MemberScopeContext(flow, pos, matchFlag) {
             this.flow = flow;
             this.pos = pos;
@@ -246,9 +246,9 @@ var TypeScript;
             this.options = new AstWalkOptions();
         }
         return MemberScopeContext;
-    })();
+    }());
     TypeScript.MemberScopeContext = MemberScopeContext;
-    var EnclosingScopeContext = (function () {
+    var EnclosingScopeContext = /** @class */ (function () {
         function EnclosingScopeContext(logger, script, text, pos, isMemberCompletion) {
             this.logger = logger;
             this.script = script;
@@ -293,7 +293,7 @@ var TypeScript;
             return this.scriptFragment;
         };
         return EnclosingScopeContext;
-    })();
+    }());
     TypeScript.EnclosingScopeContext = EnclosingScopeContext;
     function preFindMemberScope(ast, parent, walker) {
         var memScope = walker.state;

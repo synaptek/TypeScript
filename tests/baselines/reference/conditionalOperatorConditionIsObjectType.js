@@ -79,11 +79,11 @@ var exprString2;
 var exprIsObject2;
 function foo() { }
 ;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 ;
 //Cond is an object type variable
 condObject ? exprAny1 : exprAny2;

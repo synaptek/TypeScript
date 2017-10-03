@@ -1,5 +1,4 @@
 //// [declFileWithInternalModuleNameConflictsInExtendsClause3.ts]
-
 module X.A.C {
     export interface Z {
     }
@@ -23,11 +22,11 @@ var X;
         (function (B) {
             var C;
             (function (C) {
-                var W = (function () {
+                var W = /** @class */ (function () {
                     function W() {
                     }
                     return W;
-                })();
+                }());
                 C.W = W;
             })(C = B.C || (B.C = {}));
         })(B = A.B || (A.B = {}));

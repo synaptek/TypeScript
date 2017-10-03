@@ -7,11 +7,11 @@ class C {
 }
 
 //// [scopeCheckInsidePublicMethod1.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.a = function () {
         s = 1; // ERR
     };
     return C;
-})();
+}());

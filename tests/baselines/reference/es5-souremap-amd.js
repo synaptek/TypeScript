@@ -1,5 +1,4 @@
 //// [es5-souremap-amd.ts]
-
 class A
 {
     constructor ()
@@ -14,12 +13,12 @@ class A
 }
 
 //// [es5-souremap-amd.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.B = function () {
         return 42;
     };
     return A;
-})();
+}());
 //# sourceMappingURL=es5-souremap-amd.js.map

@@ -1,23 +1,22 @@
 /// <reference path='fourslash.ts'/>
 
 ////interface I {
-////    [|property1|]: number;
+////    [|{| "isWriteAccess": true, "isDefinition": true |}property1|]: number;
 ////    property2: string;
 ////}
 ////
-////function f({ /**/[|property1|]: p1 }: I,
-////           { /*SHOULD_BE_A_REFERENCE*/property1 }: I,
+////function f({ [|property1|]: p1 }: I,
+////           { [|{| "isWriteAccess": true, "isDefinition": true |}property1|] }: I,
 ////           { property1: p2 }) {
 ////
-////    return property1 + 1;
+////    return [|property1|] + 1;
 ////}
 
-// NOTE: In the future, the identifier at
-//       SHOULD_BE_A_REFERENCE should be in the set of ranges.
-goTo.marker();
+const ranges = test.ranges();
+const [r0, r1, r2, r3] = ranges;
+verify.referenceGroups([r0, r1], [{ definition: "(property) I.property1: number", ranges }]);
+verify.referenceGroups([r2, r3], [
+    { definition: "(property) I.property1: number", ranges: [r0, r1] },
+    { definition: "var property1: number", ranges: [r2, r3] }
+]);
 
-let ranges = test.ranges();
-verify.referencesCountIs(ranges.length);
-for (let expectedRange of ranges) {
-    verify.referencesAtPositionContains(expectedRange);
-}

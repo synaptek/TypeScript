@@ -29,11 +29,11 @@ var a = x;
 var b = x;
 var c = x;
 var d = x;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var e = x;
 var f = x;
 var g = 1;

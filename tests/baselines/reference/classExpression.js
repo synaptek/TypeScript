@@ -13,23 +13,23 @@ module M {
 }
 
 //// [classExpression.js]
-var x = (function () {
+var x = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var y = {
-    foo: (function () {
+    foo: /** @class */ (function () {
         function C2() {
         }
         return C2;
-    })()
+    }())
 };
 var M;
 (function (M) {
-    var z = (function () {
+    var z = /** @class */ (function () {
         function C4() {
         }
         return C4;
-    })();
+    }());
 })(M || (M = {}));

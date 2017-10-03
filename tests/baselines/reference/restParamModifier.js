@@ -4,9 +4,9 @@ class C {
 }
 
 //// [restParamModifier.js]
-var C = (function () {
-    function C(public, string) {
+var C = /** @class */ (function () {
+    function C(string) {
         if (string === void 0) { string = []; }
     }
     return C;
-})();
+}());

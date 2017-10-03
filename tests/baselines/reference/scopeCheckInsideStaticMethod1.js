@@ -11,7 +11,7 @@ class C {
 }
 
 //// [scopeCheckInsideStaticMethod1.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.b = function () {
@@ -20,4 +20,4 @@ var C = (function () {
         this.p = 1; // ERR
     };
     return C;
-})();
+}());

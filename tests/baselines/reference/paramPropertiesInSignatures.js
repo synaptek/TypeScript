@@ -12,9 +12,9 @@ declare class C2 {
 }
 
 //// [paramPropertiesInSignatures.js]
-var C1 = (function () {
+var C1 = /** @class */ (function () {
     function C1(p3) {
         this.p3 = p3;
     } // OK
     return C1;
-})();
+}());

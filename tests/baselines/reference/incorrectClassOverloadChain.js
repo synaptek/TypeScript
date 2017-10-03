@@ -6,9 +6,9 @@ class C {
 }
 
 //// [incorrectClassOverloadChain.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         this.x = 1;
     }
     return C;
-})();
+}());

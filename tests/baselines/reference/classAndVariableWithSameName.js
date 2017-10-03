@@ -11,18 +11,18 @@ module M {
 }
 
 //// [classAndVariableWithSameName.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})(); // error
+}()); // error
 var C = ''; // error
 var M;
 (function (M) {
-    var D = (function () {
+    var D = /** @class */ (function () {
         function D() {
         }
         return D;
-    })();
+    }());
     var D = 1; // error
 })(M || (M = {}));

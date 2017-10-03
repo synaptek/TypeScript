@@ -23,11 +23,11 @@ var result3: string = foo(x => { // x has type D
 
 
 //// [overloadresolutionWithConstraintCheckingDeferred.js]
-var G = (function () {
+var G = /** @class */ (function () {
     function G(x) {
     }
     return G;
-})();
+}());
 var result = foo(function (x) { return new G(x); }); // x has type D, new G(x) fails, so first overload is picked.
 var result2 = foo(function (x) { return new G(x); }); // x has type D, new G(x) fails, so first overload is picked.
 var result3 = foo(function (x) {

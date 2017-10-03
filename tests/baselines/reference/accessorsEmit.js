@@ -16,12 +16,12 @@ class Test2 {
 }
 
 //// [accessorsEmit.js]
-var Result = (function () {
+var Result = /** @class */ (function () {
     function Result() {
     }
     return Result;
-})();
-var Test = (function () {
+}());
+var Test = /** @class */ (function () {
     function Test() {
     }
     Object.defineProperty(Test.prototype, "Property", {
@@ -33,8 +33,8 @@ var Test = (function () {
         configurable: true
     });
     return Test;
-})();
-var Test2 = (function () {
+}());
+var Test2 = /** @class */ (function () {
     function Test2() {
     }
     Object.defineProperty(Test2.prototype, "Property", {
@@ -46,4 +46,4 @@ var Test2 = (function () {
         configurable: true
     });
     return Test2;
-})();
+}());

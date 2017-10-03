@@ -45,11 +45,11 @@ var r15 = foo(c2);
 // satisfaction of a constraint to Function, no errors expected
 function foo(x) { return x; }
 var i;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var a;
 var b;
 var c;
@@ -60,11 +60,11 @@ var r4 = foo(function (x) { return x; });
 var r5 = foo(i);
 var r8 = foo(c);
 var i2;
-var C2 = (function () {
+var C2 = /** @class */ (function () {
     function C2() {
     }
     return C2;
-})();
+}());
 var a2;
 var b2;
 var c2;

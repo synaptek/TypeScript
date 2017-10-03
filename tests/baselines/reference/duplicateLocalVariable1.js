@@ -1,4 +1,5 @@
 //// [duplicateLocalVariable1.ts]
+/ /@module: commonjs
 
 //import FileManager = require('filemanager');
 //import App = require('app');
@@ -344,19 +345,21 @@ export var tests: TestRunner = (function () {
 })();
 
 //// [duplicateLocalVariable1.js]
-//import FileManager = require('filemanager');
-//import App = require('app');
+"use strict";
+exports.__esModule = true;
+/ /;
+commonjs;
 var TestFileDir = ".\\TempTestFiles";
-var TestCase = (function () {
+var TestCase = /** @class */ (function () {
     function TestCase(name, test, errorMessageRegEx) {
         this.name = name;
         this.test = test;
         this.errorMessageRegEx = errorMessageRegEx;
     }
     return TestCase;
-})();
+}());
 exports.TestCase = TestCase;
-var TestRunner = (function () {
+var TestRunner = /** @class */ (function () {
     function TestRunner() {
         this.tests = [];
     }
@@ -388,6 +391,7 @@ var TestRunner = (function () {
                     }
                 }
                 if (testResult === false) {
+                    //console.log(e.message);
                 }
             }
             if ((testcase.errorMessageRegEx !== undefined) && !exception) {
@@ -403,7 +407,7 @@ var TestRunner = (function () {
         }
     };
     return TestRunner;
-})();
+}());
 exports.TestRunner = TestRunner;
 exports.tests = (function () {
     var testRunner = new TestRunner();

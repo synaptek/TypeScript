@@ -30,11 +30,16 @@ declare module MsPortal.Controls.Base.ItemList {
 */
 
 //// [recursivelySpecializedConstructorDeclaration.js]
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var MsPortal;
 (function (MsPortal) {
     var Controls;
@@ -43,19 +48,19 @@ var MsPortal;
         (function (Base) {
             var ItemList;
             (function (ItemList) {
-                var ItemValue = (function () {
+                var ItemValue = /** @class */ (function () {
                     function ItemValue(value) {
                     }
                     return ItemValue;
-                })();
+                }());
                 ItemList.ItemValue = ItemValue;
-                var ViewModel = (function (_super) {
+                var ViewModel = /** @class */ (function (_super) {
                     __extends(ViewModel, _super);
                     function ViewModel() {
-                        _super.apply(this, arguments);
+                        return _super !== null && _super.apply(this, arguments) || this;
                     }
                     return ViewModel;
-                })(ItemValue);
+                }(ItemValue));
                 ItemList.ViewModel = ViewModel;
             })(ItemList = Base.ItemList || (Base.ItemList = {}));
         })(Base = Controls.Base || (Controls.Base = {}));

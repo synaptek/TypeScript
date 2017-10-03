@@ -37,16 +37,18 @@ export var tests: TestRunner = (function () {
 
 //// [duplicateLocalVariable2.js]
 define(["require", "exports"], function (require, exports) {
-    var TestCase = (function () {
+    "use strict";
+    exports.__esModule = true;
+    var TestCase = /** @class */ (function () {
         function TestCase(name, test, errorMessageRegEx) {
             this.name = name;
             this.test = test;
             this.errorMessageRegEx = errorMessageRegEx;
         }
         return TestCase;
-    })();
+    }());
     exports.TestCase = TestCase;
-    var TestRunner = (function () {
+    var TestRunner = /** @class */ (function () {
         function TestRunner() {
         }
         TestRunner.arrayCompare = function (arg1, arg2) {
@@ -55,7 +57,7 @@ define(["require", "exports"], function (require, exports) {
         TestRunner.prototype.addTest = function (test) {
         };
         return TestRunner;
-    })();
+    }());
     exports.TestRunner = TestRunner;
     exports.tests = (function () {
         var testRunner = new TestRunner();

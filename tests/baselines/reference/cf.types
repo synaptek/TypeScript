@@ -7,39 +7,39 @@ function f() {
 
     var x=10;
 >x : number
->10 : number
+>10 : 10
 
     var y=3;
 >y : number
->3 : number
+>3 : 3
 
     L1: for (var i=0;i<19;i++) {
 >L1 : any
 >i : number
->0 : number
+>0 : 0
 >i<19 : boolean
 >i : number
->19 : number
+>19 : 19
 >i++ : number
 >i : number
 
         if (y==7) {
 >y==7 : boolean
 >y : number
->7 : number
+>7 : 7
 
             continue L1;
 >L1 : any
 
             x=11;
->x=11 : number
+>x=11 : 11
 >x : number
->11 : number
+>11 : 11
         }
         if (y==3) {
 >y==3 : boolean
 >y : number
->3 : number
+>3 : 3
 
             y++;
 >y++ : number
@@ -54,23 +54,23 @@ function f() {
             y+=2;
 >y+=2 : number
 >y : number
->2 : number
+>2 : 2
 
             if (y==20) {
 >y==20 : boolean
 >y : number
->20 : number
+>20 : 20
 
                 break;
                 x=12;
->x=12 : number
+>x=12 : 12
 >x : number
->12 : number
+>12 : 12
             }
         } while (y<41);
 >y<41 : boolean
 >y : number
->41 : number
+>41 : 41
 
         y++;
 >y++ : number
@@ -79,14 +79,14 @@ function f() {
     while (y>2) {
 >y>2 : boolean
 >y : number
->2 : number
+>2 : 2
 
         y=y>>1;
 >y=y>>1 : number
 >y : number
 >y>>1 : number
 >y : number
->1 : number
+>1 : 1
     }
     L2: try {
 >L2 : any
@@ -101,18 +101,18 @@ function f() {
 >L2 : any
 
             x=13;
->x=13 : number
+>x=13 : 13
 >x : number
->13 : number
+>13 : 13
         }
         else {
             break L3;
 >L3 : any
 
             x=14;
->x=14 : number
+>x=14 : 14
 >x : number
->14 : number
+>14 : 14
         }
     }
     catch (e) {
@@ -126,7 +126,7 @@ function f() {
         x+=3;
 >x+=3 : number
 >x : number
->3 : number
+>3 : 3
     }
     y++;
 >y++ : number
@@ -134,10 +134,10 @@ function f() {
 
     for (var k=0;k<10;k++) {
 >k : number
->0 : number
+>0 : 0
 >k<10 : boolean
 >k : number
->10 : number
+>10 : 10
 >k++ : number
 >k : number
 
@@ -147,19 +147,19 @@ function f() {
         break;
     }
     for (k=0;k<10;k++) {
->k=0 : number
+>k=0 : 0
 >k : number
->0 : number
+>0 : 0
 >k<10 : boolean
 >k : number
->10 : number
+>10 : 10
 >k++ : number
 >k : number
 
         if (k==6) {
 >k==6 : boolean
 >k : number
->6 : number
+>6 : 6
 
             continue;
         }

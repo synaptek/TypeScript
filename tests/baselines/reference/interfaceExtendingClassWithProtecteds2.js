@@ -28,21 +28,21 @@ var r2 = i.x; // error
 var r3 = i.y; // error
 
 //// [interfaceExtendingClassWithProtecteds2.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     return Foo;
-})();
-var Bar = (function () {
+}());
+var Bar = /** @class */ (function () {
     function Bar() {
     }
     return Bar;
-})();
-var Baz = (function () {
+}());
+var Baz = /** @class */ (function () {
     function Baz() {
     }
     return Baz;
-})();
+}());
 var i;
 var r = i.z;
 var r2 = i.x; // error

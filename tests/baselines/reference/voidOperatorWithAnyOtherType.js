@@ -71,7 +71,7 @@ function foo() {
     var a;
     return a;
 }
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.foo = function () {
@@ -79,7 +79,7 @@ var A = (function () {
         return a;
     };
     return A;
-})();
+}());
 var M;
 (function (M) {
 })(M || (M = {}));

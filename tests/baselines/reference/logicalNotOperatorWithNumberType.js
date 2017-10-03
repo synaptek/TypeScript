@@ -50,12 +50,12 @@ var ResultIsBoolean13 = !!!(NUMBER + NUMBER);
 var NUMBER;
 var NUMBER1 = [1, 2];
 function foo() { return 1; }
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.foo = function () { return 1; };
     return A;
-})();
+}());
 var M;
 (function (M) {
 })(M || (M = {}));

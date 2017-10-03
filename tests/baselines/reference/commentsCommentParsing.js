@@ -1,5 +1,4 @@
 //// [commentsCommentParsing.ts]
-
 /// This is simple /// comments
 function simple() {
 }
@@ -284,11 +283,11 @@ function jsDocParamTest(/** this is inline comment for a */ a, /** this is inlin
     return a + b + c + d;
 }
 /**/
-var NoQuickInfoClass = (function () {
+var NoQuickInfoClass = /** @class */ (function () {
     function NoQuickInfoClass() {
     }
     return NoQuickInfoClass;
-})();
+}());
 
 
 //// [commentsCommentParsing.d.ts]

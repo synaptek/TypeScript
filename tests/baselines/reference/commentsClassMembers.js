@@ -1,5 +1,4 @@
 //// [commentsClassMembers.ts]
-
 /** This is comment for c1*/
 class c1 {
     /** p1 is property of c1*/
@@ -220,7 +219,7 @@ cProperties_i.nc_p2 = cProperties_i.nc_p1;
 
 //// [commentsClassMembers.js]
 /** This is comment for c1*/
-var c1 = (function () {
+var c1 = /** @class */ (function () {
     /** Constructor method*/
     function c1() {
     }
@@ -413,7 +412,7 @@ var c1 = (function () {
         configurable: true
     });
     return c1;
-})();
+}());
 var i1 = new c1();
 var i1_p = i1.p1;
 var i1_f = i1.p2;
@@ -436,7 +435,7 @@ var i1_s_ncr = c1.nc_s2(20);
 var i1_s_ncprop = c1.nc_s3;
 c1.nc_s3 = i1_s_ncprop;
 var i1_c = c1;
-var cProperties = (function () {
+var cProperties = /** @class */ (function () {
     function cProperties() {
         this.x = 10; /*trailing comment for property*/
         this.y = 10; // trailing comment of // style
@@ -473,7 +472,7 @@ var cProperties = (function () {
         configurable: true
     });
     return cProperties;
-})();
+}());
 var cProperties_i = new cProperties();
 cProperties_i.p2 = cProperties_i.p1;
 cProperties_i.nc_p2 = cProperties_i.nc_p1;
@@ -568,8 +567,8 @@ declare var i1_c: typeof c1;
 declare class cProperties {
     private val;
     /** getter only property*/
-    p1: number;
-    nc_p1: number;
+    readonly p1: number;
+    readonly nc_p1: number;
     /**setter only property*/
     p2: number;
     nc_p2: number;

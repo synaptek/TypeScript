@@ -48,12 +48,12 @@ var ResultIsNumber14 = ~~~(STRING + STRING);
 var STRING;
 var STRING1 = ["", "abc"];
 function foo() { return "abc"; }
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.foo = function () { return ""; };
     return A;
-})();
+}());
 var M;
 (function (M) {
 })(M || (M = {}));

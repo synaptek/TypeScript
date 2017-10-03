@@ -2096,11 +2096,16 @@ module Harness {
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path='..\compiler\io.ts'/>
 ///<reference path='..\compiler\typescript.ts'/>
 ///<reference path='..\services\typescriptServices.ts' />
@@ -2267,7 +2272,7 @@ var Harness;
         return content;
     }
     Harness.readFile = readFile;
-    var Logger = (function () {
+    var Logger = /** @class */ (function () {
         function Logger() {
         }
         Logger.prototype.start = function (fileName, priority) { };
@@ -2282,7 +2287,7 @@ var Harness;
         Logger.prototype.comment = function (comment) { };
         Logger.prototype.verify = function (test, passed, actual, expected, message) { };
         return Logger;
-    })();
+    }());
     Harness.Logger = Logger;
     // Logger-related functions
     var loggers = [];
@@ -2302,7 +2307,7 @@ var Harness;
         }
     }
     Harness.emitLog = emitLog;
-    var Runnable = (function () {
+    var Runnable = /** @class */ (function () {
         function Runnable(description, block) {
             this.description = description;
             this.block = block;
@@ -2375,14 +2380,15 @@ var Harness;
         Runnable.currentStack = [];
         Runnable.errorHandlerStack = [];
         return Runnable;
-    })();
+    }());
     Harness.Runnable = Runnable;
-    var TestCase = (function (_super) {
+    var TestCase = /** @class */ (function (_super) {
         __extends(TestCase, _super);
         function TestCase(description, block) {
-            _super.call(this, description, block);
-            this.description = description;
-            this.block = block;
+            var _this = _super.call(this, description, block) || this;
+            _this.description = description;
+            _this.block = block;
+            return _this;
         }
         TestCase.prototype.addChild = function (child) {
             throw new Error("Testcases may not be nested inside other testcases");
@@ -2409,14 +2415,15 @@ var Harness;
             }
         };
         return TestCase;
-    })(Runnable);
+    }(Runnable));
     Harness.TestCase = TestCase;
-    var Scenario = (function (_super) {
+    var Scenario = /** @class */ (function (_super) {
         __extends(Scenario, _super);
         function Scenario(description, block) {
-            _super.call(this, description, block);
-            this.description = description;
-            this.block = block;
+            var _this = _super.call(this, description, block) || this;
+            _this.description = description;
+            _this.block = block;
+            return _this;
         }
         /** Run the block, and if the block doesn't raise an error, run the children. */
         Scenario.prototype.run = function (done) {
@@ -2464,12 +2471,12 @@ var Harness;
             done();
         };
         return Scenario;
-    })(Runnable);
+    }(Runnable));
     Harness.Scenario = Scenario;
-    var Run = (function (_super) {
+    var Run = /** @class */ (function (_super) {
         __extends(Run, _super);
         function Run() {
-            _super.call(this, 'Test Run', null);
+            return _super.call(this, 'Test Run', null) || this;
         }
         Run.prototype.run = function () {
             emitLog('start');
@@ -2495,7 +2502,7 @@ var Harness;
             emitLog('end');
         };
         return Run;
-    })(Runnable);
+    }(Runnable));
     Harness.Run = Run;
     // Performance test
     var Perf;
@@ -2517,7 +2524,7 @@ var Harness;
                 Clock.resolution = 1000;
             }
         })(Clock = Perf.Clock || (Perf.Clock = {}));
-        var Timer = (function () {
+        var Timer = /** @class */ (function () {
             function Timer() {
                 this.time = 0;
             }
@@ -2530,9 +2537,9 @@ var Harness;
                 this.time = (Clock.now() - this.startTime) / Clock.resolution * 1000;
             };
             return Timer;
-        })();
+        }());
         Perf.Timer = Timer;
-        var Dataset = (function () {
+        var Dataset = /** @class */ (function () {
             function Dataset() {
                 this.data = [];
             }
@@ -2573,10 +2580,10 @@ var Harness;
                 return Math.sqrt(sumOfSquares / this.data.length);
             };
             return Dataset;
-        })();
+        }());
         Perf.Dataset = Dataset;
         // Base benchmark class with some defaults.
-        var Benchmark = (function () {
+        var Benchmark = /** @class */ (function () {
             function Benchmark() {
                 this.iterations = 10;
                 this.description = "";
@@ -2592,7 +2599,7 @@ var Harness;
                 this.results[name].add(timing);
             };
             return Benchmark;
-        })();
+        }());
         Perf.Benchmark = Benchmark;
         Perf.benchmarks = [];
         var timeFunction;
@@ -2650,7 +2657,7 @@ var Harness;
         /** Aggregate various writes into a single array of lines. Useful for passing to the
          *  TypeScript compiler to fill with source code or errors.
          */
-        var WriterAggregator = (function () {
+        var WriterAggregator = /** @class */ (function () {
             function WriterAggregator() {
                 this.lines = [];
                 this.currentLine = "";
@@ -2673,10 +2680,10 @@ var Harness;
                 this.currentLine = "";
             };
             return WriterAggregator;
-        })();
+        }());
         Compiler.WriterAggregator = WriterAggregator;
         /** Mimics having multiple files, later concatenated to a single file. */
-        var EmitterIOHost = (function () {
+        var EmitterIOHost = /** @class */ (function () {
             function EmitterIOHost() {
                 this.fileCollection = {};
             }
@@ -2709,7 +2716,7 @@ var Harness;
                 return result;
             };
             return EmitterIOHost;
-        })();
+        }());
         Compiler.EmitterIOHost = EmitterIOHost;
         var libFolder = global['WScript'] ? TypeScript.filePath(global['WScript'].ScriptFullName) : (__dirname + '/');
         Compiler.libText = IO ? IO.readFile(libFolder + "lib.d.ts") : '';
@@ -2757,7 +2764,7 @@ var Harness;
         }
         Compiler.compile = compile;
         // Types
-        var Type = (function () {
+        var Type = /** @class */ (function () {
             function Type(type, code, identifier) {
                 this.type = type;
                 this.code = code;
@@ -2873,9 +2880,9 @@ var Harness;
                 });
             };
             return Type;
-        })();
+        }());
         Compiler.Type = Type;
-        var TypeFactory = (function () {
+        var TypeFactory = /** @class */ (function () {
             function TypeFactory() {
                 this.any = this.get('var x : any', 'x');
                 this.number = this.get('var x : number', 'x');
@@ -3014,7 +3021,7 @@ var Harness;
                 });
             };
             return TypeFactory;
-        })();
+        }());
         Compiler.TypeFactory = TypeFactory;
         /** Generates a .d.ts file for the given code
           * @param verifyNoDeclFile pass true when the given code should generate no decl file, false otherwise
@@ -3077,7 +3084,7 @@ var Harness;
         }
         Compiler.generateDeclFile = generateDeclFile;
         /** Contains the code and errors of a compilation and some helper methods to check its status. */
-        var CompilerResult = (function () {
+        var CompilerResult = /** @class */ (function () {
             /** @param fileResults an array of strings for the filename and an ITextWriter with its code */
             function CompilerResult(fileResults, errorLines, scripts) {
                 this.fileResults = fileResults;
@@ -3110,10 +3117,10 @@ var Harness;
                 return false;
             };
             return CompilerResult;
-        })();
+        }());
         Compiler.CompilerResult = CompilerResult;
         // Compiler Error.
-        var CompilerError = (function () {
+        var CompilerError = /** @class */ (function () {
             function CompilerError(file, line, column, message) {
                 this.file = file;
                 this.line = line;
@@ -3124,7 +3131,7 @@ var Harness;
                 return this.file + "(" + this.line + "," + this.column + "): " + this.message;
             };
             return CompilerError;
-        })();
+        }());
         Compiler.CompilerError = CompilerError;
         /** Create a new instance of the compiler with default settings and lib.d.ts, then typecheck */
         function recreate() {
@@ -3403,7 +3410,7 @@ var Harness;
         }
         TestCaseParser.makeUnitsFromTest = makeUnitsFromTest;
     })(TestCaseParser = Harness.TestCaseParser || (Harness.TestCaseParser = {}));
-    var ScriptInfo = (function () {
+    var ScriptInfo = /** @class */ (function () {
         function ScriptInfo(name, content, isResident, maxScriptVersions) {
             this.name = name;
             this.content = content;
@@ -3452,9 +3459,9 @@ var Harness;
             return new TypeScript.ScriptEditRange(minDistFromStart, entries[0].length - minDistFromEnd, aggDelta);
         };
         return ScriptInfo;
-    })();
+    }());
     Harness.ScriptInfo = ScriptInfo;
-    var TypeScriptLS = (function () {
+    var TypeScriptLS = /** @class */ (function () {
         function TypeScriptLS() {
             this.ls = null;
             this.scripts = [];
@@ -3654,7 +3661,7 @@ var Harness;
             return JSON.stringify({ usePullLanguageService: Harness.usePull });
         };
         return TypeScriptLS;
-    })();
+    }());
     Harness.TypeScriptLS = TypeScriptLS;
     // Describe/it definitions
     function describe(description, block) {

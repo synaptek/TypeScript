@@ -186,7 +186,7 @@ var TypeScript;
         }
         CompilerDiagnostics.assert = assert;
     })(CompilerDiagnostics = TypeScript.CompilerDiagnostics || (TypeScript.CompilerDiagnostics = {}));
-    var NullLogger = (function () {
+    var NullLogger = /** @class */ (function () {
         function NullLogger() {
         }
         NullLogger.prototype.information = function () { return false; };
@@ -197,9 +197,9 @@ var TypeScript;
         NullLogger.prototype.log = function (s) {
         };
         return NullLogger;
-    })();
+    }());
     TypeScript.NullLogger = NullLogger;
-    var LoggerAdapter = (function () {
+    var LoggerAdapter = /** @class */ (function () {
         function LoggerAdapter(logger) {
             this.logger = logger;
             this._information = this.logger.information();
@@ -217,9 +217,9 @@ var TypeScript;
             this.logger.log(s);
         };
         return LoggerAdapter;
-    })();
+    }());
     TypeScript.LoggerAdapter = LoggerAdapter;
-    var BufferedLogger = (function () {
+    var BufferedLogger = /** @class */ (function () {
         function BufferedLogger() {
             this.logContents = [];
         }
@@ -232,7 +232,7 @@ var TypeScript;
             this.logContents.push(s);
         };
         return BufferedLogger;
-    })();
+    }());
     TypeScript.BufferedLogger = BufferedLogger;
     function timeFunction(logger, funcDescription, func) {
         var start = +new Date();
@@ -247,28 +247,28 @@ var TypeScript;
         var addChar = function (index) {
             var ch = value.charCodeAt(index);
             switch (ch) {
-                case 0x09:
+                case 0x09:// tab
                     result += "\\t";
                     break;
-                case 0x0a:
+                case 0x0a:// line feed
                     result += "\\n";
                     break;
-                case 0x0b:
+                case 0x0b:// vertical tab
                     result += "\\v";
                     break;
-                case 0x0c:
+                case 0x0c:// form feed
                     result += "\\f";
                     break;
-                case 0x0d:
+                case 0x0d:// carriage return
                     result += "\\r";
                     break;
-                case 0x22:
+                case 0x22:// double quote
                     result += "\\\"";
                     break;
-                case 0x27:
+                case 0x27:// single quote
                     result += "\\\'";
                     break;
-                case 0x5c:
+                case 0x5c:// Backslash
                     result += "\\";
                     break;
                 default:

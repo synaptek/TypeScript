@@ -20,16 +20,16 @@ var b2 = <T, U extends U>() => { }
 
 //// [typeParameterDirectlyConstrainedToItself.js]
 // all of the below should be errors
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-var C2 = (function () {
+}());
+var C2 = /** @class */ (function () {
     function C2() {
     }
     return C2;
-})();
+}());
 function f() { }
 function f2() { }
 var a;

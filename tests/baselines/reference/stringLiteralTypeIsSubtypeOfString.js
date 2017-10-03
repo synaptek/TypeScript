@@ -111,7 +111,7 @@ function f6(x) { }
 function f7(x) { }
 function f8(x) { }
 function f9(x) { }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.toString = function () { return null; };
@@ -120,7 +120,7 @@ var C = (function () {
     C.prototype.concat = function () {
         var strings = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            strings[_i - 0] = arguments[_i];
+            strings[_i] = arguments[_i];
         }
         return null;
     };
@@ -141,7 +141,7 @@ var C = (function () {
     C.prototype.substr = function (from, length) { return null; };
     C.prototype.valueOf = function () { return null; };
     return C;
-})();
+}());
 function f10(x) { }
 function f11(x) { }
 function f12(x) { }

@@ -5,7 +5,7 @@ class C {
 
 
 //// [thisExpressionInCallExpressionWithTypeArguments.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function () {
@@ -13,4 +13,4 @@ var C = (function () {
         [1, 2, 3].map(function (x) { return _this; });
     };
     return C;
-})();
+}());

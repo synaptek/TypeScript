@@ -1,5 +1,4 @@
-//// [tsxEmit3.tsx]
-
+//// [file.tsx]
 declare module JSX {
 	interface Element { }
 	interface IntrinsicElements { }
@@ -41,26 +40,27 @@ module M {
 }
 
 
-//// [tsxEmit3.jsx]
+//// [file.jsx]
 var M;
 (function (M) {
-    var Foo = (function () {
+    var Foo = /** @class */ (function () {
         function Foo() {
         }
         return Foo;
-    })();
+    }());
     M.Foo = Foo;
     var S;
     (function (S) {
-        var Bar = (function () {
+        var Bar = /** @class */ (function () {
             function Bar() {
             }
             return Bar;
-        })();
+        }());
         S.Bar = Bar;
+        // Emit Foo
+        // Foo, <Foo />;
     })(S = M.S || (M.S = {}));
 })(M || (M = {}));
-var M;
 (function (M) {
     // Emit M.Foo
     M.Foo, <M.Foo />;
@@ -72,15 +72,13 @@ var M;
         S.Bar, <S.Bar />;
     })(S = M.S || (M.S = {}));
 })(M || (M = {}));
-var M;
 (function (M) {
     // Emit M.S.Bar
     M.S.Bar, <M.S.Bar />;
 })(M || (M = {}));
-var M;
 (function (M_1) {
     var M = 100;
     // Emit M_1.Foo
     M_1.Foo, <M_1.Foo />;
 })(M || (M = {}));
-//# sourceMappingURL=tsxEmit3.jsx.map
+//# sourceMappingURL=file.jsx.map

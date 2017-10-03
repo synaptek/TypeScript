@@ -45,16 +45,21 @@ module Generics {
 
 //// [assignmentCompatWithNumericIndexer.js]
 // Derived type indexer must be subtype of base type indexer
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var A = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var A = /** @class */ (function () {
     function A() {
     }
     return A;
-})();
+}());
 var a;
 var b;
 a = b;
@@ -64,18 +69,18 @@ a = b2;
 b2 = a; // error
 var Generics;
 (function (Generics) {
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
-    var B = (function (_super) {
+    }());
+    var B = /** @class */ (function (_super) {
         __extends(B, _super);
         function B() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         return B;
-    })(A);
+    }(A));
     function foo() {
         var a;
         var b;

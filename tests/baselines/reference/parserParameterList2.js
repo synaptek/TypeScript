@@ -4,11 +4,11 @@ class C {
 }
 
 //// [parserParameterList2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.F = function (A) {
         if (A === void 0) { A = 0; }
     };
     return C;
-})();
+}());

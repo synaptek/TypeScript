@@ -277,11 +277,11 @@ var r7 = E.abstract;
 var r8 = E.as;
 
 //// [propertyNamesOfReservedWords.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var c;
 var r1 = c.abstract;
 var r2 = c.as;

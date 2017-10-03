@@ -24,7 +24,7 @@ module M {
 
 
 //// [lambdaPropSelf.js]
-var Person = (function () {
+var Person = /** @class */ (function () {
     function Person(name, children) {
         var _this = this;
         this.name = name;
@@ -32,15 +32,15 @@ var Person = (function () {
         this.children = ko.observableArray(children);
     }
     return Person;
-})();
-var T = (function () {
+}());
+var T = /** @class */ (function () {
     function T() {
     }
     T.prototype.fo = function () {
         var x = this;
     };
     return T;
-})();
+}());
 var M;
 (function (M) {
     var x = this;

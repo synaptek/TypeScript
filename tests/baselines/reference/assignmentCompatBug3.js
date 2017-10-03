@@ -37,7 +37,7 @@ function makePoint(x, y) {
         }
     };
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "x", {
@@ -48,7 +48,7 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());
 function foo(test) { }
 var x;
 var y;

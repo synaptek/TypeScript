@@ -12,7 +12,7 @@ class arrTest {
 }
 
 //// [heterogeneousArrayAndOverloads.js]
-var arrTest = (function () {
+var arrTest = /** @class */ (function () {
     function arrTest() {
     }
     arrTest.prototype.test = function (arg1) { };
@@ -23,4 +23,4 @@ var arrTest = (function () {
         this.test([1, 2, "hi", 5]); // Error
     };
     return arrTest;
-})();
+}());

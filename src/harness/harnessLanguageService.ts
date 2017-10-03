@@ -3,19 +3,23 @@
 /// <reference path="..\server\client.ts" />
 /// <reference path="harness.ts" />
 
-module Harness.LanguageService {
+namespace Harness.LanguageService {
     export class ScriptInfo {
-        public version: number = 1;
+        public version = 1;
         public editRanges: { length: number; textChangeRange: ts.TextChangeRange; }[] = [];
-        public lineMap: number[] = null;
+        private lineMap: number[] = undefined;
 
-        constructor(public fileName: string, public content: string) {
+        constructor(public fileName: string, public content: string, public isRootFile: boolean) {
             this.setContent(content);
         }
 
         private setContent(content: string): void {
             this.content = content;
-            this.lineMap = ts.computeLineStarts(content);
+            this.lineMap = undefined;
+        }
+
+        public getLineMap(): number[] {
+            return this.lineMap || (this.lineMap = ts.computeLineStarts(this.content));
         }
 
         public updateContent(content: string): void {
@@ -26,9 +30,9 @@ module Harness.LanguageService {
 
         public editContent(start: number, end: number, newText: string): void {
             // Apply edits
-            let prefix = this.content.substring(0, start);
-            let middle = newText;
-            let suffix = this.content.substring(end);
+            const prefix = this.content.substring(0, start);
+            const middle = newText;
+            const suffix = this.content.substring(end);
             this.setContent(prefix + middle + suffix);
 
             // Store edit range + new length of script
@@ -48,10 +52,10 @@ module Harness.LanguageService {
                 return ts.unchangedTextChangeRange;
             }
 
-            let initialEditRangeIndex = this.editRanges.length - (this.version - startVersion);
-            let lastEditRangeIndex = this.editRanges.length - (this.version - endVersion);
+            const initialEditRangeIndex = this.editRanges.length - (this.version - startVersion);
+            const lastEditRangeIndex = this.editRanges.length - (this.version - endVersion);
 
-            let entries = this.editRanges.slice(initialEditRangeIndex, lastEditRangeIndex);
+            const entries = this.editRanges.slice(initialEditRangeIndex, lastEditRangeIndex);
             return ts.collapseTextChangeRangesAcrossMultipleVersions(entries.map(e => e.textChangeRange));
         }
     }
@@ -74,7 +78,7 @@ module Harness.LanguageService {
         }
 
         public getChangeRange(oldScript: ts.IScriptSnapshot): ts.TextChangeRange {
-            let oldShim = <ScriptSnapshot>oldScript;
+            const oldShim = <ScriptSnapshot>oldScript;
             return this.scriptInfo.getTextChangeRangeBetweenVersions(oldShim.version, this.version);
         }
     }
@@ -92,11 +96,11 @@ module Harness.LanguageService {
         }
 
         public getChangeRange(oldScript: ts.ScriptSnapshotShim): string {
-            let oldShim = <ScriptSnapshotProxy>oldScript;
+            const oldShim = <ScriptSnapshotProxy>oldScript;
 
-            let range = this.scriptSnapshot.getChangeRange(oldShim.scriptSnapshot);
-            if (range === null) {
-                return null;
+            const range = this.scriptSnapshot.getChangeRange(oldShim.scriptSnapshot);
+            if (range === undefined) {
+                return undefined;
             }
 
             return JSON.stringify({ span: { start: range.span.start, length: range.span.length }, newLength: range.newLength });
@@ -104,7 +108,7 @@ module Harness.LanguageService {
     }
 
     class DefaultHostCancellationToken implements ts.HostCancellationToken {
-        public static Instance = new DefaultHostCancellationToken();
+        public static readonly Instance = new DefaultHostCancellationToken();
 
         public isCancellationRequested() {
             return false;
@@ -118,34 +122,42 @@ module Harness.LanguageService {
         getPreProcessedFileInfo(fileName: string, fileContents: string): ts.PreProcessedFileInfo;
     }
 
-    export class LanguageServiceAdapterHost  {
-        protected fileNameToScript: ts.Map<ScriptInfo> = {};
-        
+    export class LanguageServiceAdapterHost {
+        protected virtualFileSystem: Utils.VirtualFileSystem = new Utils.VirtualFileSystem(virtualFileSystemRoot, /*useCaseSensitiveFilenames*/false);
+
         constructor(protected cancellationToken = DefaultHostCancellationToken.Instance,
-                    protected settings = ts.getDefaultCompilerOptions()) { 
+            protected settings = ts.getDefaultCompilerOptions()) {
         }
 
         public getNewLine(): string {
-            return "\r\n";
+            return harnessNewLine;
         }
 
         public getFilenames(): string[] {
-            let fileNames: string[] = [];
-            ts.forEachKey(this.fileNameToScript, (fileName) => { fileNames.push(fileName); });
+            const fileNames: string[] = [];
+            for (const virtualEntry of this.virtualFileSystem.getAllFileEntries()) {
+                const scriptInfo = virtualEntry.content;
+                if (scriptInfo.isRootFile) {
+                    // only include root files here
+                    // usually it means that we won't include lib.d.ts in the list of root files so it won't mess the computation of compilation root dir.
+                    fileNames.push(scriptInfo.fileName);
+                }
+            }
             return fileNames;
         }
 
         public getScriptInfo(fileName: string): ScriptInfo {
-            return ts.lookUp(this.fileNameToScript, fileName);
+            const fileEntry = this.virtualFileSystem.traversePath(fileName);
+            return fileEntry && fileEntry.isFile() ? (<Utils.VirtualFile>fileEntry).content : undefined;
         }
 
-        public addScript(fileName: string, content: string): void {
-            this.fileNameToScript[fileName] = new ScriptInfo(fileName, content);
+        public addScript(fileName: string, content: string, isRootFile: boolean): void {
+            this.virtualFileSystem.addFile(fileName, new ScriptInfo(fileName, content, isRootFile));
         }
 
         public editScript(fileName: string, start: number, end: number, newText: string) {
-            let script = this.getScriptInfo(fileName);
-            if (script !== null) {
+            const script = this.getScriptInfo(fileName);
+            if (script !== undefined) {
                 script.editContent(start, end, newText);
                 return;
             }
@@ -153,132 +165,187 @@ module Harness.LanguageService {
             throw new Error("No script with name '" + fileName + "'");
         }
 
-        public openFile(fileName: string): void {
+        public openFile(_fileName: string, _content?: string, _scriptKindName?: string): void {
         }
 
         /**
-          * @param line 0 based index
-          * @param col 0 based index
-          */
+         * @param line 0 based index
+         * @param col 0 based index
+         */
         public positionToLineAndCharacter(fileName: string, position: number): ts.LineAndCharacter {
-            let script: ScriptInfo = this.fileNameToScript[fileName];
-            assert.isNotNull(script);
+            const script: ScriptInfo = this.getScriptInfo(fileName);
+            assert.isOk(script);
 
-            return ts.computeLineAndCharacterOfPosition(script.lineMap, position);
+            return ts.computeLineAndCharacterOfPosition(script.getLineMap(), position);
         }
     }
 
     /// Native adapter
-    class NativeLanguageServiceHost extends LanguageServiceAdapterHost implements ts.LanguageServiceHost { 
+    class NativeLanguageServiceHost extends LanguageServiceAdapterHost implements ts.LanguageServiceHost {
         getCompilationSettings() { return this.settings; }
         getCancellationToken() { return this.cancellationToken; }
-        getCurrentDirectory(): string { return ""; }
-        getDefaultLibFileName(): string { return ""; }
-        getScriptFileNames(): string[] { return this.getFilenames(); }
+        getDirectories(path: string): string[] {
+            const dir = this.virtualFileSystem.traversePath(path);
+            if (dir && dir.isDirectory()) {
+                return ts.map((<Utils.VirtualDirectory>dir).getDirectories(), (d) => ts.combinePaths(path, d.name));
+            }
+            return [];
+        }
+        getCurrentDirectory(): string { return virtualFileSystemRoot; }
+        getDefaultLibFileName(): string { return Harness.Compiler.defaultLibFileName; }
+        getScriptFileNames(): string[] {
+            return this.getFilenames().filter(ts.isAnySupportedFileExtension);
+        }
         getScriptSnapshot(fileName: string): ts.IScriptSnapshot {
-            let script = this.getScriptInfo(fileName);
+            const script = this.getScriptInfo(fileName);
             return script ? new ScriptSnapshot(script) : undefined;
         }
+        getScriptKind(): ts.ScriptKind { return ts.ScriptKind.Unknown; }
         getScriptVersion(fileName: string): string {
-            let script = this.getScriptInfo(fileName);
+            const script = this.getScriptInfo(fileName);
             return script ? script.version.toString() : undefined;
         }
 
-        log(s: string): void { }
-        trace(s: string): void { }
-        error(s: string): void { }
+        fileExists(fileName: string): boolean {
+            const script = this.getScriptSnapshot(fileName);
+            return script !== undefined;
+        }
+        readDirectory(path: string, extensions?: ReadonlyArray<string>, exclude?: ReadonlyArray<string>, include?: ReadonlyArray<string>, depth?: number): string[] {
+            return ts.matchFiles(path, extensions, exclude, include,
+                /*useCaseSensitiveFileNames*/ false,
+                this.getCurrentDirectory(),
+                depth,
+                (p) => this.virtualFileSystem.getAccessibleFileSystemEntries(p));
+        }
+        readFile(path: string): string | undefined {
+            const snapshot = this.getScriptSnapshot(path);
+            return snapshot.getText(0, snapshot.getLength());
+        }
+        getTypeRootsVersion() {
+            return 0;
+        }
+
+
+        log(_: string): void { }
+        trace(_: string): void { }
+        error(_: string): void { }
     }
 
-    export class NativeLanugageServiceAdapter implements LanguageServiceAdapter {
+    export class NativeLanguageServiceAdapter implements LanguageServiceAdapter {
         private host: NativeLanguageServiceHost;
-        constructor(cancellationToken?: ts.HostCancellationToken, options?: ts.CompilerOptions) { 
+        constructor(cancellationToken?: ts.HostCancellationToken, options?: ts.CompilerOptions) {
             this.host = new NativeLanguageServiceHost(cancellationToken, options);
         }
         getHost() { return this.host; }
         getLanguageService(): ts.LanguageService { return ts.createLanguageService(this.host); }
         getClassifier(): ts.Classifier { return ts.createClassifier(); }
-        getPreProcessedFileInfo(fileName: string, fileContents: string): ts.PreProcessedFileInfo { return ts.preProcessFile(fileContents); }
+        getPreProcessedFileInfo(fileName: string, fileContents: string): ts.PreProcessedFileInfo { return ts.preProcessFile(fileContents, /* readImportFiles */ true, ts.hasJavaScriptFileExtension(fileName)); }
     }
 
     /// Shim adapter
     class ShimLanguageServiceHost extends LanguageServiceAdapterHost implements ts.LanguageServiceShimHost, ts.CoreServicesShimHost {
         private nativeHost: NativeLanguageServiceHost;
 
-        public getModuleResolutionsForFile: (fileName: string)=> string;
+        public getModuleResolutionsForFile: (fileName: string) => string;
+        public getTypeReferenceDirectiveResolutionsForFile: (fileName: string) => string;
 
         constructor(preprocessToResolve: boolean, cancellationToken?: ts.HostCancellationToken, options?: ts.CompilerOptions) {
             super(cancellationToken, options);
             this.nativeHost = new NativeLanguageServiceHost(cancellationToken, options);
 
             if (preprocessToResolve) {
-                let compilerOptions = this.nativeHost.getCompilationSettings()
-                let moduleResolutionHost: ts.ModuleResolutionHost = {
+                const compilerOptions = this.nativeHost.getCompilationSettings();
+                const moduleResolutionHost: ts.ModuleResolutionHost = {
                     fileExists: fileName => this.getScriptInfo(fileName) !== undefined,
                     readFile: fileName => {
-                        let scriptInfo = this.getScriptInfo(fileName);
+                        const scriptInfo = this.getScriptInfo(fileName);
                         return scriptInfo && scriptInfo.content;
                     }
                 };
                 this.getModuleResolutionsForFile = (fileName) => {
-                    let scriptInfo = this.getScriptInfo(fileName);
-                    let preprocessInfo = ts.preProcessFile(scriptInfo.content, /*readImportFiles*/ true);
-                    let imports: ts.Map<string> = {};
-                    for (let module of preprocessInfo.importedFiles) {
-                        let resolutionInfo = ts.resolveModuleName(module.fileName, fileName, compilerOptions, moduleResolutionHost);
-                        if (resolutionInfo.resolvedFileName) {
-                            imports[module.fileName] = resolutionInfo.resolvedFileName;
+                    const scriptInfo = this.getScriptInfo(fileName);
+                    const preprocessInfo = ts.preProcessFile(scriptInfo.content, /*readImportFiles*/ true);
+                    const imports: ts.MapLike<string> = {};
+                    for (const module of preprocessInfo.importedFiles) {
+                        const resolutionInfo = ts.resolveModuleName(module.fileName, fileName, compilerOptions, moduleResolutionHost);
+                        if (resolutionInfo.resolvedModule) {
+                            imports[module.fileName] = resolutionInfo.resolvedModule.resolvedFileName;
                         }
                     }
                     return JSON.stringify(imports);
-                }
+                };
+                this.getTypeReferenceDirectiveResolutionsForFile = (fileName) => {
+                    const scriptInfo = this.getScriptInfo(fileName);
+                    if (scriptInfo) {
+                        const preprocessInfo = ts.preProcessFile(scriptInfo.content, /*readImportFiles*/ false);
+                        const resolutions: ts.MapLike<ts.ResolvedTypeReferenceDirective> = {};
+                        const settings = this.nativeHost.getCompilationSettings();
+                        for (const typeReferenceDirective of preprocessInfo.typeReferenceDirectives) {
+                            const resolutionInfo = ts.resolveTypeReferenceDirective(typeReferenceDirective.fileName, fileName, settings, moduleResolutionHost);
+                            if (resolutionInfo.resolvedTypeReferenceDirective.resolvedFileName) {
+                                resolutions[typeReferenceDirective.fileName] = resolutionInfo.resolvedTypeReferenceDirective;
+                            }
+                        }
+                        return JSON.stringify(resolutions);
+                    }
+                    else {
+                        return "[]";
+                    }
+                };
             }
         }
 
         getFilenames(): string[] { return this.nativeHost.getFilenames(); }
         getScriptInfo(fileName: string): ScriptInfo { return this.nativeHost.getScriptInfo(fileName); }
-        addScript(fileName: string, content: string): void { this.nativeHost.addScript(fileName, content); }
+        addScript(fileName: string, content: string, isRootFile: boolean): void { this.nativeHost.addScript(fileName, content, isRootFile); }
         editScript(fileName: string, start: number, end: number, newText: string): void { this.nativeHost.editScript(fileName, start, end, newText); }
         positionToLineAndCharacter(fileName: string, position: number): ts.LineAndCharacter { return this.nativeHost.positionToLineAndCharacter(fileName, position); }
 
         getCompilationSettings(): string { return JSON.stringify(this.nativeHost.getCompilationSettings()); }
         getCancellationToken(): ts.HostCancellationToken { return this.nativeHost.getCancellationToken(); }
         getCurrentDirectory(): string { return this.nativeHost.getCurrentDirectory(); }
+        getDirectories(path: string): string { return JSON.stringify(this.nativeHost.getDirectories(path)); }
         getDefaultLibFileName(): string { return this.nativeHost.getDefaultLibFileName(); }
         getScriptFileNames(): string { return JSON.stringify(this.nativeHost.getScriptFileNames()); }
         getScriptSnapshot(fileName: string): ts.ScriptSnapshotShim {
-            let nativeScriptSnapshot = this.nativeHost.getScriptSnapshot(fileName);
-            return nativeScriptSnapshot && new ScriptSnapshotProxy(nativeScriptSnapshot); 
+            const nativeScriptSnapshot = this.nativeHost.getScriptSnapshot(fileName);
+            return nativeScriptSnapshot && new ScriptSnapshotProxy(nativeScriptSnapshot);
         }
+        getScriptKind(): ts.ScriptKind { return this.nativeHost.getScriptKind(); }
         getScriptVersion(fileName: string): string { return this.nativeHost.getScriptVersion(fileName); }
         getLocalizedDiagnosticMessages(): string { return JSON.stringify({}); }
 
-        readDirectory(rootDir: string, extension: string): string {
-            throw new Error("NYI");
-        }
-        fileExists(fileName: string) { return this.getScriptInfo(fileName) !== undefined; }        
-        readFile(fileName: string) { 
-            let snapshot = this.nativeHost.getScriptSnapshot(fileName);
+        readDirectory = ts.notImplemented;
+        readDirectoryNames = ts.notImplemented;
+        readFileNames = ts.notImplemented;
+        fileExists(fileName: string) { return this.getScriptInfo(fileName) !== undefined; }
+        readFile(fileName: string) {
+            const snapshot = this.nativeHost.getScriptSnapshot(fileName);
             return snapshot && snapshot.getText(0, snapshot.getLength());
-        }        
+        }
         log(s: string): void { this.nativeHost.log(s); }
         trace(s: string): void { this.nativeHost.trace(s); }
         error(s: string): void { this.nativeHost.error(s); }
+        directoryExists(): boolean {
+            // for tests pessimistically assume that directory always exists
+            return true;
+        }
     }
 
-    class ClassifierShimProxy implements ts.Classifier { 
+    class ClassifierShimProxy implements ts.Classifier {
         constructor(private shim: ts.ClassifierShim) {
         }
-        getEncodedLexicalClassifications(text: string, lexState: ts.EndOfLineState, classifyKeywordsInGenerics?: boolean): ts.Classifications {
-            throw new Error("NYI");
+        getEncodedLexicalClassifications(_text: string, _lexState: ts.EndOfLineState, _classifyKeywordsInGenerics?: boolean): ts.Classifications {
+            return ts.notImplemented();
         }
         getClassificationsForLine(text: string, lexState: ts.EndOfLineState, classifyKeywordsInGenerics?: boolean): ts.ClassificationResult {
-            let result = this.shim.getClassificationsForLine(text, lexState, classifyKeywordsInGenerics).split("\n");
-            let entries: ts.ClassificationInfo[] = [];
+            const result = this.shim.getClassificationsForLine(text, lexState, classifyKeywordsInGenerics).split("\n");
+            const entries: ts.ClassificationInfo[] = [];
             let i = 0;
             let position = 0;
 
             for (; i < result.length - 1; i += 2) {
-                let t = entries[i / 2] = {
+                const t = entries[i / 2] = {
                     length: parseInt(result[i]),
                     classification: parseInt(result[i + 1])
                 };
@@ -286,7 +353,7 @@ module Harness.LanguageService {
                 assert.isTrue(t.length > 0, "Result length should be greater than 0, got :" + t.length);
                 position += t.length;
             }
-            let finalLexState = parseInt(result[result.length - 1]);
+            const finalLexState = parseInt(result[result.length - 1]);
 
             assert.equal(position, text.length, "Expected cumulative length of all entries to match the length of the source. expected: " + text.length + ", but got: " + position);
 
@@ -298,11 +365,11 @@ module Harness.LanguageService {
     }
 
     function unwrapJSONCallResult(result: string): any {
-        let parsedResult = JSON.parse(result);
+        const parsedResult = JSON.parse(result);
         if (parsedResult.error) {
             throw new Error("Language Service Shim Error: " + JSON.stringify(parsedResult.error));
         }
-        else if (parsedResult.canceled) { 
+        else if (parsedResult.canceled) {
             throw new ts.OperationCanceledException();
         }
         return parsedResult.result;
@@ -310,13 +377,6 @@ module Harness.LanguageService {
 
     class LanguageServiceShimProxy implements ts.LanguageService {
         constructor(private shim: ts.LanguageServiceShim) {
-        }
-        private unwrappJSONCallResult(result: string): any {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult.error) {
-                throw new Error("Language Service Shim Error: " + JSON.stringify(parsedResult.error));
-            }
-            return parsedResult.result;
         }
         cleanupSemanticCache(): void {
             this.shim.cleanupSemanticCache();
@@ -348,6 +408,9 @@ module Harness.LanguageService {
         getCompletionEntryDetails(fileName: string, position: number, entryName: string): ts.CompletionEntryDetails {
             return unwrapJSONCallResult(this.shim.getCompletionEntryDetails(fileName, position, entryName));
         }
+        getCompletionEntrySymbol(): ts.Symbol {
+            throw new Error("getCompletionEntrySymbol not implemented across the shim layer.");
+        }
         getQuickInfoAtPosition(fileName: string, position: number): ts.QuickInfo {
             return unwrapJSONCallResult(this.shim.getQuickInfoAtPosition(fileName, position));
         }
@@ -369,8 +432,11 @@ module Harness.LanguageService {
         getDefinitionAtPosition(fileName: string, position: number): ts.DefinitionInfo[] {
             return unwrapJSONCallResult(this.shim.getDefinitionAtPosition(fileName, position));
         }
-        getTypeDefinitionAtPosition(fileName: string, position: number): ts.DefinitionInfo[]{
+        getTypeDefinitionAtPosition(fileName: string, position: number): ts.DefinitionInfo[] {
             return unwrapJSONCallResult(this.shim.getTypeDefinitionAtPosition(fileName, position));
+        }
+        getImplementationAtPosition(fileName: string, position: number): ts.ImplementationLocation[] {
+            return unwrapJSONCallResult(this.shim.getImplementationAtPosition(fileName, position));
         }
         getReferencesAtPosition(fileName: string, position: number): ts.ReferenceEntry[] {
             return unwrapJSONCallResult(this.shim.getReferencesAtPosition(fileName, position));
@@ -390,6 +456,10 @@ module Harness.LanguageService {
         getNavigationBarItems(fileName: string): ts.NavigationBarItem[] {
             return unwrapJSONCallResult(this.shim.getNavigationBarItems(fileName));
         }
+        getNavigationTree(fileName: string): ts.NavigationTree {
+            return unwrapJSONCallResult(this.shim.getNavigationTree(fileName));
+        }
+
         getOutliningSpans(fileName: string): ts.OutliningSpan[] {
             return unwrapJSONCallResult(this.shim.getOutliningSpans(fileName));
         }
@@ -414,19 +484,40 @@ module Harness.LanguageService {
         getDocCommentTemplateAtPosition(fileName: string, position: number): ts.TextInsertion {
             return unwrapJSONCallResult(this.shim.getDocCommentTemplateAtPosition(fileName, position));
         }
+        isValidBraceCompletionAtPosition(fileName: string, position: number, openingBrace: number): boolean {
+            return unwrapJSONCallResult(this.shim.isValidBraceCompletionAtPosition(fileName, position, openingBrace));
+        }
+        getSpanOfEnclosingComment(fileName: string, position: number, onlyMultiLine: boolean): ts.TextSpan {
+            return unwrapJSONCallResult(this.shim.getSpanOfEnclosingComment(fileName, position, onlyMultiLine));
+        }
+        getCodeFixesAtPosition(): ts.CodeAction[] {
+            throw new Error("Not supported on the shim.");
+        }
+        getCodeFixDiagnostics(): ts.Diagnostic[] {
+            throw new Error("Not supported on the shim.");
+        }
+        getEditsForRefactor(): ts.RefactorEditInfo {
+            throw new Error("Not supported on the shim.");
+        }
+        getApplicableRefactors(): ts.ApplicableRefactorInfo[] {
+            throw new Error("Not supported on the shim.");
+        }
         getEmitOutput(fileName: string): ts.EmitOutput {
             return unwrapJSONCallResult(this.shim.getEmitOutput(fileName));
         }
         getProgram(): ts.Program {
             throw new Error("Program can not be marshaled across the shim layer.");
         }
-        getSourceFile(fileName: string): ts.SourceFile {
+        getNonBoundSourceFile(): ts.SourceFile {
+            throw new Error("SourceFile can not be marshaled across the shim layer.");
+        }
+        getSourceFile(): ts.SourceFile {
             throw new Error("SourceFile can not be marshaled across the shim layer.");
         }
         dispose(): void { this.shim.dispose({}); }
     }
 
-    export class ShimLanugageServiceAdapter implements LanguageServiceAdapter {
+    export class ShimLanguageServiceAdapter implements LanguageServiceAdapter {
         private host: ShimLanguageServiceHost;
         private factory: ts.TypeScriptServicesFactory;
         constructor(preprocessToResolve: boolean, cancellationToken?: ts.HostCancellationToken, options?: ts.CompilerOptions) {
@@ -439,18 +530,20 @@ module Harness.LanguageService {
         getPreProcessedFileInfo(fileName: string, fileContents: string): ts.PreProcessedFileInfo {
             let shimResult: {
                 referencedFiles: ts.IFileReference[];
+                typeReferenceDirectives: ts.IFileReference[];
                 importedFiles: ts.IFileReference[];
                 isLibFile: boolean;
             };
 
-            let coreServicesShim = this.factory.createCoreServicesShim(this.host);
+            const coreServicesShim = this.factory.createCoreServicesShim(this.host);
             shimResult = unwrapJSONCallResult(coreServicesShim.getPreProcessedFileInfo(fileName, ts.ScriptSnapshot.fromString(fileContents)));
 
-            let convertResult: ts.PreProcessedFileInfo = {
+            const convertResult: ts.PreProcessedFileInfo = {
                 referencedFiles: [],
                 importedFiles: [],
                 ambientExternalModules: [],
-                isLibFile: shimResult.isLibFile
+                isLibFile: shimResult.isLibFile,
+                typeReferenceDirectives: []
             };
 
             ts.forEach(shimResult.referencedFiles, refFile => {
@@ -469,33 +562,40 @@ module Harness.LanguageService {
                 });
             });
 
+            ts.forEach(shimResult.typeReferenceDirectives, typeRefDirective => {
+                convertResult.importedFiles.push({
+                    fileName: typeRefDirective.path,
+                    pos: typeRefDirective.position,
+                    end: typeRefDirective.position + typeRefDirective.length
+                });
+            });
             return convertResult;
         }
     }
 
     // Server adapter
-    class SessionClientHost extends NativeLanguageServiceHost implements ts.server.SessionClientHost { 
+    class SessionClientHost extends NativeLanguageServiceHost implements ts.server.SessionClientHost {
         private client: ts.server.SessionClient;
 
         constructor(cancellationToken: ts.HostCancellationToken, settings: ts.CompilerOptions) {
             super(cancellationToken, settings);
         }
 
-        onMessage(message: string): void { 
-        
+        onMessage(): void {
+
         }
 
-        writeMessage(message: string): void { 
-        
+        writeMessage(): void {
+
         }
 
         setClient(client: ts.server.SessionClient) {
             this.client = client;
         }
 
-        openFile(fileName: string): void {
-            super.openFile(fileName);
-            this.client.openFile(fileName);
+        openFile(fileName: string, content?: string, scriptKindName?: "TS" | "JS" | "TSX" | "JSX"): void {
+            super.openFile(fileName, content, scriptKindName);
+            this.client.openFile(fileName, content, scriptKindName);
         }
 
         editScript(fileName: string, start: number, end: number, newText: string) {
@@ -504,37 +604,36 @@ module Harness.LanguageService {
         }
     }
 
-    class SessionServerHost implements ts.server.ServerHost, ts.server.Logger { 
+    class SessionServerHost implements ts.server.ServerHost, ts.server.Logger {
         args: string[] = [];
         newLine: string;
-        useCaseSensitiveFileNames: boolean = false;
+        useCaseSensitiveFileNames = false;
 
         constructor(private host: NativeLanguageServiceHost) {
             this.newLine = this.host.getNewLine();
         }
 
-        onMessage(message: string): void { 
-        
+        onMessage(): void {
+
         }
 
-        writeMessage(message: string): void {
+        writeMessage(_message: string): void {
         }
 
-        write(message: string): void { 
+        write(message: string): void {
             this.writeMessage(message);
         }
 
-
-        readFile(fileName: string): string {
-            if (fileName.indexOf(Harness.Compiler.defaultLibFileName) >= 0) { 
+        readFile(fileName: string): string | undefined {
+            if (fileName.indexOf(Harness.Compiler.defaultLibFileName) >= 0) {
                 fileName = Harness.Compiler.defaultLibFileName;
             }
-             
-            let snapshot = this.host.getScriptSnapshot(fileName);
+
+            const snapshot = this.host.getScriptSnapshot(fileName);
             return snapshot && snapshot.getText(0, snapshot.getLength());
         }
 
-        writeFile(name: string, text: string, writeByteOrderMark: boolean): void {
+        writeFile(): void {
         }
 
         resolvePath(path: string): string {
@@ -545,76 +644,199 @@ module Harness.LanguageService {
             return !!this.host.getScriptSnapshot(path);
         }
 
-        directoryExists(path: string): boolean {
-            return false;
+        directoryExists(): boolean {
+            // for tests assume that directory exists
+            return true;
         }
 
         getExecutingFilePath(): string {
             return "";
         }
 
-        exit(exitCode: number): void {
+        exit(): void {
         }
 
-        createDirectory(directoryName: string): void {
-            throw new Error("Not Implemented Yet.");
+        createDirectory(_directoryName: string): void {
+            return ts.notImplemented();
         }
 
         getCurrentDirectory(): string {
             return this.host.getCurrentDirectory();
         }
 
-        readDirectory(path: string, extension?: string): string[] {
-            throw new Error("Not implemented Yet.");
+        getDirectories(): string[] {
+            return [];
         }
-        
-        watchFile(fileName: string, callback: (fileName: string) => void): ts.FileWatcher { 
-            return { close() { } };
+
+        getEnvironmentVariable(name: string): string {
+            return ts.sys.getEnvironmentVariable(name);
+        }
+
+        readDirectory() { return ts.notImplemented(); }
+
+        watchFile(): ts.FileWatcher {
+            return { close: ts.noop };
+        }
+
+        watchDirectory(): ts.FileWatcher {
+            return { close: ts.noop };
         }
 
         close(): void {
         }
 
         info(message: string): void {
-            return this.host.log(message);
+            this.host.log(message);
         }
 
-        msg(message: string) {
-            return this.host.log(message);
+        msg(message: string): void {
+            this.host.log(message);
         }
-        
+
         loggingEnabled() {
             return true;
         }
 
-        isVerbose() {
+        getLogFileName(): string {
+            return undefined;
+        }
+
+        hasLevel() {
             return false;
         }
 
-
-        endGroup(): void {
-        }
+        startGroup() { throw ts.notImplemented(); }
+        endGroup() { throw ts.notImplemented(); }
 
         perftrc(message: string): void {
             return this.host.log(message);
         }
 
-        startGroup(): void {
+        setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any {
+            return setTimeout(callback, ms, args);
+        }
+
+        clearTimeout(timeoutId: any): void {
+            clearTimeout(timeoutId);
+        }
+
+        setImmediate(callback: (...args: any[]) => void, _ms: number, ...args: any[]): any {
+            return setImmediate(callback, args);
+        }
+
+        clearImmediate(timeoutId: any): void {
+            clearImmediate(timeoutId);
+        }
+
+        createHash(s: string) {
+            return mockHash(s);
+        }
+
+        require(_initialDir: string, _moduleName: string): ts.server.RequireResult {
+            switch (_moduleName) {
+                // Adds to the Quick Info a fixed string and a string from the config file
+                // and replaces the first display part
+                case "quickinfo-augmeneter":
+                    return {
+                        module: () => ({
+                            create(info: ts.server.PluginCreateInfo) {
+                                const proxy = makeDefaultProxy(info);
+                                const langSvc: any = info.languageService;
+                                proxy.getQuickInfoAtPosition = function () {
+                                    const parts = langSvc.getQuickInfoAtPosition.apply(langSvc, arguments);
+                                    if (parts.displayParts.length > 0) {
+                                        parts.displayParts[0].text = "Proxied";
+                                    }
+                                    parts.displayParts.push({ text: info.config.message, kind: "punctuation" });
+                                    return parts;
+                                };
+
+                                return proxy;
+                            }
+                        }),
+                        error: undefined
+                    };
+
+                // Throws during initialization
+                case "create-thrower":
+                    return {
+                        module: () => ({
+                            create() {
+                                throw new Error("I am not a well-behaved plugin");
+                            }
+                        }),
+                        error: undefined
+                    };
+
+                // Adds another diagnostic
+                case "diagnostic-adder":
+                    return {
+                        module: () => ({
+                            create(info: ts.server.PluginCreateInfo) {
+                                const proxy = makeDefaultProxy(info);
+                                proxy.getSemanticDiagnostics = function (filename: string) {
+                                    const prev = info.languageService.getSemanticDiagnostics(filename);
+                                    const sourceFile: ts.SourceFile = info.languageService.getSourceFile(filename);
+                                    prev.push({
+                                        category: ts.DiagnosticCategory.Warning,
+                                        file: sourceFile,
+                                        code: 9999,
+                                        length: 3,
+                                        messageText: `Plugin diagnostic`,
+                                        start: 0
+                                    });
+                                    return prev;
+                                };
+                                return proxy;
+                            }
+                        }),
+                        error: undefined
+                    };
+
+                default:
+                    return {
+                        module: undefined,
+                        error: new Error("Could not resolve module")
+                    };
+            }
+
+            function makeDefaultProxy(info: ts.server.PluginCreateInfo) {
+                // tslint:disable-next-line:no-null-keyword
+                const proxy = Object.create(/*prototype*/ null);
+                const langSvc: any = info.languageService;
+                for (const k of Object.keys(langSvc)) {
+                    proxy[k] = function () {
+                        return langSvc[k].apply(langSvc, arguments);
+                    };
+                }
+                return proxy;
+            }
         }
     }
-    
-    export class ServerLanugageServiceAdapter implements LanguageServiceAdapter {
+
+    export class ServerLanguageServiceAdapter implements LanguageServiceAdapter {
         private host: SessionClientHost;
         private client: ts.server.SessionClient;
         constructor(cancellationToken?: ts.HostCancellationToken, options?: ts.CompilerOptions) {
             // This is the main host that tests use to direct tests
-            let clientHost = new SessionClientHost(cancellationToken, options);
-            let client = new ts.server.SessionClient(clientHost);
+            const clientHost = new SessionClientHost(cancellationToken, options);
+            const client = new ts.server.SessionClient(clientHost);
 
             // This host is just a proxy for the clientHost, it uses the client
             // host to answer server queries about files on disk
-            let serverHost = new SessionServerHost(clientHost);
-            let server = new ts.server.Session(serverHost, Buffer.byteLength, process.hrtime, serverHost);
+            const serverHost = new SessionServerHost(clientHost);
+            const opts: ts.server.SessionOptions = {
+                host: serverHost,
+                cancellationToken: ts.server.nullCancellationToken,
+                useSingleInferredProject: false,
+                useInferredProjectPerProjectRoot: false,
+                typingsInstaller: undefined,
+                byteLength: Utils.byteLength,
+                hrtime: process.hrtime,
+                logger: serverHost,
+                canUseEvents: true
+            };
+            const server = new ts.server.Session(opts);
 
             // Fake the connection between the client and the server
             serverHost.writeMessage = client.onMessage.bind(client);
@@ -631,7 +853,6 @@ module Harness.LanguageService {
         getHost() { return this.host; }
         getLanguageService(): ts.LanguageService { return this.client; }
         getClassifier(): ts.Classifier { throw new Error("getClassifier is not available using the server interface."); }
-        getPreProcessedFileInfo(fileName: string, fileContents: string): ts.PreProcessedFileInfo { throw new Error("getPreProcessedFileInfo is not available using the server interface."); }
+        getPreProcessedFileInfo(): ts.PreProcessedFileInfo { throw new Error("getPreProcessedFileInfo is not available using the server interface."); }
     }
 }
- 

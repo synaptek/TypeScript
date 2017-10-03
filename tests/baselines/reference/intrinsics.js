@@ -1,5 +1,4 @@
 //// [intrinsics.ts]
-
 var hasOwnProperty: hasOwnProperty; // Error
 
 module m1 {
@@ -19,17 +18,17 @@ var foo: (__proto__: number) => void;
 var hasOwnProperty; // Error
 var m1;
 (function (m1) {
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
+    }());
 })(m1 || (m1 = {}));
 __proto__ = 0; // Error, __proto__ not defined
 m1.__proto__ = 0;
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     return Foo;
-})();
+}());
 var foo;

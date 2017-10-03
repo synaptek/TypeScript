@@ -23,7 +23,7 @@ C.b = 1;
 C.foo();
 
 //// [classPropertyIsPublicByDefault.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "y", {
@@ -41,7 +41,7 @@ var C = (function () {
     });
     C.foo = function () { };
     return C;
-})();
+}());
 var c;
 c.x;
 c.y;

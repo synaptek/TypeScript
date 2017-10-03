@@ -30,6 +30,8 @@ export module A {
 
 
 //// [part1.js]
+"use strict";
+exports.__esModule = true;
 var A;
 (function (A) {
     var Utils;
@@ -42,19 +44,21 @@ var A;
     A.Origin = { x: 0, y: 0 };
 })(A = exports.A || (exports.A = {}));
 //// [part2.js]
+"use strict";
+exports.__esModule = true;
 var A;
 (function (A) {
     // collision with 'Origin' var in other part of merged module
     A.Origin = { x: 0, y: 0 };
     var Utils;
     (function (Utils) {
-        var Plane = (function () {
+        var Plane = /** @class */ (function () {
             function Plane(tl, br) {
                 this.tl = tl;
                 this.br = br;
             }
             return Plane;
-        })();
+        }());
         Utils.Plane = Plane;
     })(Utils = A.Utils || (A.Utils = {}));
 })(A = exports.A || (exports.A = {}));

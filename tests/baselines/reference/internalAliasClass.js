@@ -12,11 +12,11 @@ module c {
 //// [internalAliasClass.js]
 var a;
 (function (a) {
-    var c = (function () {
+    var c = /** @class */ (function () {
         function c() {
         }
         return c;
-    })();
+    }());
     a.c = c;
 })(a || (a = {}));
 var c;

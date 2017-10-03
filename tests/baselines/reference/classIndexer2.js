@@ -8,8 +8,8 @@ class C123 {
 }
 
 //// [classIndexer2.js]
-var C123 = (function () {
+var C123 = /** @class */ (function () {
     function C123() {
     }
     return C123;
-})();
+}());

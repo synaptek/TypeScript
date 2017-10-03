@@ -8,7 +8,7 @@ class B {
 }
 
 //// [recursiveProperties.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     Object.defineProperty(A.prototype, "testProp", {
@@ -17,8 +17,8 @@ var A = (function () {
         configurable: true
     });
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
     }
     Object.defineProperty(B.prototype, "testProp", {
@@ -27,4 +27,4 @@ var B = (function () {
         configurable: true
     });
     return B;
-})();
+}());

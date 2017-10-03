@@ -75,7 +75,7 @@ var j = 0;
 while (j < 0) {
     throw j;
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         throw this;
     }
@@ -83,7 +83,7 @@ var C = (function () {
         throw this.value;
     };
     return C;
-})();
+}());
 var aa = {
     id: 12,
     biz: function () {

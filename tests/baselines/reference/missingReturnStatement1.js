@@ -7,11 +7,11 @@ class Foo {
 
 
 //// [missingReturnStatement1.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Foo.prototype.foo = function () {
         //return 4;
     };
     return Foo;
-})();
+}());

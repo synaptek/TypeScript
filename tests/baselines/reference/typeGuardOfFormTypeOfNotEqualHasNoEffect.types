@@ -19,64 +19,64 @@ var strOrC: string | C;
 // typeof x != s has not effect on typeguard
 if (typeof strOrNum != "string") {
 >typeof strOrNum != "string" : boolean
->typeof strOrNum : string
+>typeof strOrNum : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >strOrNum : string | number
->"string" : string
+>"string" : "string"
 
     var r1 = strOrNum; // string | number
->r1 : string | number
->strOrNum : string | number
+>r1 : number
+>strOrNum : number
 }
 else {
     var r1 = strOrNum; // string | number
->r1 : string | number
->strOrNum : string | number
+>r1 : number
+>strOrNum : string
 }
 
 if (typeof strOrBool != "boolean") {
 >typeof strOrBool != "boolean" : boolean
->typeof strOrBool : string
+>typeof strOrBool : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >strOrBool : string | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
     var r2 = strOrBool; // string | boolean
->r2 : string | boolean
->strOrBool : string | boolean
+>r2 : string
+>strOrBool : string
 }
 else {
     var r2 = strOrBool; // string | boolean
->r2 : string | boolean
->strOrBool : string | boolean
+>r2 : string
+>strOrBool : boolean
 }
 
 if (typeof numOrBool != "number") {
 >typeof numOrBool != "number" : boolean
->typeof numOrBool : string
+>typeof numOrBool : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >numOrBool : number | boolean
->"number" : string
+>"number" : "number"
 
     var r3 = numOrBool; // number | boolean
->r3 : number | boolean
->numOrBool : number | boolean
+>r3 : boolean
+>numOrBool : boolean
 }
 else {
     var r3 = numOrBool; // number | boolean
->r3 : number | boolean
->numOrBool : number | boolean
+>r3 : boolean
+>numOrBool : number
 }
 
 if (typeof strOrC != "Object") {
 >typeof strOrC != "Object" : boolean
->typeof strOrC : string
+>typeof strOrC : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >strOrC : string | C
->"Object" : string
+>"Object" : "Object"
 
     var r4 = strOrC; // string | C
->r4 : string | C
->strOrC : string | C
+>r4 : string
+>strOrC : string
 }
 else {
     var r4 = strOrC; // string | C
->r4 : string | C
->strOrC : string | C
+>r4 : string
+>strOrC : C
 }

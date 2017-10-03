@@ -4,15 +4,15 @@ class D { }
 export = D;
 
 //// [exportAssignmentWithExports.js]
-var C = (function () {
+"use strict";
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-exports.C = C;
-var D = (function () {
+}());
+var D = /** @class */ (function () {
     function D() {
     }
     return D;
-})();
+}());
 module.exports = D;

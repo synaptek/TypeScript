@@ -55,12 +55,12 @@ function f2() { }
 function g2() { }
 function f3() { return f3; }
 var a = f3; // error
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.g = function (t) { };
     return C;
-})();
+}());
 C.g(3); // error
 var f4;
 f4 = 3; // error

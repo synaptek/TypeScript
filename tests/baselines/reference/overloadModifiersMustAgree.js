@@ -16,10 +16,12 @@ interface I {
 
 
 //// [overloadModifiersMustAgree.js]
-var baz = (function () {
+"use strict";
+exports.__esModule = true;
+var baz = /** @class */ (function () {
     function baz() {
     }
     baz.prototype.foo = function (bar) { }; // error - access modifiers do not agree
     return baz;
-})();
+}());
 function bar(s) { }

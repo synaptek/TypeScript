@@ -66,12 +66,12 @@ f(1);
 f();
 f2(1);
 f2(1, 2);
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x) { };
     return C;
-})();
+}());
 var c;
 c.foo();
 c.foo(1);

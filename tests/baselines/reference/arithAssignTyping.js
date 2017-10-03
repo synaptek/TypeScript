@@ -15,11 +15,11 @@ f >>>= 1; // error
 f ^= 1; // error
 
 //// [arithAssignTyping.js]
-var f = (function () {
+var f = /** @class */ (function () {
     function f() {
     }
     return f;
-})();
+}());
 f += ''; // error
 f += 1; // error
 f -= 1; // error

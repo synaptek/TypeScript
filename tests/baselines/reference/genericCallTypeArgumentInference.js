@@ -106,7 +106,7 @@ function foo2b(u) {
 }
 var r2 = foo2('', 1); // number
 var r3 = foo2b(1); // {}
-var C = (function () {
+var C = /** @class */ (function () {
     function C(t, u) {
         this.t = t;
         this.u = u;
@@ -139,7 +139,7 @@ var C = (function () {
         return x;
     };
     return C;
-})();
+}());
 var c = new C('', 1);
 var r4 = c.foo('', 1); // string
 var r5 = c.foo2('', 1); // number

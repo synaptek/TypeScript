@@ -21,32 +21,32 @@ extractIndexer({
 
     [a]: ""
 >a : any
->"" : string
+>"" : ""
 
 }); // Should return string
 
 extractIndexer({
 >extractIndexer({    [E.x]: ""}) : string
 >extractIndexer : <T>(p: { [n: number]: T; }) => T
->{    [E.x]: ""} : { [x: number]: string; }
+>{    [E.x]: ""} : { [E.x]: string; }
 
     [E.x]: ""
 >E.x : E
 >E : typeof E
 >x : E
->"" : string
+>"" : ""
 
 }); // Should return string
 
 extractIndexer({
->extractIndexer({    ["" || 0]: ""}) : any
+>extractIndexer({    ["" || 0]: ""}) : string
 >extractIndexer : <T>(p: { [n: number]: T; }) => T
->{    ["" || 0]: ""} : { [x: number]: undefined; }
+>{    ["" || 0]: ""} : { ["" || 0]: string; }
 
     ["" || 0]: ""
->"" || 0 : string | number
->"" : string
->0 : number
->"" : string
+>"" || 0 : 0
+>"" : ""
+>0 : 0
+>"" : ""
 
 }); // Should return any (widened form of undefined)

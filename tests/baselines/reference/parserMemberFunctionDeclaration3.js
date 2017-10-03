@@ -4,9 +4,9 @@ class C {
 }
 
 //// [parserMemberFunctionDeclaration3.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.Foo = function () { };
     return C;
-})();
+}());

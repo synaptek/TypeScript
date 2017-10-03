@@ -11,12 +11,12 @@ module M {
 }
 
 //// [generativeRecursionWithTypeOf.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.foo = function (x) { };
     return C;
-})();
+}());
 var M;
 (function (M) {
     function f(x) {

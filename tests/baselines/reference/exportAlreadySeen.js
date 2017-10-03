@@ -27,11 +27,11 @@ var M;
     M.f = f;
     var N;
     (function (N) {
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             return C;
-        })();
+        }());
         N.C = C;
     })(N = M.N || (M.N = {}));
 })(M || (M = {}));

@@ -20,7 +20,7 @@ class C {
 var s;
 var n;
 var a;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, s, {
@@ -79,4 +79,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

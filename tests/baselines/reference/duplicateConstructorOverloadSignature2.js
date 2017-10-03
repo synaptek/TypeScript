@@ -6,8 +6,8 @@ class C<T> {
 }
 
 //// [duplicateConstructorOverloadSignature2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C(x) {
     }
     return C;
-})();
+}());

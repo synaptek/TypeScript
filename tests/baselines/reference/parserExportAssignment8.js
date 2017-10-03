@@ -5,9 +5,10 @@ export class C {
 }
 
 //// [parserExportAssignment8.js]
-var C = (function () {
+"use strict";
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-exports.C = C;
+}());
+module.exports = B;

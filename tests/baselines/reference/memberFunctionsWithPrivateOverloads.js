@@ -50,7 +50,7 @@ var r3 = C.foo(1); // error
 var r4 = D.bar(''); // error
 
 //// [memberFunctionsWithPrivateOverloads.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x, y) { };
@@ -58,8 +58,8 @@ var C = (function () {
     C.foo = function (x, y) { };
     C.bar = function (x, y) { };
     return C;
-})();
-var D = (function () {
+}());
+var D = /** @class */ (function () {
     function D() {
     }
     D.prototype.foo = function (x, y) { };
@@ -67,7 +67,7 @@ var D = (function () {
     D.foo = function (x, y) { };
     D.bar = function (x, y) { };
     return D;
-})();
+}());
 var c;
 var r = c.foo(1); // error
 var d;

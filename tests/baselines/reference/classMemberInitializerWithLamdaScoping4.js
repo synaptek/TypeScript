@@ -16,8 +16,12 @@ export class Test1 {
 }
 
 //// [classMemberInitializerWithLamdaScoping3_0.js]
+"use strict";
+exports.__esModule = true;
 //// [classMemberInitializerWithLamdaScoping3_1.js]
-var Test1 = (function () {
+"use strict";
+exports.__esModule = true;
+var Test1 = /** @class */ (function () {
     function Test1(field1) {
         this.field1 = field1;
         this.messageHandler = function () {
@@ -25,5 +29,5 @@ var Test1 = (function () {
         };
     }
     return Test1;
-})();
+}());
 exports.Test1 = Test1;

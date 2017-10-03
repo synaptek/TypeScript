@@ -6,7 +6,7 @@ class C {
 }
 
 //// [computedPropertyNamesDeclarationEmit1_ES5.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype["" + ""] = function () { };
@@ -21,7 +21,7 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());
 
 
 //// [computedPropertyNamesDeclarationEmit1_ES5.d.ts]

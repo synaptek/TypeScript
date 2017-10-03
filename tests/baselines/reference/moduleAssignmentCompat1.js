@@ -19,26 +19,26 @@ b = a;
 //// [moduleAssignmentCompat1.js]
 var A;
 (function (A) {
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
+    }());
     A.C = C;
 })(A || (A = {}));
 var B;
 (function (B) {
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
+    }());
     B.C = C;
-    var D = (function () {
+    var D = /** @class */ (function () {
         function D() {
         }
         return D;
-    })();
+    }());
 })(B || (B = {}));
 var a;
 var b;

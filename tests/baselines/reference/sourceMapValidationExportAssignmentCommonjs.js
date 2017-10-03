@@ -5,10 +5,11 @@ class a {
 export = a;
 
 //// [sourceMapValidationExportAssignmentCommonjs.js]
-var a = (function () {
+"use strict";
+var a = /** @class */ (function () {
     function a() {
     }
     return a;
-})();
+}());
 module.exports = a;
 //# sourceMappingURL=sourceMapValidationExportAssignmentCommonjs.js.map

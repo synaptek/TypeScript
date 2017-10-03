@@ -19,7 +19,7 @@ class myCls {
 }
 
 //// [thisInLambda.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
         this.x = "hello";
     }
@@ -29,9 +29,9 @@ var Foo = (function () {
         var f = function () { return _this.x; }; // 'this' should be type 'Foo' as well
     };
     return Foo;
-})();
+}());
 function myFn(a) { }
-var myCls = (function () {
+var myCls = /** @class */ (function () {
     function myCls() {
         var _this = this;
         myFn(function () {
@@ -41,4 +41,4 @@ var myCls = (function () {
         });
     }
     return myCls;
-})();
+}());

@@ -33,21 +33,21 @@ function use() {
 //// [aliasErrors.js]
 var foo;
 (function (foo) {
-    var Provide = (function () {
+    var Provide = /** @class */ (function () {
         function Provide() {
         }
         return Provide;
-    })();
+    }());
     foo.Provide = Provide;
     var bar;
     (function (bar) {
         var baz;
         (function (baz) {
-            var boo = (function () {
+            var boo = /** @class */ (function () {
                 function boo() {
                 }
                 return boo;
-            })();
+            }());
             baz.boo = boo;
         })(baz = bar.baz || (bar.baz = {}));
     })(bar = foo.bar || (foo.bar = {}));
@@ -55,9 +55,12 @@ var foo;
 var provide = foo;
 var booz = foo.bar.baz;
 var beez = foo.bar;
+var m = no;
+var m2 = no.mod;
 5;
 "s";
 null;
+var r = undefined;
 var p = new provide.Provide();
 function use() {
     beez.baz.boo;

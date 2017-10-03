@@ -1,15 +1,15 @@
 === tests/cases/conformance/statements/continueStatements/whileContinueStatements.ts ===
 while(true) {
->true : boolean
+>true : true
 
     continue;
 } 
 
 while (true) {
->true : boolean
+>true : true
 
     if (true) {
->true : boolean
+>true : true
 
         continue;
     }
@@ -19,7 +19,7 @@ ONE:
 >ONE : any
 
 while (true) {
->true : boolean
+>true : true
 
     continue ONE;
 >ONE : any
@@ -32,7 +32,7 @@ THREE:
 >THREE : any
 
 while (true) {
->true : boolean
+>true : true
 
     continue THREE;
 >THREE : any
@@ -42,13 +42,13 @@ FOUR:
 >FOUR : any
 
 while (true) {
->true : boolean
+>true : true
 
     FIVE:
 >FIVE : any
 
     while (true) {
->true : boolean
+>true : true
 
         continue FOUR;
 >FOUR : any
@@ -56,13 +56,13 @@ while (true) {
 }
 
 while (true) {
->true : boolean
+>true : true
 
     SIX:
 >SIX : any
 
     while (true)
->true : boolean
+>true : true
 
         continue SIX;
 >SIX : any
@@ -72,13 +72,13 @@ SEVEN:
 >SEVEN : any
 
 while (true)
->true : boolean
+>true : true
 
     while (true)
->true : boolean
+>true : true
 
         while (true)
->true : boolean
+>true : true
 
             continue SEVEN;
 >SEVEN : any
@@ -87,7 +87,7 @@ EIGHT:
 >EIGHT : any
 
 while (true) {
->true : boolean
+>true : true
 
     var fn = function () { }
 >fn : () => void
@@ -101,10 +101,10 @@ NINE:
 >NINE : any
 
 while (true) {
->true : boolean
+>true : true
 
     if (true) { continue NINE; }
->true : boolean
+>true : true
 >NINE : any
 }
 

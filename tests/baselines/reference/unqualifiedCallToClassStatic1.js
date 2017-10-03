@@ -7,7 +7,7 @@ class Vector {
 }
 
 //// [unqualifiedCallToClassStatic1.js]
-var Vector = (function () {
+var Vector = /** @class */ (function () {
     function Vector() {
     }
     Vector.foo = function () {
@@ -15,4 +15,4 @@ var Vector = (function () {
         foo();
     };
     return Vector;
-})();
+}());

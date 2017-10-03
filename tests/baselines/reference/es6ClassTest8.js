@@ -42,7 +42,7 @@ class Camera {
 
 //// [es6ClassTest8.js]
 function f1(x) { return x; }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         var bar = (function () {
             return bar; // 'bar' should be resolvable
@@ -50,8 +50,8 @@ var C = (function () {
         var b = f1(f1(bar));
     }
     return C;
-})();
-var Vector = (function () {
+}());
+var Vector = /** @class */ (function () {
     function Vector(x, y, z) {
         this.x = x;
         this.y = y;
@@ -63,8 +63,8 @@ var Vector = (function () {
     Vector.cross = function (v1, v2) { return null; };
     Vector.dot = function (v1, v2) { return null; };
     return Vector;
-})();
-var Camera = (function () {
+}());
+var Camera = /** @class */ (function () {
     function Camera(pos, lookAt) {
         this.pos = pos;
         var down = new Vector(0.0, -1.0, 0.0);
@@ -73,4 +73,4 @@ var Camera = (function () {
         this.up = Vector.times(down, Vector.norm(Vector.cross(this.forward, this.right)));
     }
     return Camera;
-})();
+}());

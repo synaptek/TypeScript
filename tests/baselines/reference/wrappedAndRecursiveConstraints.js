@@ -18,7 +18,7 @@ var r = c.foo(y);
 
 //// [wrappedAndRecursiveConstraints.js]
 // no errors expected
-var C = (function () {
+var C = /** @class */ (function () {
     function C(data) {
         this.data = data;
     }
@@ -26,7 +26,7 @@ var C = (function () {
         return x;
     };
     return C;
-})();
+}());
 var y = null;
 var c = new C(y);
 var r = c.foo(y);

@@ -28,7 +28,7 @@ result+=(M.origin.move(1,1));
 
 
 //// [topLevel.js]
-var Point = (function () {
+var Point = /** @class */ (function () {
     function Point(x, y) {
         this.x = x;
         this.y = y;
@@ -42,7 +42,7 @@ var Point = (function () {
         return ("(" + this.x + "," + this.y + ")");
     };
     return Point;
-})();
+}());
 var result = "";
 result += (new Point(3, 4).move(2, 2));
 var M;

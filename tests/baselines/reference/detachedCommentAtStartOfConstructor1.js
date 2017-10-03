@@ -11,7 +11,7 @@ class TestFile {
 }
 
 //// [detachedCommentAtStartOfConstructor1.js]
-var TestFile = (function () {
+var TestFile = /** @class */ (function () {
     function TestFile(message) {
         var _this = this;
         /// <summary>Test summary</summary>
@@ -20,4 +20,4 @@ var TestFile = (function () {
         this.message = getMessage();
     }
     return TestFile;
-})();
+}());

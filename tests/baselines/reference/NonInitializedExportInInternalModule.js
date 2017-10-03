@@ -1,5 +1,4 @@
 //// [NonInitializedExportInInternalModule.ts]
-
 module Inner {
     var;
     let;
@@ -41,11 +40,11 @@ var Inner;
     var ;
     let;
     var ;
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     var B;
     (function (B) {
         B.a = 1, B.c = 2;
@@ -59,11 +58,11 @@ var Inner;
     Inner.b1 = 1;
     Inner.c1 = 'a';
     Inner.d1 = 1;
-    var D = (function () {
+    var D = /** @class */ (function () {
         function D() {
         }
         return D;
-    })();
+    }());
     Inner.e1 = new D;
     Inner.f1 = new D;
     Inner.g1 = new D;

@@ -23,17 +23,21 @@ module Path.Utils {
 
 
 //// [clodulesDerivedClasses.js]
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Shape = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Shape = /** @class */ (function () {
     function Shape() {
     }
     return Shape;
-})();
-var Shape;
+}());
 (function (Shape) {
     var Utils;
     (function (Utils) {
@@ -41,14 +45,13 @@ var Shape;
         Utils.convert = convert;
     })(Utils = Shape.Utils || (Shape.Utils = {}));
 })(Shape || (Shape = {}));
-var Path = (function (_super) {
+var Path = /** @class */ (function (_super) {
     __extends(Path, _super);
     function Path() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return Path;
-})(Shape);
-var Path;
+}(Shape));
 (function (Path) {
     var Utils;
     (function (Utils) {

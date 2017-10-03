@@ -17,7 +17,7 @@ class Bar {
 
 
 //// [es6DeclOrdering.js]
-var Bar = (function () {
+var Bar = /** @class */ (function () {
     function Bar(store) {
         this._store = store; // this is an error for some reason? Unresolved symbol store
     }
@@ -26,4 +26,4 @@ var Bar = (function () {
         return this._store.length;
     };
     return Bar;
-})();
+}());

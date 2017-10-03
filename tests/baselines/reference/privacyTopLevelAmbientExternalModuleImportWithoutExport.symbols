@@ -64,13 +64,12 @@ export var publicUse_im_private_mi_public = new im_private_mi_public.c_public();
 >c_public : Symbol(im_private_mi_public.c_public, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require.ts, 0, 0))
 
 === tests/cases/compiler/privacyTopLevelAmbientExternalModuleImportWithoutExport_require.ts ===
-
 // Public elements
 export class c_public {
 >c_public : Symbol(c_public, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require.ts, 0, 0))
 
     foo: string;
->foo : Symbol(foo, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require.ts, 2, 23))
+>foo : Symbol(c_public.foo, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require.ts, 1, 23))
 }
 
 === tests/cases/compiler/privacyTopLevelAmbientExternalModuleImportWithoutExport_require1.ts ===
@@ -78,7 +77,7 @@ export class c_public {
 >c_public : Symbol(c_public, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require1.ts, 0, 0))
 
     bar: string;
->bar : Symbol(bar, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require1.ts, 0, 23))
+>bar : Symbol(c_public.bar, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require1.ts, 0, 23))
 }
 
 === tests/cases/compiler/privacyTopLevelAmbientExternalModuleImportWithoutExport_require2.ts ===
@@ -89,7 +88,7 @@ declare module 'm' {
 >c_private : Symbol(c_private, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require2.ts, 2, 20))
 
         baz: string
->baz : Symbol(baz, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require2.ts, 3, 28))
+>baz : Symbol(c_private.baz, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require2.ts, 3, 28))
     }   
 }
 
@@ -99,7 +98,7 @@ declare module 'm2' {
 >c_private : Symbol(c_private, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require3.ts, 0, 21))
 
         bing: string;
->bing : Symbol(bing, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require3.ts, 1, 28))
+>bing : Symbol(c_private.bing, Decl(privacyTopLevelAmbientExternalModuleImportWithoutExport_require3.ts, 1, 28))
     }
 }
 

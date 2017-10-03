@@ -1,8 +1,6 @@
 //// [tests/cases/conformance/classes/classDeclarations/mergedClassInterface.ts] ////
 
 //// [file1.ts]
-
-
 declare class C1 { }
 
 interface C1 { }
@@ -11,13 +9,13 @@ interface C2 { }
 
 declare class C2 { }
 
-class C3 { } // error -- cannot merge non-ambient class and interface
+class C3 { }
 
-interface C3 { } // error -- cannot merge non-ambient class and interface
+interface C3 { }
 
-interface C4 { } // error -- cannot merge non-ambient class and interface
+interface C4 { }
 
-class C4 { } // error -- cannot merge non-ambient class and interface
+class C4 { }
 
 interface C5 {
     x1: number;
@@ -43,28 +41,26 @@ c5.x3;
 c5.x4;
 
 //// [file2.ts]
-
 declare class C6 { }
 
 interface C7 { }
 
 //// [file3.ts]
-
 interface C6 { }
 
 declare class C7 { }
 
 //// [file1.js]
-var C3 = (function () {
+var C3 = /** @class */ (function () {
     function C3() {
     }
     return C3;
-})(); // error -- cannot merge non-ambient class and interface
-var C4 = (function () {
+}());
+var C4 = /** @class */ (function () {
     function C4() {
     }
     return C4;
-})(); // error -- cannot merge non-ambient class and interface
+}());
 // checks if properties actually were merged
 var c5;
 c5.x1;

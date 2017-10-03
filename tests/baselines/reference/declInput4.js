@@ -18,25 +18,25 @@ module M {
 //// [declInput4.js]
 var M;
 (function (M) {
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
-    var E = (function () {
+    }());
+    var E = /** @class */ (function () {
         function E() {
         }
         return E;
-    })();
+    }());
     M.E = E;
-    var D = (function () {
+    var D = /** @class */ (function () {
         function D() {
         }
         D.prototype.m232 = function () { return null; };
         D.prototype.m242 = function () { return null; };
         D.prototype.m26 = function (i) { };
         return D;
-    })();
+    }());
     M.D = D;
 })(M || (M = {}));
 

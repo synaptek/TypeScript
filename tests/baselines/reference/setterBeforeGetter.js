@@ -13,7 +13,7 @@ class Foo {
 
 
 //// [setterBeforeGetter.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Object.defineProperty(Foo.prototype, "bar", {
@@ -28,4 +28,4 @@ var Foo = (function () {
         configurable: true
     });
     return Foo;
-})();
+}());

@@ -1,5 +1,4 @@
 //// [giant.ts]
-
 /*
     Prefixes
     p -> public
@@ -683,6 +682,8 @@ export declare module eaM {
 
 //// [giant.js]
 define(["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
     /*
         Prefixes
         p -> public
@@ -699,7 +700,7 @@ define(["require", "exports"], function (require, exports) {
     var V;
     function F() { }
     ;
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         C.prototype.pF = function () { };
@@ -742,13 +743,13 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return C;
-    })();
+    }());
     var M;
     (function (M_1) {
         var V;
         function F() { }
         ;
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             C.prototype.pF = function () { };
@@ -791,28 +792,28 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return C;
-        })();
+        }());
         var M;
         (function (M) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             M.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             M.eC = eC;
             ;
             ;
@@ -824,7 +825,7 @@ define(["require", "exports"], function (require, exports) {
         function eF() { }
         M_1.eF = eF;
         ;
-        var eC = (function () {
+        var eC = /** @class */ (function () {
             function eC() {
             }
             eC.prototype.pF = function () { };
@@ -867,29 +868,29 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return eC;
-        })();
+        }());
         M_1.eC = eC;
         var eM;
         (function (eM) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             eM.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             eM.eC = eC;
             ;
             ;
@@ -903,7 +904,7 @@ define(["require", "exports"], function (require, exports) {
     function eF() { }
     exports.eF = eF;
     ;
-    var eC = (function () {
+    var eC = /** @class */ (function () {
         function eC() {
         }
         eC.prototype.pF = function () { };
@@ -946,14 +947,14 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return eC;
-    })();
+    }());
     exports.eC = eC;
     var eM;
     (function (eM_1) {
         var V;
         function F() { }
         ;
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             C.prototype.pF = function () { };
@@ -996,28 +997,28 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return C;
-        })();
+        }());
         var M;
         (function (M) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             M.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             M.eC = eC;
             ;
             ;
@@ -1029,7 +1030,7 @@ define(["require", "exports"], function (require, exports) {
         function eF() { }
         eM_1.eF = eF;
         ;
-        var eC = (function () {
+        var eC = /** @class */ (function () {
             function eC() {
             }
             eC.prototype.pF = function () { };
@@ -1072,29 +1073,29 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return eC;
-        })();
+        }());
         eM_1.eC = eC;
         var eM;
         (function (eM) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             eM.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             eM.eC = eC;
             ;
             ;
@@ -1119,11 +1120,11 @@ export declare class eC {
     pF(): void;
     private rF();
     pgF(): void;
-    pgF: any;
+    readonly pgF: any;
     psF(param: any): void;
     psF: any;
     private rgF();
-    private rgF;
+    private readonly rgF;
     private rsF(param);
     private rsF;
     static tV: any;
@@ -1131,7 +1132,7 @@ export declare class eC {
     static tsF(param: any): void;
     static tsF: any;
     static tgF(): void;
-    static tgF: any;
+    static readonly tgF: any;
 }
 export interface eI {
     (): any;
@@ -1171,11 +1172,11 @@ export declare module eM {
         pF(): void;
         private rF();
         pgF(): void;
-        pgF: any;
+        readonly pgF: any;
         psF(param: any): void;
         psF: any;
         private rgF();
-        private rgF;
+        private readonly rgF;
         private rsF(param);
         private rsF;
         static tV: any;
@@ -1183,7 +1184,7 @@ export declare module eM {
         static tsF(param: any): void;
         static tsF: any;
         static tgF(): void;
-        static tgF: any;
+        static readonly tgF: any;
     }
     interface eI {
         (): any;
@@ -1238,11 +1239,11 @@ export declare module eM {
         pF(): void;
         private rF();
         pgF(): void;
-        pgF: any;
+        readonly pgF: any;
         psF(param: any): void;
         psF: any;
         private rgF();
-        private rgF;
+        private readonly rgF;
         private rsF(param);
         private rsF;
         static tV: any;
@@ -1250,7 +1251,7 @@ export declare module eM {
         static tsF(param: any): void;
         static tsF: any;
         static tgF(): void;
-        static tgF: any;
+        static readonly tgF: any;
     }
     module eaM {
         var V: any;
@@ -1280,11 +1281,11 @@ export declare class eaC {
     pF(): void;
     private rF();
     pgF(): void;
-    pgF: any;
+    readonly pgF: any;
     psF(param: any): void;
     psF: any;
     private rgF();
-    private rgF;
+    private readonly rgF;
     private rsF(param);
     private rsF;
     static tV: any;
@@ -1292,7 +1293,7 @@ export declare class eaC {
     static tsF(param: any): void;
     static tsF: any;
     static tgF(): void;
-    static tgF: any;
+    static readonly tgF: any;
 }
 export declare module eaM {
     var V: any;

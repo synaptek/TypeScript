@@ -1,5 +1,4 @@
 //// [declFileTypeAnnotationVisibilityErrorAccessors.ts]
-
 module m {
     class private1 {
     }
@@ -103,27 +102,27 @@ module m {
 //// [declFileTypeAnnotationVisibilityErrorAccessors.js]
 var m;
 (function (m) {
-    var private1 = (function () {
+    var private1 = /** @class */ (function () {
         function private1() {
         }
         return private1;
-    })();
-    var public1 = (function () {
+    }());
+    var public1 = /** @class */ (function () {
         function public1() {
         }
         return public1;
-    })();
+    }());
     m.public1 = public1;
     var m2;
     (function (m2) {
-        var public2 = (function () {
+        var public2 = /** @class */ (function () {
             function public2() {
             }
             return public2;
-        })();
+        }());
         m2.public2 = public2;
     })(m2 || (m2 = {}));
-    var c = (function () {
+    var c = /** @class */ (function () {
         function c() {
         }
         Object.defineProperty(c.prototype, "foo1", {
@@ -256,6 +255,6 @@ var m;
             configurable: true
         });
         return c;
-    })();
+    }());
     m.c = c;
 })(m || (m = {}));

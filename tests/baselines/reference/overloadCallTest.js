@@ -16,7 +16,7 @@ class foo {
 
 
 //// [overloadCallTest.js]
-var foo = (function () {
+var foo = /** @class */ (function () {
     function foo() {
         function bar(foo) { return "foo"; }
         ;
@@ -25,4 +25,4 @@ var foo = (function () {
         goo = bar("test");
     }
     return foo;
-})();
+}());

@@ -10,15 +10,16 @@ import b = a;
 export = b;
 
 //// [declFileImportChainInExportAssignment.js]
+"use strict";
 var m;
 (function (m) {
     var c;
     (function (c_1) {
-        var c = (function () {
+        var c = /** @class */ (function () {
             function c() {
             }
             return c;
-        })();
+        }());
         c_1.c = c;
     })(c = m.c || (m.c = {}));
 })(m || (m = {}));

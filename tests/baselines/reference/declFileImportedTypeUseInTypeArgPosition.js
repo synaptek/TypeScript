@@ -14,11 +14,11 @@ declare module 'moo' {
 
 
 //// [declFileImportedTypeUseInTypeArgPosition.js]
-var List = (function () {
+var List = /** @class */ (function () {
     function List() {
     }
     return List;
-})();
+}());
 
 
 //// [declFileImportedTypeUseInTypeArgPosition.d.ts]

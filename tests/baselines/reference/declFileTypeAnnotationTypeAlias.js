@@ -1,5 +1,4 @@
 //// [declFileTypeAnnotationTypeAlias.ts]
-
 module M {
     export type Value = string | number | boolean;
     export var x: Value;
@@ -34,31 +33,30 @@ module M {
 //// [declFileTypeAnnotationTypeAlias.js]
 var M;
 (function (M) {
-    var c = (function () {
+    var c = /** @class */ (function () {
         function c() {
         }
         return c;
-    })();
+    }());
     M.c = c;
     var m;
     (function (m) {
-        var c = (function () {
+        var c = /** @class */ (function () {
             function c() {
             }
             return c;
-        })();
+        }());
         m.c = c;
     })(m = M.m || (M.m = {}));
 })(M || (M = {}));
-var M;
 (function (M) {
     var N;
     (function (N) {
-        var Window = (function () {
+        var Window = /** @class */ (function () {
             function Window() {
             }
             return Window;
-        })();
+        }());
         N.Window = Window;
     })(N = M.N || (M.N = {}));
 })(M || (M = {}));

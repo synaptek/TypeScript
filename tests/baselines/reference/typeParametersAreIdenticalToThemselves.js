@@ -84,7 +84,7 @@ function foo3(x, y) {
     function inner(x) { }
     function inner2(x) { }
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo1 = function (x) { };
@@ -92,12 +92,12 @@ var C = (function () {
     C.prototype.foo3 = function (x) { };
     C.prototype.foo4 = function (x) { };
     return C;
-})();
-var C2 = (function () {
+}());
+var C2 = /** @class */ (function () {
     function C2() {
     }
     C2.prototype.foo1 = function (x) { };
     C2.prototype.foo2 = function (a, x) { };
     C2.prototype.foo3 = function (x) { };
     return C2;
-})();
+}());

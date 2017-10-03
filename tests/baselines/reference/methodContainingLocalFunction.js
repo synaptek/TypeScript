@@ -52,7 +52,7 @@ enum E {
 
 //// [methodContainingLocalFunction.js]
 // The first case here (BugExhibition<T>) caused a crash. Try with different permutations of features.
-var BugExhibition = (function () {
+var BugExhibition = /** @class */ (function () {
     function BugExhibition() {
     }
     BugExhibition.prototype.exhibitBug = function () {
@@ -61,8 +61,8 @@ var BugExhibition = (function () {
         x = localFunction;
     };
     return BugExhibition;
-})();
-var BugExhibition2 = (function () {
+}());
+var BugExhibition2 = /** @class */ (function () {
     function BugExhibition2() {
     }
     Object.defineProperty(BugExhibition2, "exhibitBug", {
@@ -76,8 +76,8 @@ var BugExhibition2 = (function () {
         configurable: true
     });
     return BugExhibition2;
-})();
-var BugExhibition3 = (function () {
+}());
+var BugExhibition3 = /** @class */ (function () {
     function BugExhibition3() {
     }
     BugExhibition3.prototype.exhibitBug = function () {
@@ -86,8 +86,8 @@ var BugExhibition3 = (function () {
         x = localGenericFunction;
     };
     return BugExhibition3;
-})();
-var C = (function () {
+}());
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.exhibit = function () {
@@ -96,7 +96,7 @@ var C = (function () {
         x = funcExpr;
     };
     return C;
-})();
+}());
 var M;
 (function (M) {
     function exhibitBug() {

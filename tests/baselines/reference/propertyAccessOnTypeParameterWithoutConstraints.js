@@ -32,7 +32,7 @@ var b = {
 var r4 = b.foo(1);
 
 //// [propertyAccessOnTypeParameterWithoutConstraints.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.f = function () {
@@ -41,7 +41,7 @@ var C = (function () {
         return a + x.toString();
     };
     return C;
-})();
+}());
 var r = (new C()).f();
 var i;
 var r2 = i.foo.toString();

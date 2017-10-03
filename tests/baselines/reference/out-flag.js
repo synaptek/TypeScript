@@ -19,7 +19,7 @@ class MyClass
 //// [out-flag.js]
 //// @out: bin\
 // my class comments
-var MyClass = (function () {
+var MyClass = /** @class */ (function () {
     function MyClass() {
     }
     // my function comments
@@ -30,7 +30,7 @@ var MyClass = (function () {
         //
     };
     return MyClass;
-})();
+}());
 //# sourceMappingURL=out-flag.js.map
 
 //// [out-flag.d.ts]

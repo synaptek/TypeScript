@@ -10,7 +10,9 @@
     }
 
 //// [parserClass1.js]
-var NullLogger = (function () {
+"use strict";
+exports.__esModule = true;
+var NullLogger = /** @class */ (function () {
     function NullLogger() {
     }
     NullLogger.prototype.information = function () { return false; };
@@ -21,5 +23,5 @@ var NullLogger = (function () {
     NullLogger.prototype.log = function (s) {
     };
     return NullLogger;
-})();
+}());
 exports.NullLogger = NullLogger;

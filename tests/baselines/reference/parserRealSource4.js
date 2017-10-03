@@ -301,7 +301,7 @@ module TypeScript {
 ///<reference path='typescript.ts' />
 var TypeScript;
 (function (TypeScript) {
-    var BlockIntrinsics = (function () {
+    var BlockIntrinsics = /** @class */ (function () {
         function BlockIntrinsics() {
             this.prototype = undefined;
             this.toString = undefined;
@@ -314,12 +314,12 @@ var TypeScript;
             this["constructor"] = undefined;
         }
         return BlockIntrinsics;
-    })();
+    }());
     TypeScript.BlockIntrinsics = BlockIntrinsics;
-    var StringHashTable = (function () {
+    var StringHashTable = /** @class */ (function () {
         function StringHashTable() {
             this.itemCount = 0;
-            this.table = (new BlockIntrinsics());
+            this.table = new BlockIntrinsics();
         }
         StringHashTable.prototype.getAllKeys = function () {
             var result = [];
@@ -388,12 +388,12 @@ var TypeScript;
             }
         };
         return StringHashTable;
-    })();
+    }());
     TypeScript.StringHashTable = StringHashTable;
     // The resident table is expected to reference the same table object, whereas the 
     // transientTable may reference different objects over time
     // REVIEW:  WARNING:  For performance reasons, neither the primary nor secondary table may be null
-    var DualStringHashTable = (function () {
+    var DualStringHashTable = /** @class */ (function () {
         function DualStringHashTable(primaryTable, secondaryTable) {
             this.primaryTable = primaryTable;
             this.secondaryTable = secondaryTable;
@@ -441,7 +441,7 @@ var TypeScript;
             }
         };
         return DualStringHashTable;
-    })();
+    }());
     TypeScript.DualStringHashTable = DualStringHashTable;
     function numberHashFn(key) {
         var c2 = 0x27d4eb2d; // a prime or an odd constant
@@ -457,15 +457,15 @@ var TypeScript;
         return key2 ^ ((key1 >> 5) + key1);
     }
     TypeScript.combineHashes = combineHashes;
-    var HashEntry = (function () {
+    var HashEntry = /** @class */ (function () {
         function HashEntry(key, data) {
             this.key = key;
             this.data = data;
         }
         return HashEntry;
-    })();
+    }());
     TypeScript.HashEntry = HashEntry;
-    var HashTable = (function () {
+    var HashTable = /** @class */ (function () {
         function HashTable(size, hashFn, equalsFn) {
             this.size = size;
             this.hashFn = hashFn;
@@ -526,10 +526,10 @@ var TypeScript;
             return (null);
         };
         return HashTable;
-    })();
+    }());
     TypeScript.HashTable = HashTable;
     // Simple Hash table with list of keys and values matching each other at the given index
-    var SimpleHashTable = (function () {
+    var SimpleHashTable = /** @class */ (function () {
         function SimpleHashTable() {
             this.keys = [];
             this.values = [];
@@ -559,6 +559,6 @@ var TypeScript;
             return true;
         };
         return SimpleHashTable;
-    })();
+    }());
     TypeScript.SimpleHashTable = SimpleHashTable;
 })(TypeScript || (TypeScript = {}));

@@ -1,5 +1,5 @@
 //// [ES5SymbolProperty3.ts]
-var Symbol;
+var Symbol: any;
 
 class C {
     [Symbol.iterator]() { }
@@ -9,10 +9,10 @@ class C {
 
 //// [ES5SymbolProperty3.js]
 var Symbol;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype[Symbol.iterator] = function () { };
     return C;
-})();
+}());
 (new C)[Symbol.iterator];

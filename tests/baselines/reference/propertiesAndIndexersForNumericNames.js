@@ -43,7 +43,7 @@ class C {
 
 
 //// [propertiesAndIndexersForNumericNames.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         // These all have numeric names; they should error
         // because their types are not compatible with the numeric indexer.
@@ -81,4 +81,4 @@ var C = (function () {
         this["0.000000000000000000012"] = "should've been in exponential form"; // No error
     }
     return C;
-})();
+}());

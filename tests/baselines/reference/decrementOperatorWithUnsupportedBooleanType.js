@@ -58,12 +58,12 @@ objA.a--, M.n--;
 // -- operator on boolean type
 var BOOLEAN;
 function foo() { return true; }
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.foo = function () { return true; };
     return A;
-})();
+}());
 var M;
 (function (M) {
 })(M || (M = {}));

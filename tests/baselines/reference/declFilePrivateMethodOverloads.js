@@ -1,5 +1,4 @@
 //// [declFilePrivateMethodOverloads.ts]
-
 interface IContext {
     someMethod();
 }
@@ -24,7 +23,7 @@ declare class c2 {
 }
 
 //// [declFilePrivateMethodOverloads.js]
-var c1 = (function () {
+var c1 = /** @class */ (function () {
     function c1() {
     }
     c1.prototype._forEachBindingContext = function (context, fn) {
@@ -34,7 +33,7 @@ var c1 = (function () {
         // Function here
     };
     return c1;
-})();
+}());
 
 
 //// [declFilePrivateMethodOverloads.d.ts]

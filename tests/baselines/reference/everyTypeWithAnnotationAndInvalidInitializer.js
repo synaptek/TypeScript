@@ -55,36 +55,36 @@ var aFunctionInModule: typeof M.F2 = F2;
 
 
 //// [everyTypeWithAnnotationAndInvalidInitializer.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-var D = (function () {
+}());
+var D = /** @class */ (function () {
     function D() {
     }
     return D;
-})();
+}());
 function F(x) { return 42; }
 function F2(x) { return x < 42; }
 var M;
 (function (M) {
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     M.A = A;
     function F2(x) { return x.toString(); }
     M.F2 = F2;
 })(M || (M = {}));
 var N;
 (function (N) {
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     N.A = A;
     function F2(x) { return x.toString(); }
     N.F2 = F2;

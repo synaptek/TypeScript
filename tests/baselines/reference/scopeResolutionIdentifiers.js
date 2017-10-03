@@ -57,7 +57,7 @@ function fn() {
     var n = s;
     var n;
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         this.n = this.s;
     }
@@ -66,7 +66,7 @@ var C = (function () {
         var p;
     };
     return C;
-})();
+}());
 var M3;
 (function (M3) {
     var s;

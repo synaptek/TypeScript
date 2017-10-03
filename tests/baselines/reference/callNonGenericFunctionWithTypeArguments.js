@@ -52,25 +52,25 @@ var f2 = function (x) { return null; };
 var r2 = f2(1);
 var f3;
 var r3 = f3(1);
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.f = function (x) {
         return null;
     };
     return C;
-})();
+}());
 var r4 = (new C()).f(1);
 var i;
 var r5 = i.f(1);
-var C2 = (function () {
+var C2 = /** @class */ (function () {
     function C2() {
     }
     C2.prototype.f = function (x) {
         return null;
     };
     return C2;
-})();
+}());
 var r6 = (new C2()).f(1);
 var i2;
 var r7 = i2.f(1);

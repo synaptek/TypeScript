@@ -9,14 +9,14 @@ class Bar {
 }
 
 //// [parser553699.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Foo.prototype.banana = function (x) { };
     return Foo;
-})();
-var Bar = (function () {
+}());
+var Bar = /** @class */ (function () {
     function Bar(c) {
     }
     return Bar;
-})();
+}());

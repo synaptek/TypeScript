@@ -1,5 +1,4 @@
 //// [declFileTypeAnnotationTupleType.ts]
-
 class c {
 }
 module m {
@@ -19,31 +18,31 @@ var x: [g<string>, m.g<number>, () => c] = [new g<string>(), new m.g<number>(), 
 var y = x;
 
 //// [declFileTypeAnnotationTupleType.js]
-var c = (function () {
+var c = /** @class */ (function () {
     function c() {
     }
     return c;
-})();
+}());
 var m;
 (function (m) {
-    var c = (function () {
+    var c = /** @class */ (function () {
         function c() {
         }
         return c;
-    })();
+    }());
     m.c = c;
-    var g = (function () {
+    var g = /** @class */ (function () {
         function g() {
         }
         return g;
-    })();
+    }());
     m.g = g;
 })(m || (m = {}));
-var g = (function () {
+var g = /** @class */ (function () {
     function g() {
     }
     return g;
-})();
+}());
 // Just the name
 var k = [new c(), new m.c()];
 var l = k;

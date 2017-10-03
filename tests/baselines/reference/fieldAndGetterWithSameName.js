@@ -6,7 +6,9 @@ export class C {
 
 //// [fieldAndGetterWithSameName.js]
 define(["require", "exports"], function (require, exports) {
-    var C = (function () {
+    "use strict";
+    exports.__esModule = true;
+    var C = /** @class */ (function () {
         function C() {
         }
         Object.defineProperty(C.prototype, "x", {
@@ -15,6 +17,6 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return C;
-    })();
+    }());
     exports.C = C;
 });

@@ -13,7 +13,7 @@ class C {
 }
 
 //// [staticMemberAssignsToConstructorFunctionMembers.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.foo = function () {
@@ -26,4 +26,4 @@ var C = (function () {
         return 1;
     };
     return C;
-})();
+}());

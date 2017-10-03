@@ -5,9 +5,11 @@ export class Logger {
 
 
 //// [parser509546.js]
-var Logger = (function () {
+"use strict";
+exports.__esModule = true;
+var Logger = /** @class */ (function () {
     function Logger() {
     }
     return Logger;
-})();
+}());
 exports.Logger = Logger;

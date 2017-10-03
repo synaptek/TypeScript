@@ -11,19 +11,19 @@ class C {
 }
 
 //// [computedPropertyNames29_ES5.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.bar = function () {
         var _this = this;
         (function () {
             var obj = (_a = {},
-                _a[_this.bar()] = function () { },
-                _a
-            );
+                _a[_this.bar()] = function () { } // needs capture
+            ,
+                _a);
             var _a;
         });
         return 0;
     };
     return C;
-})();
+}());

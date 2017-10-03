@@ -37,13 +37,13 @@ module E {
 //// [importStatements.js]
 var A;
 (function (A) {
-    var Point = (function () {
+    var Point = /** @class */ (function () {
         function Point(x, y) {
             this.x = x;
             this.y = y;
         }
         return Point;
-    })();
+    }());
     A.Point = Point;
     A.Origin = new Point(0, 0);
 })(A || (A = {}));

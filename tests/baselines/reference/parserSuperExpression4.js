@@ -14,25 +14,25 @@ module M1.M2 {
 }
 
 //// [parserSuperExpression4.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function () {
         _super.prototype.foo = 1;
     };
     return C;
-})();
+}());
 var M1;
 (function (M1) {
     var M2;
     (function (M2) {
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             C.prototype.foo = function () {
                 _super.prototype.foo = 1;
             };
             return C;
-        })();
+        }());
     })(M2 = M1.M2 || (M1.M2 = {}));
 })(M1 || (M1 = {}));

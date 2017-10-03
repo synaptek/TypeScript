@@ -17,7 +17,7 @@ module M {
 //// [es6ClassTest3.js]
 var M;
 (function (M) {
-    var Visibility = (function () {
+    var Visibility = /** @class */ (function () {
         function Visibility() {
             this.x = 1;
             this.y = 2;
@@ -27,5 +27,5 @@ var M;
         Visibility.prototype.bar = function () { };
         ;
         return Visibility;
-    })();
+    }());
 })(M || (M = {}));

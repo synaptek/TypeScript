@@ -12,11 +12,11 @@ interface Array<T> {
 //// [innerBoundLambdaEmit.js]
 var M;
 (function (M) {
-    var Foo = (function () {
+    var Foo = /** @class */ (function () {
         function Foo() {
         }
         return Foo;
-    })();
+    }());
     M.Foo = Foo;
     var bar = function () { };
 })(M || (M = {}));

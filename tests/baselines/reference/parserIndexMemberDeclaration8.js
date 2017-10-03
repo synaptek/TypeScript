@@ -4,8 +4,8 @@ class C {
 }
 
 //// [parserIndexMemberDeclaration8.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());

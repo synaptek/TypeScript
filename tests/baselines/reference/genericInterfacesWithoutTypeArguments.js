@@ -6,10 +6,10 @@ var c: C<I>;
 
 
 //// [genericInterfacesWithoutTypeArguments.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var i;
 var c;

@@ -5,11 +5,13 @@ export export class Foo {
 }
 
 //// [parser618973.js]
-var Foo = (function () {
+"use strict";
+exports.__esModule = true;
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Foo.prototype.Bar = function () {
     };
     return Foo;
-})();
+}());
 exports.Foo = Foo;

@@ -2,11 +2,11 @@
 var names = ["list", "table1", "table2", "table3", "summary"];
 >names : string[]
 >["list", "table1", "table2", "table3", "summary"] : string[]
->"list" : string
->"table1" : string
->"table2" : string
->"table3" : string
->"summary" : string
+>"list" : "list"
+>"table1" : "table1"
+>"table2" : "table2"
+>"table3" : "table3"
+>"summary" : "summary"
 
 interface HTMLElement {
 >HTMLElement : HTMLElement
@@ -53,9 +53,9 @@ var elements = names.map(function (name) {
 var xxx = elements.filter(function (e) {
 >xxx : HTMLElement[]
 >elements.filter(function (e) {    return !e.isDisabled;}) : HTMLElement[]
->elements.filter : (callbackfn: (value: HTMLElement, index: number, array: HTMLElement[]) => boolean, thisArg?: any) => HTMLElement[]
+>elements.filter : { <S extends HTMLElement>(callbackfn: (value: HTMLElement, index: number, array: HTMLElement[]) => value is S, thisArg?: any): S[]; (callbackfn: (value: HTMLElement, index: number, array: HTMLElement[]) => any, thisArg?: any): HTMLElement[]; }
 >elements : HTMLElement[]
->filter : (callbackfn: (value: HTMLElement, index: number, array: HTMLElement[]) => boolean, thisArg?: any) => HTMLElement[]
+>filter : { <S extends HTMLElement>(callbackfn: (value: HTMLElement, index: number, array: HTMLElement[]) => value is S, thisArg?: any): S[]; (callbackfn: (value: HTMLElement, index: number, array: HTMLElement[]) => any, thisArg?: any): HTMLElement[]; }
 >function (e) {    return !e.isDisabled;} : (e: HTMLElement) => boolean
 >e : HTMLElement
 

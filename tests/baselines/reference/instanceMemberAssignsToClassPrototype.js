@@ -13,7 +13,7 @@ class C {
 }
 
 //// [instanceMemberAssignsToClassPrototype.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function () {
@@ -26,4 +26,4 @@ var C = (function () {
         return 1;
     };
     return C;
-})();
+}());

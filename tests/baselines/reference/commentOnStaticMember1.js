@@ -6,11 +6,11 @@ class Greeter {
 }
 
 //// [commentOnStaticMember1.js]
-var Greeter = (function () {
+var Greeter = /** @class */ (function () {
     function Greeter() {
     }
     //Hello World
     Greeter.foo = function () {
     };
     return Greeter;
-})();
+}());

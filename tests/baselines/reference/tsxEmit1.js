@@ -1,4 +1,4 @@
-//// [tsxEmit1.tsx]
+//// [file.tsx]
 declare module JSX {
 	interface Element { }
 	interface IntrinsicElements {
@@ -40,7 +40,7 @@ var whitespace3 = <div>
       </div>;
 
 
-//// [tsxEmit1.jsx]
+//// [file.jsx]
 var p;
 var selfClosed1 = <div />;
 var selfClosed2 = <div x="1"/>;
@@ -54,7 +54,7 @@ var openClosed2 = <div n='m'>foo</div>;
 var openClosed3 = <div n='m'>{p}</div>;
 var openClosed4 = <div n='m'>{p < p}</div>;
 var openClosed5 = <div n='m'>{p > p}</div>;
-var SomeClass = (function () {
+var SomeClass = /** @class */ (function () {
     function SomeClass() {
     }
     SomeClass.prototype.f = function () {
@@ -67,7 +67,7 @@ var SomeClass = (function () {
         var rewrites6 = <div a={{ p: p }}></div>;
     };
     return SomeClass;
-})();
+}());
 var whitespace1 = <div>      </div>;
 var whitespace2 = <div>  {p}    </div>;
 var whitespace3 = <div>  

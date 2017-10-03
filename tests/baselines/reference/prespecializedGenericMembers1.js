@@ -21,17 +21,19 @@ var catThing = {
 var catBag = new CatBag(catThing);
 
 //// [prespecializedGenericMembers1.js]
-var Cat = (function () {
+"use strict";
+exports.__esModule = true;
+var Cat = /** @class */ (function () {
     function Cat() {
     }
     return Cat;
-})();
+}());
 exports.Cat = Cat;
-var CatBag = (function () {
+var CatBag = /** @class */ (function () {
     function CatBag(cats) {
     }
     return CatBag;
-})();
+}());
 exports.CatBag = CatBag;
 var cat = new Cat();
 var catThing = {

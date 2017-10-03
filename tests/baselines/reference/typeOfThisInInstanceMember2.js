@@ -36,7 +36,7 @@ rs.forEach(x => {
 });
 
 //// [typeOfThisInInstanceMember2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C(x) {
         this.x = this;
         var t = this;
@@ -56,7 +56,7 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());
 var c;
 // all ok
 var r = c.x;

@@ -36,11 +36,11 @@ else {
 }
 
 //// [typeGuardOfFormTypeOfNotEqualHasNoEffect.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 ;
 var strOrNum;
 var strOrBool;

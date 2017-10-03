@@ -15,27 +15,27 @@ class C {
 }
 
 //// [functionArgShadowing.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.foo = function () { };
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
     }
     B.prototype.bar = function () { };
     return B;
-})();
+}());
 function foo(x) {
     var x = new B();
     x.bar(); // the property bar does not exist on a value of type A
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C(p) {
         this.p = p;
         var p;
         var n = p;
     }
     return C;
-})();
+}());

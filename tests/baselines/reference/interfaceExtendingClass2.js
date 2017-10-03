@@ -16,7 +16,7 @@ interface I2 extends Foo { // error
     }
 
 //// [interfaceExtendingClass2.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Foo.prototype.y = function () { };
@@ -28,6 +28,6 @@ var Foo = (function () {
         configurable: true
     });
     return Foo;
-})();
+}());
 return 1;
 ;

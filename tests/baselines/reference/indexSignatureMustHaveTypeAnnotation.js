@@ -16,13 +16,13 @@ class C2 {
 }
 
 //// [indexSignatureMustHaveTypeAnnotation.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-var C2 = (function () {
+}());
+var C2 = /** @class */ (function () {
     function C2() {
     }
     return C2;
-})();
+}());

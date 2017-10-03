@@ -144,7 +144,7 @@ var p10 = function (_a) {
 };
 // Arrow function used in class member initializer
 // Arrow function used in class member function
-var MyClass = (function () {
+var MyClass = /** @class */ (function () {
     function MyClass() {
         var _this = this;
         this.m = function (n) { return n + 1; };
@@ -156,7 +156,7 @@ var MyClass = (function () {
         var p = function (n) { return n && _this; };
     };
     return MyClass;
-})();
+}());
 // Arrow function used in arrow function
 var arrrr = function () { return function (m) { return function () { return function (n) { return m + n; }; }; }; };
 var e = arrrr()(3)()(4);

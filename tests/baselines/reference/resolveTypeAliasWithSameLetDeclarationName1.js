@@ -5,9 +5,9 @@ let baz: baz;
 
 
 //// [resolveTypeAliasWithSameLetDeclarationName1.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var baz;

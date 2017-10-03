@@ -131,14 +131,14 @@ var WinJS;
 })(WinJS || (WinJS = {}));
 var Errors;
 (function (Errors) {
-    var ConnectionError /* extends Error */ = (function () {
-        function ConnectionError /* extends Error */(request) {
+    var ConnectionError /* extends Error */ = /** @class */ (function () {
+        function ConnectionError(request) {
         }
-        return ConnectionError /* extends Error */;
-    })();
-    Errors.ConnectionError /* extends Error */ = ConnectionError /* extends Error */;
+        return ConnectionError;
+    }());
+    Errors.ConnectionError = ConnectionError;
 })(Errors || (Errors = {}));
-var FileService = (function () {
+var FileService = /** @class */ (function () {
     function FileService() {
     }
     FileService.prototype.uploadData = function () {
@@ -160,4 +160,4 @@ var FileService = (function () {
         });
     };
     return FileService;
-})();
+}());

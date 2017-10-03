@@ -4,12 +4,13 @@ class C {
 }
 
 //// [restParamModifier2.js]
-var C = (function () {
-    function C(public) {
+var C = /** @class */ (function () {
+    function C() {
         var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            rest[_i] = arguments[_i];
         }
+        this.rest = rest;
     }
     return C;
-})();
+}());

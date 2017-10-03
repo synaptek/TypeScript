@@ -1,5 +1,4 @@
 //// [typeGuardFunctionErrors.ts]
-
 class A {
     propA: number;
 }
@@ -68,7 +67,7 @@ if (funA(0, a)) {
 
 // No type guard in if statement
 if (hasNoTypeGuard(a)) {
-    a.propB; 
+    a.propB;
 }
 
 // Type predicate type is not assignable
@@ -87,7 +86,7 @@ assign2 = function(p1, p2): p2 is A {
     return true;
 };
 
-// No matching signature 
+// No matching signature
 var assign3: (p1, p2) => p1 is A;
 assign3 = function(p1, p2, p3): p1 is A {
     return true;
@@ -145,33 +144,63 @@ if (hasMissingParameter()) {
     x.propA;
 }
 
-//// [typeGuardFunctionErrors.js]
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+// repro #17297
+
+type Keys = 'a'|'b'|'c'
+type KeySet<T extends Keys> = { [k in T]: true }
+
+// expected an error, since Keys doesn't have a 'd'
+declare function hasKey<T extends Keys>(x: KeySet<T>): x is KeySet<T|'d'>;
+
+type Foo = { 'a': string; }
+type Bar = { 'a': number; }
+
+interface NeedsFoo<T extends Foo> {
+    foo: T;
+    isFoo(): this is NeedsFoo<Bar>; // should error
 };
-var A = (function () {
+
+declare var anError: NeedsFoo<Bar>; // error, as expected
+declare var alsoAnError: NeedsFoo<number>; // also error, as expected
+declare function newError1(x: any): x is NeedsFoo<Bar>; // should error
+declare function newError2(x: any): x is NeedsFoo<number>; // should error
+declare function newError3(x: number): x is NeedsFoo<number>; // should error
+
+
+//// [typeGuardFunctionErrors.js]
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var A = /** @class */ (function () {
     function A() {
     }
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
     }
     return B;
-})();
-var C = (function (_super) {
+}());
+var C = /** @class */ (function (_super) {
     __extends(C, _super);
     function C() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return C;
-})(A);
+}(A));
 function hasANonBooleanReturnStatement(x) {
     return '';
 }
-function hasTypeGuardTypeInsideTypeGuardType(x) {
+is;
+A;
+{
     return true;
 }
 function hasMissingIsKeyword() {
@@ -218,21 +247,25 @@ var assign2;
 assign2 = function (p1, p2) {
     return true;
 };
-// No matching signature 
+// No matching signature
 var assign3;
 assign3 = function (p1, p2, p3) {
     return true;
 };
 // Type predicates in non-return type positions
-var b1;
-function b2(a) { }
+var b1 = is, A;
+function b2(a, A) {
+    if (a === void 0) { a = is; }
+}
 ;
-function b3() {
+is;
+A;
+{
     return true;
 }
 ;
 // Non-compatiable type predicate positions for signature declarations
-var D = (function () {
+var D = /** @class */ (function () {
     function D(p1) {
         return true;
     }
@@ -251,12 +284,14 @@ var D = (function () {
         configurable: true
     });
     return D;
-})();
+}());
+is;
+C;
 // Reference to rest parameter
 function b4() {
     var a = [];
     for (var _i = 0; _i < arguments.length; _i++) {
-        a[_i - 0] = arguments[_i];
+        a[_i] = arguments[_i];
     }
     return true;
 }
@@ -278,3 +313,4 @@ var x;
 if (hasMissingParameter()) {
     x.propA;
 }
+;

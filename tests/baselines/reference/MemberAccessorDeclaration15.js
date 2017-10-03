@@ -4,7 +4,7 @@ class C {
 }
 
 //// [MemberAccessorDeclaration15.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "Foo", {
@@ -13,4 +13,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

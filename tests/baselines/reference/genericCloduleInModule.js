@@ -15,15 +15,14 @@ b.foo();
 //// [genericCloduleInModule.js]
 var A;
 (function (A) {
-    var B = (function () {
+    var B = /** @class */ (function () {
         function B() {
         }
         B.prototype.foo = function () { };
         B.bar = function () { };
         return B;
-    })();
+    }());
     A.B = B;
-    var B;
     (function (B) {
         B.x = 1;
     })(B = A.B || (A.B = {}));

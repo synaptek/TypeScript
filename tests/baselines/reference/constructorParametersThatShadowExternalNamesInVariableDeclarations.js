@@ -15,16 +15,16 @@ class B {
 
 //// [constructorParametersThatShadowExternalNamesInVariableDeclarations.js]
 var x = 1;
-var A = (function () {
+var A = /** @class */ (function () {
     function A(x) {
         this.a = x;
     }
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
         this.a = x;
         var x = "";
     }
     return B;
-})();
+}());

@@ -39,7 +39,7 @@ class c3 {
 }
 
 //// [collisionRestParameterClassMethod.js]
-var c1 = (function () {
+var c1 = /** @class */ (function () {
     function c1() {
     }
     c1.prototype.foo = function (_i) {
@@ -63,14 +63,14 @@ var c1 = (function () {
         var _i; // no error
     };
     return c1;
-})();
-var c3 = (function () {
+}());
+var c3 = /** @class */ (function () {
     function c3() {
     }
     c3.prototype.foo = function () {
         var restParameters = [];
         for (var _a = 0; _a < arguments.length; _a++) {
-            restParameters[_a - 0] = arguments[_a];
+            restParameters[_a] = arguments[_a];
         }
         var _i = 10; // no error
     };
@@ -78,4 +78,4 @@ var c3 = (function () {
         var _i = 10; // no error
     };
     return c3;
-})();
+}());

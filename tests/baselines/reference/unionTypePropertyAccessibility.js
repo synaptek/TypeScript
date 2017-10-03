@@ -49,26 +49,26 @@ v15.member;
 
 
 //// [unionTypePropertyAccessibility.js]
-var Default = (function () {
+var Default = /** @class */ (function () {
     function Default() {
     }
     return Default;
-})();
-var Public = (function () {
+}());
+var Public = /** @class */ (function () {
     function Public() {
     }
     return Public;
-})();
-var Protected = (function () {
+}());
+var Protected = /** @class */ (function () {
     function Protected() {
     }
     return Protected;
-})();
-var Private = (function () {
+}());
+var Private = /** @class */ (function () {
     function Private() {
     }
     return Private;
-})();
+}());
 var v1;
 var v2;
 var v3;

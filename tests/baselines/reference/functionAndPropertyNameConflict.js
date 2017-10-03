@@ -7,7 +7,7 @@ class C65 {
 }
 
 //// [functionAndPropertyNameConflict.js]
-var C65 = (function () {
+var C65 = /** @class */ (function () {
     function C65() {
     }
     C65.prototype.aaaaa = function () { };
@@ -19,4 +19,4 @@ var C65 = (function () {
         configurable: true
     });
     return C65;
-})();
+}());

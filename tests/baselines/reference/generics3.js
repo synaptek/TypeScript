@@ -8,11 +8,11 @@ var b: C<Y>;
 a = b; // Ok - should be identical
 
 //// [generics3.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var a;
 var b;
 a = b; // Ok - should be identical

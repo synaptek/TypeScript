@@ -30,11 +30,11 @@ var A;
     (function (B) {
         var C;
         (function (C) {
-            var Class1 = (function () {
+            var Class1 = /** @class */ (function () {
                 function Class1() {
                 }
                 return Class1;
-            })();
+            }());
             C.Class1 = Class1;
         })(C = B.C || (B.C = {}));
     })(B = A.B || (A.B = {}));
@@ -45,11 +45,11 @@ var D;
     var c1 = new inner.Class1();
     var E;
     (function (E) {
-        var Class2 = (function () {
+        var Class2 = /** @class */ (function () {
             function Class2() {
             }
             return Class2;
-        })();
+        }());
         E.Class2 = Class2;
     })(E = D.E || (D.E = {}));
 })(D || (D = {}));

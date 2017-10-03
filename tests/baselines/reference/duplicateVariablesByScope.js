@@ -50,7 +50,7 @@ function foo() {
         var result = 2;
     }
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function () {
@@ -62,4 +62,4 @@ var C = (function () {
         }
     };
     return C;
-})();
+}());

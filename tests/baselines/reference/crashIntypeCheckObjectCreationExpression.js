@@ -10,7 +10,9 @@ export class BuildWorkspaceService {
 
 //// [crashIntypeCheckObjectCreationExpression.js]
 define(["require", "exports"], function (require, exports) {
-    var BuildWorkspaceService = (function () {
+    "use strict";
+    exports.__esModule = true;
+    var BuildWorkspaceService = /** @class */ (function () {
         function BuildWorkspaceService() {
         }
         BuildWorkspaceService.prototype.injectRequestService = function (service) {
@@ -19,6 +21,6 @@ define(["require", "exports"], function (require, exports) {
         BuildWorkspaceService.prototype.injectBuildService = function (service) {
         };
         return BuildWorkspaceService;
-    })();
+    }());
     exports.BuildWorkspaceService = BuildWorkspaceService;
 });

@@ -8,11 +8,11 @@ var v1 = new C<string>();
 var y = v1.x; // should be 'string'
 
 //// [genericClasses1.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var v1 = new C();
 var y = v1.x; // should be 'string'
 

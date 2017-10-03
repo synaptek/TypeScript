@@ -13,13 +13,15 @@ export class A
 
 //// [es5ModuleWithModuleGenAmd.js]
 define(["require", "exports"], function (require, exports) {
-    var A = (function () {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var A = /** @class */ (function () {
         function A() {
         }
         A.prototype.B = function () {
             return 42;
         };
         return A;
-    })();
+    }());
     exports.A = A;
 });

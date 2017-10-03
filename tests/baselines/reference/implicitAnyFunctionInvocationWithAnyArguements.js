@@ -61,11 +61,11 @@ noError(null, []);
 noError(undefined, []);
 noError(null, [null, undefined]);
 noError(undefined, anyArray);
-var C = (function () {
+var C = /** @class */ (function () {
     function C(emtpyArray, variable) {
     }
     return C;
-})();
+}());
 var newC = new C([], undefined);
 var newC1 = new C([], arg0);
 var newC2 = new C([], null);

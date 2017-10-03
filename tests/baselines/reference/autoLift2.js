@@ -32,7 +32,7 @@ a.baz();
 
 
 //// [autoLift2.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
         this.foo;
         any;
@@ -47,6 +47,6 @@ var A = (function () {
         [1, 2].forEach(function (p) { return _this.bar; });
     };
     return A;
-})();
+}());
 var a = new A();
 a.baz();

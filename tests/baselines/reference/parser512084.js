@@ -3,8 +3,8 @@ class foo {
 
 
 //// [parser512084.js]
-var foo = (function () {
+var foo = /** @class */ (function () {
     function foo() {
     }
     return foo;
-})();
+}());

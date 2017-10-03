@@ -9,11 +9,11 @@ return null;
 
 
 //// [overloadEquivalenceWithStatics.js]
-var A1 = (function () {
+var A1 = /** @class */ (function () {
     function A1() {
     }
     A1.B = function (v) {
         return null;
     };
     return A1;
-})();
+}());

@@ -13,7 +13,7 @@ class C {
 //// [computedPropertyNames2_ES5.js]
 var methodName = "method";
 var accessorName = "accessor";
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype[methodName] = function () { };
@@ -39,4 +39,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

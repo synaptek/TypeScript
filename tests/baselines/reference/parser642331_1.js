@@ -8,8 +8,8 @@ class test {
 
 //// [parser642331_1.js]
 "use strict";
-var test = (function () {
+var test = /** @class */ (function () {
     function test(static) {
     }
     return test;
-})();
+}());

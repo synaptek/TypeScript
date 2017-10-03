@@ -215,7 +215,7 @@ module TypeScript {
 ///<reference path='typescript.ts' />
 var TypeScript;
 (function (TypeScript) {
-    var Binder = (function () {
+    var Binder = /** @class */ (function () {
         function Binder(checker) {
             this.checker = checker;
         }
@@ -396,6 +396,6 @@ var TypeScript;
             }, this);
         };
         return Binder;
-    })();
+    }());
     TypeScript.Binder = Binder;
 })(TypeScript || (TypeScript = {}));

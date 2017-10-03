@@ -6,10 +6,10 @@ var c = C.x;
 
 
 //// [propertyAccessibility2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.x = 1;
     return C;
-})();
+}());
 var c = C.x;

@@ -3,9 +3,9 @@ class foo<T> { }
 new foo<>();
 
 //// [emptyTypeArgumentListWithNew.js]
-var foo = (function () {
+var foo = /** @class */ (function () {
     function foo() {
     }
     return foo;
-})();
+}());
 new foo();

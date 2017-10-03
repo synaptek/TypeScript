@@ -36,12 +36,12 @@ var M;
     function f() {
         var inner = outer; // Ok
     }
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
             var inner = outer; // Ok
         }
         return C;
-    })();
+    }());
     var X;
     (function (X) {
         var inner = outer; // Error: outer not visible

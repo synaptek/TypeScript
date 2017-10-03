@@ -4,7 +4,7 @@ class C {
 }
 
 //// [quotedAccessorName2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C, "foo", {
@@ -13,4 +13,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

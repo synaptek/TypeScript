@@ -5,9 +5,9 @@ class X<T, U> implements I2<T> { }
 (new X).blah;
 
 //// [recursiveBaseCheck5.js]
-var X = (function () {
+var X = /** @class */ (function () {
     function X() {
     }
     return X;
-})();
+}());
 (new X).blah;

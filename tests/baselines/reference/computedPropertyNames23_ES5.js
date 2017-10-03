@@ -9,7 +9,7 @@ class C {
 }
 
 //// [computedPropertyNames23_ES5.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.bar = function () {
@@ -18,4 +18,4 @@ var C = (function () {
     C.prototype[(_a = {}, _a[this.bar()] = 1, _a)[0]] = function () { };
     return C;
     var _a;
-})();
+}());

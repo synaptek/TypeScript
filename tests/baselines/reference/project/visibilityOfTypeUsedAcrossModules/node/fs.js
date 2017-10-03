@@ -1,4 +1,6 @@
-var RM = (function () {
+"use strict";
+exports.__esModule = true;
+var RM = /** @class */ (function () {
     function RM() {
     }
     RM.prototype.getName = function () {
@@ -11,5 +13,5 @@ var RM = (function () {
         var absoluteWorkspacePath = configuration.workspace.toAbsolutePath(configuration.server);
     };
     return RM;
-})();
+}());
 exports.RM = RM;

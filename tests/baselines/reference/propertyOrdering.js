@@ -24,7 +24,7 @@ class Bar {
 
 
 //// [propertyOrdering.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo(store) {
         this._store = store; // no repro if this is first line in class body
     }
@@ -33,8 +33,8 @@ var Foo = (function () {
     };
     Foo.prototype.bar = function () { return this.store; }; // should be an error
     return Foo;
-})();
-var Bar = (function () {
+}());
+var Bar = /** @class */ (function () {
     function Bar(store) {
         this._store = store;
     }
@@ -42,4 +42,4 @@ var Bar = (function () {
         return this._store.length; // shouldn't be an error
     };
     return Bar;
-})();
+}());

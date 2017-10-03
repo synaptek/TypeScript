@@ -11,11 +11,11 @@ function saySize(message: Message | Message[]) {
 
 
 //// [TypeGuardWithArrayUnion.js]
-var Message = (function () {
+var Message = /** @class */ (function () {
     function Message() {
     }
     return Message;
-})();
+}());
 function saySize(message) {
     if (message instanceof Array) {
         return message.length; // Should have type Message[] here

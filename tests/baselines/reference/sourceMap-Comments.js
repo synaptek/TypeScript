@@ -25,7 +25,7 @@ var sas;
 (function (sas) {
     var tools;
     (function (tools) {
-        var Test = (function () {
+        var Test = /** @class */ (function () {
             function Test() {
             }
             Test.prototype.doX = function () {
@@ -43,7 +43,7 @@ var sas;
                 }
             };
             return Test;
-        })();
+        }());
         tools.Test = Test;
     })(tools = sas.tools || (sas.tools = {}));
 })(sas || (sas = {}));

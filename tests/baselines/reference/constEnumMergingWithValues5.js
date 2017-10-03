@@ -1,13 +1,13 @@
-//// [constEnumMergingWithValues5.ts]
-
+//// [m1.ts]
 module foo {
     const enum E { X }
 }
 
 export = foo
 
-//// [constEnumMergingWithValues5.js]
+//// [m1.js]
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     var foo;
     (function (foo) {
         var E;

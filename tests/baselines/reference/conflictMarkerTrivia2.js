@@ -14,7 +14,7 @@ class C {
 
 
 //// [conflictMarkerTrivia2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function () {
@@ -22,4 +22,4 @@ var C = (function () {
     };
     C.prototype.bar = function () { };
     return C;
-})();
+}());

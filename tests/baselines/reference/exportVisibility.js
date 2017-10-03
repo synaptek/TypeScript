@@ -10,11 +10,13 @@ export function test(foo: Foo) {
 
 
 //// [exportVisibility.js]
-var Foo = (function () {
+"use strict";
+exports.__esModule = true;
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     return Foo;
-})();
+}());
 exports.Foo = Foo;
 exports.foo = new Foo();
 function test(foo) {

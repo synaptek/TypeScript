@@ -9,8 +9,8 @@ var x = class C {
 }
 
 //// [classExpressionWithResolutionOfNamespaceOfSameName01.js]
-var x = (function () {
+var x = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());

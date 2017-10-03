@@ -16,11 +16,11 @@ var a;
 (function (a) {
     var b;
     (function (b) {
-        var c = (function () {
+        var c = /** @class */ (function () {
             function c() {
             }
             return c;
-        })();
+        }());
         b.c = c;
     })(b = a.b || (a.b = {}));
 })(a || (a = {}));

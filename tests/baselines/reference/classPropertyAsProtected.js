@@ -24,7 +24,7 @@ C.b = 1;
 C.foo();
 
 //// [classPropertyAsProtected.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "y", {
@@ -42,7 +42,7 @@ var C = (function () {
     });
     C.foo = function () { };
     return C;
-})();
+}());
 var c;
 // all errors
 c.x;

@@ -32,7 +32,7 @@ var x = {
 }
 
 //// [typeOfThisInAccessor.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "x", {
@@ -52,8 +52,8 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
-var D = (function () {
+}());
+var D = /** @class */ (function () {
     function D() {
     }
     Object.defineProperty(D.prototype, "x", {
@@ -73,7 +73,7 @@ var D = (function () {
         configurable: true
     });
     return D;
-})();
+}());
 var x = {
     get a() {
         var r3 = this; // any

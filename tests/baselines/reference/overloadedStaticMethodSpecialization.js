@@ -9,11 +9,11 @@ class A<T> {
 
 
 //// [overloadedStaticMethodSpecialization.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.B = function (v) {
         return null;
     };
     return A;
-})();
+}());

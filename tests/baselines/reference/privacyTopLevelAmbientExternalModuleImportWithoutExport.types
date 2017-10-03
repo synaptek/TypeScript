@@ -72,7 +72,6 @@ export var publicUse_im_private_mi_public = new im_private_mi_public.c_public();
 >c_public : typeof im_private_mi_public.c_public
 
 === tests/cases/compiler/privacyTopLevelAmbientExternalModuleImportWithoutExport_require.ts ===
-
 // Public elements
 export class c_public {
 >c_public : c_public

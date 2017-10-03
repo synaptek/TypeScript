@@ -7,11 +7,11 @@ class A<T>{
 }
 
 //// [noTypeArgumentOnReturnType1.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.foo = function () {
         return null;
     };
     return A;
-})();
+}());

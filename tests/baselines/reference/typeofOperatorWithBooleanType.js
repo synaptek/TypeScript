@@ -54,12 +54,12 @@ z: typeof M.n;
 // typeof  operator on boolean type
 var BOOLEAN;
 function foo() { return true; }
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.foo = function () { return false; };
     return A;
-})();
+}());
 var M;
 (function (M) {
 })(M || (M = {}));

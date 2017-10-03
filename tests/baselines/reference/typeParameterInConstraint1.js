@@ -3,8 +3,8 @@ class C<T, U extends T> {
 }
 
 //// [typeParameterInConstraint1.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());

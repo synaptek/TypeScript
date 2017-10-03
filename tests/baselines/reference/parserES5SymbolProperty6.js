@@ -4,9 +4,9 @@ class C {
 }
 
 //// [parserES5SymbolProperty6.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         this[Symbol.toStringTag] = "";
     }
     return C;
-})();
+}());

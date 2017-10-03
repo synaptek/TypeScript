@@ -41,12 +41,12 @@ var r20 = a + ((a: string) => { return a });
 
 //// [additionOperatorWithAnyAndEveryType.js]
 function foo() { }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.foo = function () { };
     return C;
-})();
+}());
 var E;
 (function (E) {
     E[E["a"] = 0] = "a";

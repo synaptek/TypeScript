@@ -12,12 +12,12 @@ var c = new C<number>();
 var r: string = c.x;
 
 //// [genericGetter3.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     return A;
-})();
-var C = (function () {
+}());
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "x", {
@@ -28,6 +28,6 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());
 var c = new C();
 var r = c.x;

@@ -18,11 +18,11 @@ var x5: () => any;
 
 
 //// [implicitAnyDeclareTypePropertyWithoutType.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 // this should be an error
 var x; // error at "y,z"
 var x1; // error at "z1" 

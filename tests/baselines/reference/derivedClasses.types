@@ -11,14 +11,14 @@ class Red extends Color {
 >() => { return this.hue(); } : () => string
 >this.hue() : string
 >this.hue : () => string
->this : Red
+>this : this
 >hue : () => string
 
     	return getHue() + " red"; 
 >getHue() + " red" : string
 >getHue() : string
 >getHue : () => string
->" red" : string
+>" red" : " red"
     }
 }
 
@@ -27,11 +27,11 @@ class Color {
 
     public shade() { return "some shade"; }
 >shade : () => string
->"some shade" : string
+>"some shade" : "some shade"
 
     public hue() { return "some hue"; }
 >hue : () => string
->"some hue" : string
+>"some hue" : "some hue"
 }
 
 class Blue extends Color {
@@ -46,14 +46,14 @@ class Blue extends Color {
 >() => { return this.hue(); } : () => string
 >this.hue() : string
 >this.hue : () => string
->this : Blue
+>this : this
 >hue : () => string
 
     	return getHue() + " blue"; 
 >getHue() + " blue" : string
 >getHue() : string
 >getHue : () => string
->" blue" : string
+>" blue" : " blue"
     }
 }
 

@@ -1,5 +1,4 @@
-=== tests/cases/compiler/constEnumMergingWithValues4.ts ===
-
+=== tests/cases/compiler/m1.ts ===
 module foo {
 >foo : typeof foo
 
@@ -13,7 +12,7 @@ module foo {
 
     var x = 1;
 >x : number
->1 : number
+>1 : 1
 }
 
 

@@ -17,21 +17,21 @@ var x = foo<void>();
 
 //// [localTypes5.js]
 function foo() {
-    var X = (function () {
+    var X = /** @class */ (function () {
         function X() {
         }
         X.prototype.m = function () {
             return (function () {
-                var Y = (function () {
+                var Y = /** @class */ (function () {
                     function Y() {
                     }
                     return Y;
-                })();
+                }());
                 return new Y();
             })();
         };
         return X;
-    })();
+    }());
     var x = new X();
     return x.m();
 }

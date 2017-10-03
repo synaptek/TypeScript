@@ -9,7 +9,7 @@ class c {
 
 
 //// [thisWhenTypeCheckFails.js]
-var c = (function () {
+var c = /** @class */ (function () {
     function c() {
     }
     c.prototype.n = function () {
@@ -19,4 +19,4 @@ var c = (function () {
         };
     };
     return c;
-})();
+}());

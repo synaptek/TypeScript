@@ -23,7 +23,7 @@ var f: (a = 3) => number;
 function fun(a) {
     if (a === void 0) { a = null; }
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.fun = function (a) {
@@ -33,5 +33,5 @@ var C = (function () {
         if (a === void 0) { a = null; }
     };
     return C;
-})();
+}());
 var f;

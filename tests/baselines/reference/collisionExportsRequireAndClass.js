@@ -38,83 +38,85 @@ module m4 {
 
 //// [collisionExportsRequireAndClass_externalmodule.js]
 define(["require", "exports"], function (require, exports) {
-    var require = (function () {
+    "use strict";
+    exports.__esModule = true;
+    var require = /** @class */ (function () {
         function require() {
         }
         return require;
-    })();
+    }());
     exports.require = require;
-    var exports = (function () {
+    var exports = /** @class */ (function () {
         function exports() {
         }
         return exports;
-    })();
+    }());
     exports.exports = exports;
     var m1;
     (function (m1) {
-        var require = (function () {
+        var require = /** @class */ (function () {
             function require() {
             }
             return require;
-        })();
-        var exports = (function () {
+        }());
+        var exports = /** @class */ (function () {
             function exports() {
             }
             return exports;
-        })();
+        }());
     })(m1 || (m1 = {}));
     var m2;
     (function (m2) {
-        var require = (function () {
+        var require = /** @class */ (function () {
             function require() {
             }
             return require;
-        })();
+        }());
         m2.require = require;
-        var exports = (function () {
+        var exports = /** @class */ (function () {
             function exports() {
             }
             return exports;
-        })();
+        }());
         m2.exports = exports;
     })(m2 || (m2 = {}));
 });
 //// [collisionExportsRequireAndClass_globalFile.js]
-var require = (function () {
+var require = /** @class */ (function () {
     function require() {
     }
     return require;
-})();
-var exports = (function () {
+}());
+var exports = /** @class */ (function () {
     function exports() {
     }
     return exports;
-})();
+}());
 var m3;
 (function (m3) {
-    var require = (function () {
+    var require = /** @class */ (function () {
         function require() {
         }
         return require;
-    })();
-    var exports = (function () {
+    }());
+    var exports = /** @class */ (function () {
         function exports() {
         }
         return exports;
-    })();
+    }());
 })(m3 || (m3 = {}));
 var m4;
 (function (m4) {
-    var require = (function () {
+    var require = /** @class */ (function () {
         function require() {
         }
         return require;
-    })();
+    }());
     m4.require = require;
-    var exports = (function () {
+    var exports = /** @class */ (function () {
         function exports() {
         }
         return exports;
-    })();
+    }());
     m4.exports = exports;
 })(m4 || (m4 = {}));

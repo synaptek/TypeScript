@@ -9,7 +9,7 @@ class C {
 
 //// [staticGetter1.js]
 // once caused stack overflow
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C, "x", {
@@ -20,4 +20,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

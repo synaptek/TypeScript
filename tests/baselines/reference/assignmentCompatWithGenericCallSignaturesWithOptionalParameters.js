@@ -134,7 +134,7 @@ module GenericSignaturesValid {
 // call signatures in derived types must have the same or fewer optional parameters as the target for assignment
 var ClassTypeParam;
 (function (ClassTypeParam) {
-    var Base = (function () {
+    var Base = /** @class */ (function () {
         function Base() {
             var _this = this;
             this.init = function () {
@@ -159,20 +159,20 @@ var ClassTypeParam;
             };
         }
         return Base;
-    })();
+    }());
 })(ClassTypeParam || (ClassTypeParam = {}));
 var GenericSignaturesInvalid;
 (function (GenericSignaturesInvalid) {
-    var Base2 = (function () {
+    var Base2 = /** @class */ (function () {
         function Base2() {
         }
         return Base2;
-    })();
-    var Target = (function () {
+    }());
+    var Target = /** @class */ (function () {
         function Target() {
         }
         return Target;
-    })();
+    }());
     function foo() {
         var b;
         var t;
@@ -206,7 +206,7 @@ var GenericSignaturesInvalid;
 })(GenericSignaturesInvalid || (GenericSignaturesInvalid = {}));
 var GenericSignaturesValid;
 (function (GenericSignaturesValid) {
-    var Base2 = (function () {
+    var Base2 = /** @class */ (function () {
         function Base2() {
             var _this = this;
             this.init = function () {
@@ -231,5 +231,5 @@ var GenericSignaturesValid;
             };
         }
         return Base2;
-    })();
+    }());
 })(GenericSignaturesValid || (GenericSignaturesValid = {}));

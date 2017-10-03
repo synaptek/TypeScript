@@ -179,7 +179,7 @@ this.spaaaaace = 4;
 
 //// [typeOfThis.js]
 var _this = this;
-var MyTestClass = (function () {
+var MyTestClass = /** @class */ (function () {
     function MyTestClass() {
         var _this = this;
         this.someFunc = function () {
@@ -248,8 +248,8 @@ var MyTestClass = (function () {
         configurable: true
     });
     return MyTestClass;
-})();
-var MyGenericTestClass = (function () {
+}());
+var MyGenericTestClass = /** @class */ (function () {
     function MyGenericTestClass() {
         var _this = this;
         this.someFunc = function () {
@@ -318,7 +318,7 @@ var MyGenericTestClass = (function () {
         configurable: true
     });
     return MyGenericTestClass;
-})();
+}());
 //type of 'this' in a function declaration param list is Any
 function fn(s) {
     if (s === void 0) { s = this; }

@@ -33,7 +33,7 @@ class C2 {
 
 //// [privateClassPropertyAccessibleWithinClass.js]
 // no errors
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "y", {
@@ -52,9 +52,9 @@ var C = (function () {
     C.foo = function () { return this.foo; };
     C.bar = function () { this.foo(); };
     return C;
-})();
+}());
 // added level of function nesting
-var C2 = (function () {
+var C2 = /** @class */ (function () {
     function C2() {
     }
     Object.defineProperty(C2.prototype, "y", {
@@ -96,4 +96,4 @@ var C2 = (function () {
         (function () { return _this.foo(); });
     };
     return C2;
-})();
+}());

@@ -38,24 +38,24 @@ var b: {
 
 //// [constructSignatureWithAccessibilityModifiersOnParameters2.js]
 // Parameter properties are not valid in overloads of constructors
-var C = (function () {
+var C = /** @class */ (function () {
     function C(x, y) {
         this.x = x;
         this.y = y;
     }
     return C;
-})();
-var C2 = (function () {
+}());
+var C2 = /** @class */ (function () {
     function C2(x) {
         this.x = x;
     }
     return C2;
-})();
-var C3 = (function () {
+}());
+var C3 = /** @class */ (function () {
     function C3(y) {
         this.y = y;
     }
     return C3;
-})();
+}());
 var a;
 var b;

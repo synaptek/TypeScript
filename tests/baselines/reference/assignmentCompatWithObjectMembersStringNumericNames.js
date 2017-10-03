@@ -90,16 +90,16 @@ module NumbersAndStrings {
 // string named numeric properties work correctly, errors below unless otherwise noted
 var JustStrings;
 (function (JustStrings) {
-    var S = (function () {
+    var S = /** @class */ (function () {
         function S() {
         }
         return S;
-    })();
-    var T = (function () {
+    }());
+    var T = /** @class */ (function () {
         function T() {
         }
         return T;
-    })();
+    }());
     var s;
     var t;
     var s2;
@@ -130,16 +130,16 @@ var JustStrings;
 })(JustStrings || (JustStrings = {}));
 var NumbersAndStrings;
 (function (NumbersAndStrings) {
-    var S = (function () {
+    var S = /** @class */ (function () {
         function S() {
         }
         return S;
-    })();
-    var T = (function () {
+    }());
+    var T = /** @class */ (function () {
         function T() {
         }
         return T;
-    })();
+    }());
     var s;
     var t;
     var s2;

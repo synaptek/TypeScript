@@ -1,5 +1,4 @@
 //// [es5-umd.ts]
-
 class A
 {
     constructor ()
@@ -15,11 +14,11 @@ class A
 
 
 //// [es5-umd.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.B = function () {
         return 42;
     };
     return A;
-})();
+}());

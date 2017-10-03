@@ -42,12 +42,11 @@ else {
     c = numOrC; // C
 }
 
-// Narrowing occurs only if target type is a subtype of variable type
 if (typeof strOrBool === "number") {
-    var y1: string | boolean = strOrBool; // string | boolean
+    let y1: {} = strOrBool; // {}
 }
 else {
-    var y2: string | boolean = strOrBool; // string | boolean
+    let y2: string | boolean = strOrBool; // string | boolean
 }
 
 // A type guard of the form typeof x !== s, where s is a string literal,
@@ -78,21 +77,20 @@ else {
     num = numOrC; // number
 }
 
-// Narrowing occurs only if target type is a subtype of variable type
 if (typeof strOrBool !== "number") {
-    var y1: string | boolean = strOrBool; // string | boolean
+    let y1: string | boolean = strOrBool; // string | boolean
 }
 else {
-    var y2: string | boolean = strOrBool; // string | boolean
+    let y2: {} = strOrBool; // {}
 }
 
 
 //// [typeGuardOfFormTypeOfNumber.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 ;
 var str;
 var bool;
@@ -133,9 +131,8 @@ if (typeof numOrC === "number") {
 else {
     c = numOrC; // C
 }
-// Narrowing occurs only if target type is a subtype of variable type
 if (typeof strOrBool === "number") {
-    var y1 = strOrBool; // string | boolean
+    var y1 = strOrBool; // {}
 }
 else {
     var y2 = strOrBool; // string | boolean
@@ -167,10 +164,9 @@ if (typeof numOrC !== "number") {
 else {
     num = numOrC; // number
 }
-// Narrowing occurs only if target type is a subtype of variable type
 if (typeof strOrBool !== "number") {
     var y1 = strOrBool; // string | boolean
 }
 else {
-    var y2 = strOrBool; // string | boolean
+    var y2 = strOrBool; // {}
 }

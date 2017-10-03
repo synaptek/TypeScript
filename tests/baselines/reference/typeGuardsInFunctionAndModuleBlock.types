@@ -2,15 +2,15 @@
 // typeguards are scoped in function/module block
 
 function foo(x: number | string | boolean) {
->foo : (x: number | string | boolean) => string
->x : number | string | boolean
+>foo : (x: string | number | boolean) => string
+>x : string | number | boolean
 
     return typeof x === "string"
 >typeof x === "string"        ? x        : function f() {            var b = x; // number | boolean            return typeof x === "boolean"                ? x.toString() // boolean                : x.toString(); // number        } () : string
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
         ? x
 >x : string
@@ -27,9 +27,9 @@ function foo(x: number | string | boolean) {
             return typeof x === "boolean"
 >typeof x === "boolean"                ? x.toString() // boolean                : x.toString() : string
 >typeof x === "boolean" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : number | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
                 ? x.toString() // boolean
 >x.toString() : string
@@ -46,15 +46,15 @@ function foo(x: number | string | boolean) {
         } ();
 }
 function foo2(x: number | string | boolean) {
->foo2 : (x: number | string | boolean) => string
->x : number | string | boolean
+>foo2 : (x: string | number | boolean) => string
+>x : string | number | boolean
 
     return typeof x === "string"
 >typeof x === "string"        ? x        : function f(a: number | boolean) {            var b = x; // new scope - number | boolean            return typeof x === "boolean"                ? x.toString() // boolean                : x.toString(); // number        } (x) : string
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
         ? x
 >x : string
@@ -72,9 +72,9 @@ function foo2(x: number | string | boolean) {
             return typeof x === "boolean"
 >typeof x === "boolean"                ? x.toString() // boolean                : x.toString() : string
 >typeof x === "boolean" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : number | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
                 ? x.toString() // boolean
 >x.toString() : string
@@ -92,15 +92,15 @@ function foo2(x: number | string | boolean) {
 >x : number | boolean
 }
 function foo3(x: number | string | boolean) {
->foo3 : (x: number | string | boolean) => string
->x : number | string | boolean
+>foo3 : (x: string | number | boolean) => string
+>x : string | number | boolean
 
     return typeof x === "string"
 >typeof x === "string"        ? x        : (() => {            var b = x; // new scope - number | boolean            return typeof x === "boolean"                ? x.toString() // boolean                : x.toString(); // number        })() : string
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
         ? x
 >x : string
@@ -117,9 +117,9 @@ function foo3(x: number | string | boolean) {
             return typeof x === "boolean"
 >typeof x === "boolean"                ? x.toString() // boolean                : x.toString() : string
 >typeof x === "boolean" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : number | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
                 ? x.toString() // boolean
 >x.toString() : string
@@ -136,15 +136,15 @@ function foo3(x: number | string | boolean) {
         })();
 }
 function foo4(x: number | string | boolean) {
->foo4 : (x: number | string | boolean) => string
->x : number | string | boolean
+>foo4 : (x: string | number | boolean) => string
+>x : string | number | boolean
 
     return typeof x === "string"
 >typeof x === "string"        ? x        : ((a: number | boolean) => {            var b = x; // new scope - number | boolean            return typeof x === "boolean"                ? x.toString() // boolean                : x.toString(); // number        })(x) : string
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
         ? x
 >x : string
@@ -162,9 +162,9 @@ function foo4(x: number | string | boolean) {
             return typeof x === "boolean"
 >typeof x === "boolean"                ? x.toString() // boolean                : x.toString() : string
 >typeof x === "boolean" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : number | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
                 ? x.toString() // boolean
 >x.toString() : string
@@ -181,16 +181,16 @@ function foo4(x: number | string | boolean) {
         })(x); // x here is narrowed to number | boolean
 >x : number | boolean
 }
-// Type guards affect nested function expressions, but not nested function declarations
+// Type guards do not affect nested function declarations
 function foo5(x: number | string | boolean) {
->foo5 : (x: number | string | boolean) => void
->x : number | string | boolean
+>foo5 : (x: string | number | boolean) => void
+>x : string | number | boolean
 
     if (typeof x === "string") {
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
         var y = x; // string;
 >y : string
@@ -199,9 +199,9 @@ function foo5(x: number | string | boolean) {
         function foo() {
 >foo : () => void
 
-            var z = x; // number | string | boolean, type guard has no effect
->z : number | string | boolean
->x : number | string | boolean
+            var z = x; // string
+>z : string | number | boolean
+>x : string | number | boolean
         }
     }
 }
@@ -209,23 +209,23 @@ module m {
 >m : typeof m
 
     var x: number | string | boolean;
->x : number | string | boolean
+>x : string | number | boolean
 
     module m2 {
 >m2 : typeof m2
 
         var b = x; // new scope - number | boolean | string
->b : number | string | boolean
->x : number | string | boolean
+>b : string | number | boolean
+>x : string | number | boolean
 
         var y: string;
 >y : string
 
         if (typeof x === "string") {
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
             y = x // string;
 >y = x : string
@@ -238,9 +238,9 @@ module m {
 >y : string
 >typeof x === "boolean"            ? x.toString() // boolean            : x.toString() : string
 >typeof x === "boolean" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : number | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
             ? x.toString() // boolean
 >x.toString() : string
@@ -260,24 +260,24 @@ module m1 {
 >m1 : typeof m1
 
     var x: number | string | boolean;
->x : number | string | boolean
+>x : string | number | boolean
 
     module m2.m3 {
 >m2 : typeof m2
 >m3 : typeof m3
 
         var b = x; // new scope - number | boolean | string
->b : number | string | boolean
->x : number | string | boolean
+>b : string | number | boolean
+>x : string | number | boolean
 
         var y: string;
 >y : string
 
         if (typeof x === "string") {
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string | boolean
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | boolean
+>"string" : "string"
 
             y = x // string;
 >y = x : string
@@ -290,9 +290,9 @@ module m1 {
 >y : string
 >typeof x === "boolean"            ? x.toString() // boolean            : x.toString() : string
 >typeof x === "boolean" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : number | boolean
->"boolean" : string
+>"boolean" : "boolean"
 
             ? x.toString() // boolean
 >x.toString() : string

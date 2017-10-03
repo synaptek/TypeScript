@@ -29,59 +29,64 @@ class K extends J {
 }
 
 //// [indexerConstraints2.js]
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var A = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var A = /** @class */ (function () {
     function A() {
     }
     return A;
-})();
-var B = (function (_super) {
+}());
+var B = /** @class */ (function (_super) {
     __extends(B, _super);
     function B() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return B;
-})(A);
+}(A));
 // Inheritance
-var F = (function () {
+var F = /** @class */ (function () {
     function F() {
     }
     return F;
-})();
-var G = (function (_super) {
+}());
+var G = /** @class */ (function (_super) {
     __extends(G, _super);
     function G() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return G;
-})(F);
+}(F));
 // Other way
-var H = (function () {
+var H = /** @class */ (function () {
     function H() {
     }
     return H;
-})();
-var I = (function (_super) {
+}());
+var I = /** @class */ (function (_super) {
     __extends(I, _super);
     function I() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return I;
-})(H);
+}(H));
 // With hidden indexer
-var J = (function () {
+var J = /** @class */ (function () {
     function J() {
     }
     return J;
-})();
-var K = (function (_super) {
+}());
+var K = /** @class */ (function (_super) {
     __extends(K, _super);
     function K() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return K;
-})(J);
+}(J));

@@ -72,14 +72,14 @@ f(1);
 f();
 f2(1);
 f2(1, 2);
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x) {
         if (x === void 0) { x = 1; }
     };
     return C;
-})();
+}());
 var c;
 c.foo();
 c.foo(1);

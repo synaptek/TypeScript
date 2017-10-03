@@ -41,7 +41,7 @@ class D<T> {
 }
 
 //// [memberFunctionsWithPublicOverloads.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x, y) { };
@@ -49,8 +49,8 @@ var C = (function () {
     C.foo = function (x, y) { };
     C.bar = function (x, y) { };
     return C;
-})();
-var D = (function () {
+}());
+var D = /** @class */ (function () {
     function D() {
     }
     D.prototype.foo = function (x, y) { };
@@ -58,4 +58,4 @@ var D = (function () {
     D.foo = function (x, y) { };
     D.bar = function (x, y) { };
     return D;
-})();
+}());

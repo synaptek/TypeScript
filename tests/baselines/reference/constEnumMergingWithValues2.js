@@ -1,5 +1,4 @@
-//// [constEnumMergingWithValues2.ts]
-
+//// [m1.ts]
 class foo {}
 module foo {
     const enum E { X }
@@ -7,12 +6,13 @@ module foo {
 
 export = foo
 
-//// [constEnumMergingWithValues2.js]
+//// [m1.js]
 define(["require", "exports"], function (require, exports) {
-    var foo = (function () {
+    "use strict";
+    var foo = /** @class */ (function () {
         function foo() {
         }
         return foo;
-    })();
+    }());
     return foo;
 });

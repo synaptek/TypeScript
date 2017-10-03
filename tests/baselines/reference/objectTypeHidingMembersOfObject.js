@@ -29,12 +29,12 @@ var r4: void = b.valueOf();
 
 //// [objectTypeHidingMembersOfObject.js]
 // all of these valueOf calls should return the type shown in the overriding signatures here
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.valueOf = function () { };
     return C;
-})();
+}());
 var c;
 var r1 = c.valueOf();
 var i;

@@ -17,14 +17,14 @@ c.m(function(n) { return "hello: "+n; },18);
 //// [anonterface.js]
 var M;
 (function (M) {
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         C.prototype.m = function (fn, n2) {
             return fn(n2);
         };
         return C;
-    })();
+    }());
     M.C = C;
 })(M || (M = {}));
 var c = new M.C();

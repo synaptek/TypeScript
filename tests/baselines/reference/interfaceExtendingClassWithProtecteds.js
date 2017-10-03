@@ -16,11 +16,11 @@ var r = i.y;
 var r2 = i.x; // error
 
 //// [interfaceExtendingClassWithProtecteds.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     return Foo;
-})();
+}());
 var i;
 var r = i.y;
 var r2 = i.x; // error

@@ -6,10 +6,10 @@ class C {
 var { x } = new C;
 
 //// [destructuringWithNewExpression.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         this.x = 0;
     }
     return C;
-})();
+}());
 var x = (new C).x;

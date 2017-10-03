@@ -27,18 +27,18 @@ module Consumer {
 //// [fatArrowSelf.js]
 var Events;
 (function (Events) {
-    var EventEmitter = (function () {
+    var EventEmitter = /** @class */ (function () {
         function EventEmitter() {
         }
         EventEmitter.prototype.addListener = function (type, listener) {
         };
         return EventEmitter;
-    })();
+    }());
     Events.EventEmitter = EventEmitter;
 })(Events || (Events = {}));
 var Consumer;
 (function (Consumer) {
-    var EventEmitterConsummer = (function () {
+    var EventEmitterConsummer = /** @class */ (function () {
         function EventEmitterConsummer(emitter) {
             this.emitter = emitter;
         }
@@ -51,5 +51,5 @@ var Consumer;
         EventEmitterConsummer.prototype.changed = function () {
         };
         return EventEmitterConsummer;
-    })();
+    }());
 })(Consumer || (Consumer = {}));

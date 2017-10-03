@@ -31,7 +31,7 @@ b.foo();
 
 
 //// [autolift3.js]
-var B = (function () {
+var B = /** @class */ (function () {
     function B() {
         function foo() { }
         foo();
@@ -49,6 +49,6 @@ var B = (function () {
         })();
     }
     return B;
-})();
+}());
 var b = new B();
 b.foo();

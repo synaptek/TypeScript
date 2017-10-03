@@ -1,5 +1,4 @@
 //// [declFileForClassWithPrivateOverloadedFunction.ts]
-
 class C {
     private foo(x: number);
     private foo(x: string);
@@ -7,12 +6,12 @@ class C {
 }
 
 //// [declFileForClassWithPrivateOverloadedFunction.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.foo = function (x) { };
     return C;
-})();
+}());
 
 
 //// [declFileForClassWithPrivateOverloadedFunction.d.ts]

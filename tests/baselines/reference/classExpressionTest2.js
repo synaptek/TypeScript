@@ -14,7 +14,7 @@ function M() {
 
 //// [classExpressionTest2.js]
 function M() {
-    var m = (function () {
+    var m = /** @class */ (function () {
         function C() {
         }
         C.prototype.f = function () {
@@ -23,7 +23,7 @@ function M() {
             return { t: t, x: x };
         };
         return C;
-    })();
+    }());
     var v = new m();
     return v.f();
 }

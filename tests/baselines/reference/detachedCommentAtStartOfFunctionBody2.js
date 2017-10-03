@@ -10,7 +10,7 @@ class TestFile {
 }
 
 //// [detachedCommentAtStartOfFunctionBody2.js]
-var TestFile = (function () {
+var TestFile = /** @class */ (function () {
     function TestFile() {
     }
     TestFile.prototype.foo = function (message) {
@@ -21,4 +21,4 @@ var TestFile = (function () {
         return function () { return message + _this.name; };
     };
     return TestFile;
-})();
+}());

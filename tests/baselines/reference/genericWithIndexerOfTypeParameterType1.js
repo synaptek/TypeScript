@@ -9,7 +9,7 @@ var lazyArray = new LazyArray<string>();
 var value: string = lazyArray.array()["test"]; // used to be an error
 
 //// [genericWithIndexerOfTypeParameterType1.js]
-var LazyArray = (function () {
+var LazyArray = /** @class */ (function () {
     function LazyArray() {
         this.objects = {};
     }
@@ -17,6 +17,6 @@ var LazyArray = (function () {
         return this.objects;
     };
     return LazyArray;
-})();
+}());
 var lazyArray = new LazyArray();
 var value = lazyArray.array()["test"]; // used to be an error

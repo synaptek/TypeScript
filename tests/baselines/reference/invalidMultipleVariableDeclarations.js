@@ -54,36 +54,41 @@ var m: typeof M;
 var m = M.A;
 
 //// [invalidMultipleVariableDeclarations.js]
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var C = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-var C2 = (function (_super) {
+}());
+var C2 = /** @class */ (function (_super) {
     __extends(C2, _super);
     function C2() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return C2;
-})(C);
-var D = (function () {
+}(C));
+var D = /** @class */ (function () {
     function D() {
     }
     return D;
-})();
+}());
 function F(x) { return 42; }
 var M;
 (function (M) {
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     M.A = A;
     function F2(x) { return x.toString(); }
     M.F2 = F2;

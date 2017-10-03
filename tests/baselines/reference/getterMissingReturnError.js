@@ -7,7 +7,7 @@ class test {
 
 
 //// [getterMissingReturnError.js]
-var test = (function () {
+var test = /** @class */ (function () {
     function test() {
     }
     Object.defineProperty(test.prototype, "p2", {
@@ -17,4 +17,4 @@ var test = (function () {
         configurable: true
     });
     return test;
-})();
+}());

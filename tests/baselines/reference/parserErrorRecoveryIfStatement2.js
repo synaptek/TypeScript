@@ -10,7 +10,7 @@ class Foo {
 }
 
 //// [parserErrorRecoveryIfStatement2.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Foo.prototype.f1 = function () {
@@ -22,4 +22,4 @@ var Foo = (function () {
     Foo.prototype.f3 = function () {
     };
     return Foo;
-})();
+}());

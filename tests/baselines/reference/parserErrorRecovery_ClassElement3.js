@@ -10,11 +10,11 @@ module M {
 //// [parserErrorRecovery_ClassElement3.js]
 var M;
 (function (M) {
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         return C;
-    })();
+    }());
     var E;
     (function (E) {
     })(E || (E = {}));

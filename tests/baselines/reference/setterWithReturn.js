@@ -11,7 +11,7 @@ class C234 {
 }
 
 //// [setterWithReturn.js]
-var C234 = (function () {
+var C234 = /** @class */ (function () {
     function C234() {
     }
     Object.defineProperty(C234.prototype, "p1", {
@@ -27,4 +27,4 @@ var C234 = (function () {
         configurable: true
     });
     return C234;
-})();
+}());

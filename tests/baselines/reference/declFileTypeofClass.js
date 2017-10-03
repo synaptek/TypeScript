@@ -1,5 +1,4 @@
 //// [declFileTypeofClass.ts]
-
 class c {
     static x : string;
     private static y: number;
@@ -17,19 +16,19 @@ var genericX = genericC;
 
 
 //// [declFileTypeofClass.js]
-var c = (function () {
+var c = /** @class */ (function () {
     function c() {
     }
     return c;
-})();
+}());
 var x;
 var y = c;
 var z;
-var genericC = (function () {
+var genericC = /** @class */ (function () {
     function genericC() {
     }
     return genericC;
-})();
+}());
 var genericX = genericC;
 
 

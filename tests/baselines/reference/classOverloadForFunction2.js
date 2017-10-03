@@ -3,8 +3,8 @@ function bar(): string;
 class bar {}
 
 //// [classOverloadForFunction2.js]
-var bar = (function () {
+var bar = /** @class */ (function () {
     function bar() {
     }
     return bar;
-})();
+}());

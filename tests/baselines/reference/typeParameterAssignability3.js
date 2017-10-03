@@ -27,11 +27,11 @@ class C<T extends Foo, U extends Foo> {
 
 //// [typeParameterAssignability3.js]
 // type parameters are not assignable to one another unless directly or indirectly constrained to one another
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     return Foo;
-})();
+}());
 function foo(t, u) {
     var a;
     var b;
@@ -42,7 +42,7 @@ function foo(t, u) {
     t = u; // error
     u = t; // error
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         var _this = this;
         this.r = function () {
@@ -51,4 +51,4 @@ var C = (function () {
         };
     }
     return C;
-})();
+}());

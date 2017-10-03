@@ -29,9 +29,9 @@ var [a0, a1]: any = undefined;
 
 var [a2 = false, a3 = 1]: any = undefined;
 >a2 : boolean
->false : boolean
+>false : false
 >a3 : number
->1 : number
+>1 : 1
 >undefined : undefined
 
 // V is an array assignment pattern, S is the type Any or an array-like type (section 3.3.2), and, for each assignment element E in V,
@@ -42,27 +42,27 @@ var [b0, b1, b2] = [2, 3, 4];
 >b1 : number
 >b2 : number
 >[2, 3, 4] : [number, number, number]
->2 : number
->3 : number
->4 : number
+>2 : 2
+>3 : 3
+>4 : 4
 
 var [b3, b4, b5]: [number, number, string] = [1, 2, "string"];
 >b3 : number
 >b4 : number
 >b5 : string
 >[1, 2, "string"] : [number, number, string]
->1 : number
->2 : number
->"string" : string
+>1 : 1
+>2 : 2
+>"string" : "string"
 
 function foo() {
 >foo : () => number[]
 
     return [1, 2, 3];
 >[1, 2, 3] : number[]
->1 : number
->2 : number
->3 : number
+>1 : 1
+>2 : 2
+>3 : 3
 }
 
 var [b6, b7] = foo();
@@ -80,9 +80,9 @@ var [...b8] = foo();
 var temp = [1,2,3]
 >temp : number[]
 >[1,2,3] : number[]
->1 : number
->2 : number
->3 : number
+>1 : 1
+>2 : 2
+>3 : 3
 
 var [c0, c1] = [...temp];
 >c0 : number
@@ -93,34 +93,34 @@ var [c0, c1] = [...temp];
 
 var [c2] = [];
 >c2 : any
->[] : undefined[]
+>[] : [any]
 
 var [[[c3]], [[[[c4]]]]] = [[[]], [[[[]]]]]
 >c3 : any
 >c4 : any
->[[[]], [[[[]]]]] : [[undefined[]], [[[undefined[]]]]]
->[[]] : [undefined[]]
->[] : undefined[]
->[[[[]]]] : [[[undefined[]]]]
->[[[]]] : [[undefined[]]]
->[[]] : [undefined[]]
->[] : undefined[]
+>[[[]], [[[[]]]]] : [[[any]], [[[[any]]]]]
+>[[]] : [[any]]
+>[] : [any]
+>[[[[]]]] : [[[[any]]]]
+>[[[]]] : [[[any]]]
+>[[]] : [[any]]
+>[] : [any]
 
 var [[c5], c6]: [[string|number], boolean] = [[1], true];
 >c5 : string | number
 >c6 : boolean
->[[1], true] : [[number], boolean]
+>[[1], true] : [[number], true]
 >[1] : [number]
->1 : number
->true : boolean
+>1 : 1
+>true : true
 
 var [, c7] = [1, 2, 3];
 > : undefined
 >c7 : number
 >[1, 2, 3] : [number, number, number]
->1 : number
->2 : number
->3 : number
+>1 : 1
+>2 : 2
+>3 : 3
 
 var [,,, c8] = [1, 2, 3, 4];
 > : undefined
@@ -128,10 +128,10 @@ var [,,, c8] = [1, 2, 3, 4];
 > : undefined
 >c8 : number
 >[1, 2, 3, 4] : [number, number, number, number]
->1 : number
->2 : number
->3 : number
->4 : number
+>1 : 1
+>2 : 2
+>3 : 3
+>4 : 4
 
 var [,,, c9] = [1, 2, 3, 4];
 > : undefined
@@ -139,39 +139,39 @@ var [,,, c9] = [1, 2, 3, 4];
 > : undefined
 >c9 : number
 >[1, 2, 3, 4] : [number, number, number, number]
->1 : number
->2 : number
->3 : number
->4 : number
+>1 : 1
+>2 : 2
+>3 : 3
+>4 : 4
 
 var [,,,...c10] = [1, 2, 3, 4, "hello"];
 > : undefined
 > : undefined
 > : undefined
->c10 : (number | string)[]
->[1, 2, 3, 4, "hello"] : (number | string)[]
->1 : number
->2 : number
->3 : number
->4 : number
->"hello" : string
+>c10 : (string | number)[]
+>[1, 2, 3, 4, "hello"] : (string | number)[]
+>1 : 1
+>2 : 2
+>3 : 3
+>4 : 4
+>"hello" : "hello"
 
 var [c11, c12, ...c13] = [1, 2, "string"];
->c11 : number | string
->c12 : number | string
->c13 : (number | string)[]
->[1, 2, "string"] : (number | string)[]
->1 : number
->2 : number
->"string" : string
+>c11 : string | number
+>c12 : string | number
+>c13 : (string | number)[]
+>[1, 2, "string"] : (string | number)[]
+>1 : 1
+>2 : 2
+>"string" : "string"
 
 var [c14, c15, c16] = [1, 2, "string"];
 >c14 : number
 >c15 : number
 >c16 : string
 >[1, 2, "string"] : [number, number, string]
->1 : number
->2 : number
->"string" : string
+>1 : 1
+>2 : 2
+>"string" : "string"
 
 

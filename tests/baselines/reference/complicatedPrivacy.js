@@ -115,7 +115,7 @@ var m1;
         function f2(c2) {
         }
         m2.f2 = f2;
-        var C2 = (function () {
+        var C2 = /** @class */ (function () {
             function C2() {
             }
             Object.defineProperty(C2.prototype, "p1", {
@@ -131,7 +131,7 @@ var m1;
                 return "Hello world";
             };
             return C2;
-        })();
+        }());
         m2.C2 = C2;
     })(m2 = m1.m2 || (m1.m2 = {}));
     function f2(arg1) {
@@ -152,43 +152,43 @@ var m1;
         function f2(f1) {
         }
     })(m3 || (m3 = {}));
-    var C1 = (function () {
+    var C1 = /** @class */ (function () {
         function C1() {
         }
         return C1;
-    })();
-    var C5 = (function () {
+    }());
+    var C5 = /** @class */ (function () {
         function C5() {
         }
         return C5;
-    })();
+    }());
     m1.C5 = C5;
 })(m1 || (m1 = {}));
-var C2 = (function () {
+var C2 = /** @class */ (function () {
     function C2() {
     }
     return C2;
-})();
+}());
 var m2;
 (function (m2) {
     var m3;
     (function (m3) {
-        var c_pr = (function () {
+        var c_pr = /** @class */ (function () {
             function c_pr() {
             }
             c_pr.prototype.f1 = function () {
                 return "Hello";
             };
             return c_pr;
-        })();
+        }());
         m3.c_pr = c_pr;
         var m4;
         (function (m4) {
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             var m5;
             (function (m5) {
                 var m6;

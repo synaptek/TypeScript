@@ -15,7 +15,7 @@ var r = c.x(''); // string
 
 //// [accessorsAreNotContextuallyTyped.js]
 // accessors are not contextually typed
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "x", {
@@ -28,6 +28,6 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());
 var c;
 var r = c.x(''); // string

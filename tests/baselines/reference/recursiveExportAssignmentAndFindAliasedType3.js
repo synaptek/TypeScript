@@ -26,13 +26,16 @@ export var b: ClassB; // This should result in type ClassB
 
 //// [recursiveExportAssignmentAndFindAliasedType3_moduleB.js]
 define(["require", "exports"], function (require, exports) {
-    var ClassB = (function () {
+    "use strict";
+    var ClassB = /** @class */ (function () {
         function ClassB() {
         }
         return ClassB;
-    })();
+    }());
     return ClassB;
 });
 //// [recursiveExportAssignmentAndFindAliasedType3_moduleA.js]
 define(["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
 });

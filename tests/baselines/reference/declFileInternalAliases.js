@@ -15,11 +15,11 @@ module m2 {
 //// [declFileInternalAliases.js]
 var m;
 (function (m) {
-    var c = (function () {
+    var c = /** @class */ (function () {
         function c() {
         }
         return c;
-    })();
+    }());
     m.c = c;
 })(m || (m = {}));
 var m1;

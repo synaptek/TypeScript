@@ -1,5 +1,4 @@
 //// [es5-commonjs.ts]
-
 export default class A
 {
     constructor ()
@@ -15,13 +14,14 @@ export default class A
 
 
 //// [es5-commonjs.js]
-var A = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.B = function () {
         return 42;
     };
     return A;
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
+}());
 exports.default = A;

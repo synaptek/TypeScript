@@ -9,7 +9,7 @@ export = Car;
 
 //// [arrayOfExportedClass_1.ts]
 ///<reference path='arrayOfExportedClass_0.ts'/>
-import Car = require('arrayOfExportedClass_0');
+import Car = require('./arrayOfExportedClass_0');
 
 class Road {
 
@@ -25,19 +25,21 @@ export = Road;
 
 
 //// [arrayOfExportedClass_0.js]
-var Car = (function () {
+"use strict";
+var Car = /** @class */ (function () {
     function Car() {
     }
     return Car;
-})();
+}());
 module.exports = Car;
 //// [arrayOfExportedClass_1.js]
-var Road = (function () {
+"use strict";
+var Road = /** @class */ (function () {
     function Road() {
     }
     Road.prototype.AddCars = function (cars) {
         this.cars = cars;
     };
     return Road;
-})();
+}());
 module.exports = Road;

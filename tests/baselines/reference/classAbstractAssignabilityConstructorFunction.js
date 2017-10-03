@@ -9,11 +9,11 @@ AAA = A; // error.
 AAA = "asdf";
 
 //// [classAbstractAssignabilityConstructorFunction.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     return A;
-})();
+}());
 // var AA: typeof A;
 var AAA;
 // AA = A; // okay

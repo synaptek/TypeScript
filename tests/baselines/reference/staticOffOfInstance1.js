@@ -7,7 +7,7 @@ class List {
 }
 
 //// [staticOffOfInstance1.js]
-var List = (function () {
+var List = /** @class */ (function () {
     function List() {
     }
     List.prototype.Blah = function () {
@@ -15,4 +15,4 @@ var List = (function () {
     };
     List.Foo = function () { };
     return List;
-})();
+}());

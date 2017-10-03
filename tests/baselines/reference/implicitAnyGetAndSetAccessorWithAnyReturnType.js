@@ -25,7 +25,7 @@ class GetterOnly {
 
 //// [implicitAnyGetAndSetAccessorWithAnyReturnType.js]
 // these should be errors
-var GetAndSet = (function () {
+var GetAndSet = /** @class */ (function () {
     function GetAndSet() {
         this.getAndSet = null; // error at "getAndSet"
     }
@@ -41,8 +41,8 @@ var GetAndSet = (function () {
         configurable: true
     });
     return GetAndSet;
-})();
-var SetterOnly = (function () {
+}());
+var SetterOnly = /** @class */ (function () {
     function SetterOnly() {
     }
     Object.defineProperty(SetterOnly.prototype, "haveOnlySet", {
@@ -52,8 +52,8 @@ var SetterOnly = (function () {
         configurable: true
     });
     return SetterOnly;
-})();
-var GetterOnly = (function () {
+}());
+var GetterOnly = /** @class */ (function () {
     function GetterOnly() {
     }
     Object.defineProperty(GetterOnly.prototype, "haveOnlyGet", {
@@ -64,4 +64,4 @@ var GetterOnly = (function () {
         configurable: true
     });
     return GetterOnly;
-})();
+}());

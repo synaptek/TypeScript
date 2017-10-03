@@ -6,13 +6,13 @@ var x=null;
 var y=3+x;  
 >y : any
 >3+x : any
->3 : number
+>3 : 3
 >x : any
 
 var z=3+null; 
->z : number
->3+null : number
->3 : number
+>z : any
+>3+null : any
+>3 : 3
 >null : null
 
 class C {
@@ -35,7 +35,7 @@ function g() {
 >null : null
 
     return 3;
->3 : number
+>3 : 3
 }
 interface I {
 >I : I
@@ -53,7 +53,7 @@ var w:I={x:null,y:3};
 >x : null
 >null : null
 >y : number
->3 : number
+>3 : 3
 
 
 

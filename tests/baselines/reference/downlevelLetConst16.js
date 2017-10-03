@@ -254,7 +254,7 @@ function foo2() {
     }
     use(x);
 }
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.m1 = function () {
@@ -277,8 +277,8 @@ var A = (function () {
         use(x);
     };
     return A;
-})();
-var B = (function () {
+}());
+var B = /** @class */ (function () {
     function B() {
     }
     B.prototype.m1 = function () {
@@ -301,7 +301,7 @@ var B = (function () {
         use(x);
     };
     return B;
-})();
+}());
 function bar1() {
     var x = 1;
     use(x);
@@ -366,7 +366,7 @@ var M4;
     use(z);
 })(M4 || (M4 = {}));
 function foo3() {
-    for (var x_7 = void 0;;) {
+    for (var x_7;;) {
         use(x_7);
     }
     for (var y_7 = [][0];;) {

@@ -5,8 +5,8 @@ class C {
 }
 
 //// [propertyNamedPrototype.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());

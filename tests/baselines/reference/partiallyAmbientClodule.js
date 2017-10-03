@@ -5,8 +5,8 @@ declare module foo {
 class foo { } // Legal, because module is ambient
 
 //// [partiallyAmbientClodule.js]
-var foo = (function () {
+var foo = /** @class */ (function () {
     function foo() {
     }
     return foo;
-})(); // Legal, because module is ambient
+}()); // Legal, because module is ambient

@@ -50,24 +50,24 @@ var x;
 
 
 //// [everyTypeWithInitializer.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
-var D = (function () {
+}());
+var D = /** @class */ (function () {
     function D() {
     }
     return D;
-})();
+}());
 function F(x) { return 42; }
 var M;
 (function (M) {
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     M.A = A;
     function F2(x) { return x.toString(); }
     M.F2 = F2;

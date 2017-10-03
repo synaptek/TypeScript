@@ -2,22 +2,22 @@
 // Also note that it is possible to defeat a type guard by calling a function that changes the 
 // type of the guarded variable.
 function foo(x: number | string) {
->foo : (x: number | string) => number
->x : number | string
+>foo : (x: string | number) => number
+>x : string | number
 
     function f() {
 >f : () => void
 
         x = 10;
->x = 10 : number
->x : number | string
->10 : number
+>x = 10 : 10
+>x : string | number
+>10 : 10
     }
     if (typeof x === "string") {
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number
+>"string" : "string"
 
         f();
 >f() : void
@@ -35,14 +35,14 @@ function foo(x: number | string) {
     }
 }
 function foo2(x: number | string) {
->foo2 : (x: number | string) => number
->x : number | string
+>foo2 : (x: string | number) => number
+>x : string | number
 
     if (typeof x === "string") {
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number
+>"string" : "string"
 
         return x.length; // string
 >x.length : number
@@ -56,29 +56,29 @@ function foo2(x: number | string) {
 
             return x * x;
 >x * x : number
->x : number
->x : number
+>x : string | number
+>x : string | number
 
         };
     }
     x = "hello";
->x = "hello" : string
->x : number | string
->"hello" : string
+>x = "hello" : "hello"
+>x : string | number
+>"hello" : "hello"
 
     f();
 >f() : number
 >f : () => number
 }
 function foo3(x: number | string) {
->foo3 : (x: number | string) => number
->x : number | string
+>foo3 : (x: string | number) => number
+>x : string | number
 
     if (typeof x === "string") {
 >typeof x === "string" : boolean
->typeof x : string
->x : number | string
->"string" : string
+>typeof x : "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number
+>"string" : "string"
 
         return x.length; // string
 >x.length : number
@@ -90,13 +90,13 @@ function foo3(x: number | string) {
 >f : () => number
 >() => x * x : () => number
 >x * x : number
->x : number
->x : number
+>x : string | number
+>x : string | number
     }
     x = "hello";
->x = "hello" : string
->x : number | string
->"hello" : string
+>x = "hello" : "hello"
+>x : string | number
+>"hello" : "hello"
 
     f();
 >f() : number

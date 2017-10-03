@@ -19,13 +19,13 @@ var __test1__;
 })(__test1__ || (__test1__ = {}));
 var __test2__;
 (function (__test2__) {
-    var classWithTwoPrivate = (function () {
+    var classWithTwoPrivate = /** @class */ (function () {
         function classWithTwoPrivate(one, two) {
             this.one = one;
             this.two = two;
         }
         return classWithTwoPrivate;
-    })();
+    }());
     __test2__.classWithTwoPrivate = classWithTwoPrivate;
     var x6 = new classWithTwoPrivate(1, "a");
     ;

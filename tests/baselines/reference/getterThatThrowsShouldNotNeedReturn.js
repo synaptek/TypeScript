@@ -10,7 +10,7 @@ class Greeter {
 
 
 //// [getterThatThrowsShouldNotNeedReturn.js]
-var Greeter = (function () {
+var Greeter = /** @class */ (function () {
     function Greeter() {
     }
     Object.defineProperty(Greeter.prototype, "greet", {
@@ -24,4 +24,4 @@ var Greeter = (function () {
         throw ''; // should not raise an error
     };
     return Greeter;
-})();
+}());

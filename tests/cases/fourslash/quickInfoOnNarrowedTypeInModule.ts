@@ -7,7 +7,7 @@
 ////    var num: number;
 ////    var str: string;
 ////    if (typeof /*1*/nonExportedStrOrNum === "number") {
-////        num = /*2*/nonExportedStrOrNum; 
+////        num = /*2*/nonExportedStrOrNum;
 ////    }
 ////    else {
 ////        str = /*3*/nonExportedStrOrNum.length;
@@ -38,14 +38,38 @@ goTo.marker('3');
 verify.quickInfoIs('var nonExportedStrOrNum: string');
 verify.completionListContains("nonExportedStrOrNum", "var nonExportedStrOrNum: string");
 
-['4', '5', '6', '7', '8', '9'].forEach((marker, index, arr) => {
-    goTo.marker(marker);
-    verify.quickInfoIs('var m.exportedStrOrNum: string | number');
-    verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: string | number");
-});
+goTo.marker('4');
+verify.quickInfoIs('var m.exportedStrOrNum: string | number');
+verify.completionListContains("exportedStrOrNum", "var exportedStrOrNum: string | number");
 
-['7', '8', '9'].forEach((marker, index, arr) => {
-    goTo.marker(marker);
-    verify.quickInfoIs('var m.exportedStrOrNum: string | number');
-    verify.memberListContains("exportedStrOrNum", "var m.exportedStrOrNum: string | number");
-});
+goTo.marker('5');
+verify.quickInfoIs('var m.exportedStrOrNum: number');
+verify.completionListContains("exportedStrOrNum", "var exportedStrOrNum: number");
+
+goTo.marker('6');
+verify.quickInfoIs('var m.exportedStrOrNum: string');
+verify.completionListContains("exportedStrOrNum", "var exportedStrOrNum: string");
+
+goTo.marker('7');
+verify.quickInfoIs('var m.exportedStrOrNum: string | number');
+verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: string | number");
+
+goTo.marker('8');
+verify.quickInfoIs('var m.exportedStrOrNum: number');
+verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: number");
+
+goTo.marker('9');
+verify.quickInfoIs('var m.exportedStrOrNum: string');
+verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: string");
+
+goTo.marker('7');
+verify.quickInfoIs('var m.exportedStrOrNum: string | number');
+verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: string | number");
+
+goTo.marker('8');
+verify.quickInfoIs('var m.exportedStrOrNum: number');
+verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: number");
+
+goTo.marker('9');
+verify.quickInfoIs('var m.exportedStrOrNum: string');
+verify.completionListContains("exportedStrOrNum", "var m.exportedStrOrNum: string");

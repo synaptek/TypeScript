@@ -5,10 +5,10 @@ class T {
 }
 
 //// [staticAndMemberFunctions.js]
-var T = (function () {
+var T = /** @class */ (function () {
     function T() {
     }
     T.x = function () { };
     T.prototype.y = function () { };
     return T;
-})();
+}());

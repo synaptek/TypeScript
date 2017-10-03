@@ -73,7 +73,7 @@ module TypeScript {
 var TypeScript;
 (function (TypeScript) {
     // TODO: refactor indent logic for use in emit
-    var PrintContext = (function () {
+    var PrintContext = /** @class */ (function () {
         function PrintContext(outfile, parser) {
             this.outfile = outfile;
             this.parser = parser;
@@ -111,7 +111,7 @@ var TypeScript;
             this.builder = "";
         };
         return PrintContext;
-    })();
+    }());
     TypeScript.PrintContext = PrintContext;
     function prePrintAST(ast, parent, walker) {
         var pc = walker.state;

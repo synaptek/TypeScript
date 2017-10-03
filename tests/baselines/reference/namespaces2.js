@@ -12,11 +12,11 @@ var A;
 (function (A) {
     var B;
     (function (B) {
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             return C;
-        })();
+        }());
         B.C = C;
     })(B = A.B || (A.B = {}));
 })(A || (A = {}));

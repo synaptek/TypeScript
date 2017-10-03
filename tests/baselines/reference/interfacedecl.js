@@ -47,11 +47,11 @@ class c1 implements a {
 var instance2 = new c1();
 
 //// [interfacedecl.js]
-var c1 = (function () {
+var c1 = /** @class */ (function () {
     function c1() {
     }
     return c1;
-})();
+}());
 var instance2 = new c1();
 
 

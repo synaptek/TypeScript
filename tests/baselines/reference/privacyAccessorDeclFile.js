@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/privacyAccessorDeclFile.ts] ////
 
 //// [privacyAccessorDeclFile_externalModule.ts]
-
 class privateClass {
 }
 
@@ -1060,18 +1059,20 @@ module publicModuleInGlobal {
 }
 
 //// [privacyAccessorDeclFile_externalModule.js]
-var privateClass = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var privateClass = /** @class */ (function () {
     function privateClass() {
     }
     return privateClass;
-})();
-var publicClass = (function () {
+}());
+var publicClass = /** @class */ (function () {
     function publicClass() {
     }
     return publicClass;
-})();
+}());
 exports.publicClass = publicClass;
-var publicClassWithWithPrivateGetAccessorTypes = (function () {
+var publicClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
     function publicClassWithWithPrivateGetAccessorTypes() {
     }
     Object.defineProperty(publicClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -1131,9 +1132,9 @@ var publicClassWithWithPrivateGetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassWithWithPrivateGetAccessorTypes;
-})();
+}());
 exports.publicClassWithWithPrivateGetAccessorTypes = publicClassWithWithPrivateGetAccessorTypes;
-var publicClassWithWithPublicGetAccessorTypes = (function () {
+var publicClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
     function publicClassWithWithPublicGetAccessorTypes() {
     }
     Object.defineProperty(publicClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -1193,9 +1194,9 @@ var publicClassWithWithPublicGetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassWithWithPublicGetAccessorTypes;
-})();
+}());
 exports.publicClassWithWithPublicGetAccessorTypes = publicClassWithWithPublicGetAccessorTypes;
-var privateClassWithWithPrivateGetAccessorTypes = (function () {
+var privateClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
     function privateClassWithWithPrivateGetAccessorTypes() {
     }
     Object.defineProperty(privateClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -1255,8 +1256,8 @@ var privateClassWithWithPrivateGetAccessorTypes = (function () {
         configurable: true
     });
     return privateClassWithWithPrivateGetAccessorTypes;
-})();
-var privateClassWithWithPublicGetAccessorTypes = (function () {
+}());
+var privateClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
     function privateClassWithWithPublicGetAccessorTypes() {
     }
     Object.defineProperty(privateClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -1316,8 +1317,8 @@ var privateClassWithWithPublicGetAccessorTypes = (function () {
         configurable: true
     });
     return privateClassWithWithPublicGetAccessorTypes;
-})();
-var publicClassWithWithPrivateSetAccessorTypes = (function () {
+}());
+var publicClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
     function publicClassWithWithPrivateSetAccessorTypes() {
     }
     Object.defineProperty(publicClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -1345,9 +1346,9 @@ var publicClassWithWithPrivateSetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassWithWithPrivateSetAccessorTypes;
-})();
+}());
 exports.publicClassWithWithPrivateSetAccessorTypes = publicClassWithWithPrivateSetAccessorTypes;
-var publicClassWithWithPublicSetAccessorTypes = (function () {
+var publicClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
     function publicClassWithWithPublicSetAccessorTypes() {
     }
     Object.defineProperty(publicClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -1375,9 +1376,9 @@ var publicClassWithWithPublicSetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassWithWithPublicSetAccessorTypes;
-})();
+}());
 exports.publicClassWithWithPublicSetAccessorTypes = publicClassWithWithPublicSetAccessorTypes;
-var privateClassWithWithPrivateSetAccessorTypes = (function () {
+var privateClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
     function privateClassWithWithPrivateSetAccessorTypes() {
     }
     Object.defineProperty(privateClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -1405,8 +1406,8 @@ var privateClassWithWithPrivateSetAccessorTypes = (function () {
         configurable: true
     });
     return privateClassWithWithPrivateSetAccessorTypes;
-})();
-var privateClassWithWithPublicSetAccessorTypes = (function () {
+}());
+var privateClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
     function privateClassWithWithPublicSetAccessorTypes() {
     }
     Object.defineProperty(privateClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -1434,8 +1435,8 @@ var privateClassWithWithPublicSetAccessorTypes = (function () {
         configurable: true
     });
     return privateClassWithWithPublicSetAccessorTypes;
-})();
-var publicClassWithPrivateModuleGetAccessorTypes = (function () {
+}());
+var publicClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
     function publicClassWithPrivateModuleGetAccessorTypes() {
     }
     Object.defineProperty(publicClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -1467,9 +1468,9 @@ var publicClassWithPrivateModuleGetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassWithPrivateModuleGetAccessorTypes;
-})();
+}());
 exports.publicClassWithPrivateModuleGetAccessorTypes = publicClassWithPrivateModuleGetAccessorTypes;
-var publicClassWithPrivateModuleSetAccessorTypes = (function () {
+var publicClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
     function publicClassWithPrivateModuleSetAccessorTypes() {
     }
     Object.defineProperty(publicClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -1485,9 +1486,9 @@ var publicClassWithPrivateModuleSetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassWithPrivateModuleSetAccessorTypes;
-})();
+}());
 exports.publicClassWithPrivateModuleSetAccessorTypes = publicClassWithPrivateModuleSetAccessorTypes;
-var privateClassWithPrivateModuleGetAccessorTypes = (function () {
+var privateClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
     function privateClassWithPrivateModuleGetAccessorTypes() {
     }
     Object.defineProperty(privateClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -1519,8 +1520,8 @@ var privateClassWithPrivateModuleGetAccessorTypes = (function () {
         configurable: true
     });
     return privateClassWithPrivateModuleGetAccessorTypes;
-})();
-var privateClassWithPrivateModuleSetAccessorTypes = (function () {
+}());
+var privateClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
     function privateClassWithPrivateModuleSetAccessorTypes() {
     }
     Object.defineProperty(privateClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -1536,21 +1537,21 @@ var privateClassWithPrivateModuleSetAccessorTypes = (function () {
         configurable: true
     });
     return privateClassWithPrivateModuleSetAccessorTypes;
-})();
+}());
 var publicModule;
 (function (publicModule) {
-    var privateClass = (function () {
+    var privateClass = /** @class */ (function () {
         function privateClass() {
         }
         return privateClass;
-    })();
-    var publicClass = (function () {
+    }());
+    var publicClass = /** @class */ (function () {
         function publicClass() {
         }
         return publicClass;
-    })();
+    }());
     publicModule.publicClass = publicClass;
-    var publicClassWithWithPrivateGetAccessorTypes = (function () {
+    var publicClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPrivateGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -1610,9 +1611,9 @@ var publicModule;
             configurable: true
         });
         return publicClassWithWithPrivateGetAccessorTypes;
-    })();
+    }());
     publicModule.publicClassWithWithPrivateGetAccessorTypes = publicClassWithWithPrivateGetAccessorTypes;
-    var publicClassWithWithPublicGetAccessorTypes = (function () {
+    var publicClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPublicGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -1672,9 +1673,9 @@ var publicModule;
             configurable: true
         });
         return publicClassWithWithPublicGetAccessorTypes;
-    })();
+    }());
     publicModule.publicClassWithWithPublicGetAccessorTypes = publicClassWithWithPublicGetAccessorTypes;
-    var privateClassWithWithPrivateGetAccessorTypes = (function () {
+    var privateClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPrivateGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -1734,8 +1735,8 @@ var publicModule;
             configurable: true
         });
         return privateClassWithWithPrivateGetAccessorTypes;
-    })();
-    var privateClassWithWithPublicGetAccessorTypes = (function () {
+    }());
+    var privateClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPublicGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -1795,8 +1796,8 @@ var publicModule;
             configurable: true
         });
         return privateClassWithWithPublicGetAccessorTypes;
-    })();
-    var publicClassWithWithPrivateSetAccessorTypes = (function () {
+    }());
+    var publicClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPrivateSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -1824,9 +1825,9 @@ var publicModule;
             configurable: true
         });
         return publicClassWithWithPrivateSetAccessorTypes;
-    })();
+    }());
     publicModule.publicClassWithWithPrivateSetAccessorTypes = publicClassWithWithPrivateSetAccessorTypes;
-    var publicClassWithWithPublicSetAccessorTypes = (function () {
+    var publicClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPublicSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -1854,9 +1855,9 @@ var publicModule;
             configurable: true
         });
         return publicClassWithWithPublicSetAccessorTypes;
-    })();
+    }());
     publicModule.publicClassWithWithPublicSetAccessorTypes = publicClassWithWithPublicSetAccessorTypes;
-    var privateClassWithWithPrivateSetAccessorTypes = (function () {
+    var privateClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPrivateSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -1884,8 +1885,8 @@ var publicModule;
             configurable: true
         });
         return privateClassWithWithPrivateSetAccessorTypes;
-    })();
-    var privateClassWithWithPublicSetAccessorTypes = (function () {
+    }());
+    var privateClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPublicSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -1913,8 +1914,8 @@ var publicModule;
             configurable: true
         });
         return privateClassWithWithPublicSetAccessorTypes;
-    })();
-    var publicClassWithPrivateModuleGetAccessorTypes = (function () {
+    }());
+    var publicClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
         function publicClassWithPrivateModuleGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -1946,9 +1947,9 @@ var publicModule;
             configurable: true
         });
         return publicClassWithPrivateModuleGetAccessorTypes;
-    })();
+    }());
     publicModule.publicClassWithPrivateModuleGetAccessorTypes = publicClassWithPrivateModuleGetAccessorTypes;
-    var publicClassWithPrivateModuleSetAccessorTypes = (function () {
+    var publicClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
         function publicClassWithPrivateModuleSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -1964,9 +1965,9 @@ var publicModule;
             configurable: true
         });
         return publicClassWithPrivateModuleSetAccessorTypes;
-    })();
+    }());
     publicModule.publicClassWithPrivateModuleSetAccessorTypes = publicClassWithPrivateModuleSetAccessorTypes;
-    var privateClassWithPrivateModuleGetAccessorTypes = (function () {
+    var privateClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
         function privateClassWithPrivateModuleGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -1998,8 +1999,8 @@ var publicModule;
             configurable: true
         });
         return privateClassWithPrivateModuleGetAccessorTypes;
-    })();
-    var privateClassWithPrivateModuleSetAccessorTypes = (function () {
+    }());
+    var privateClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
         function privateClassWithPrivateModuleSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -2015,22 +2016,22 @@ var publicModule;
             configurable: true
         });
         return privateClassWithPrivateModuleSetAccessorTypes;
-    })();
+    }());
 })(publicModule = exports.publicModule || (exports.publicModule = {}));
 var privateModule;
 (function (privateModule) {
-    var privateClass = (function () {
+    var privateClass = /** @class */ (function () {
         function privateClass() {
         }
         return privateClass;
-    })();
-    var publicClass = (function () {
+    }());
+    var publicClass = /** @class */ (function () {
         function publicClass() {
         }
         return publicClass;
-    })();
+    }());
     privateModule.publicClass = publicClass;
-    var publicClassWithWithPrivateGetAccessorTypes = (function () {
+    var publicClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPrivateGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -2090,9 +2091,9 @@ var privateModule;
             configurable: true
         });
         return publicClassWithWithPrivateGetAccessorTypes;
-    })();
+    }());
     privateModule.publicClassWithWithPrivateGetAccessorTypes = publicClassWithWithPrivateGetAccessorTypes;
-    var publicClassWithWithPublicGetAccessorTypes = (function () {
+    var publicClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPublicGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -2152,9 +2153,9 @@ var privateModule;
             configurable: true
         });
         return publicClassWithWithPublicGetAccessorTypes;
-    })();
+    }());
     privateModule.publicClassWithWithPublicGetAccessorTypes = publicClassWithWithPublicGetAccessorTypes;
-    var privateClassWithWithPrivateGetAccessorTypes = (function () {
+    var privateClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPrivateGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -2214,8 +2215,8 @@ var privateModule;
             configurable: true
         });
         return privateClassWithWithPrivateGetAccessorTypes;
-    })();
-    var privateClassWithWithPublicGetAccessorTypes = (function () {
+    }());
+    var privateClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPublicGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -2275,8 +2276,8 @@ var privateModule;
             configurable: true
         });
         return privateClassWithWithPublicGetAccessorTypes;
-    })();
-    var publicClassWithWithPrivateSetAccessorTypes = (function () {
+    }());
+    var publicClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPrivateSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -2304,9 +2305,9 @@ var privateModule;
             configurable: true
         });
         return publicClassWithWithPrivateSetAccessorTypes;
-    })();
+    }());
     privateModule.publicClassWithWithPrivateSetAccessorTypes = publicClassWithWithPrivateSetAccessorTypes;
-    var publicClassWithWithPublicSetAccessorTypes = (function () {
+    var publicClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPublicSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -2334,9 +2335,9 @@ var privateModule;
             configurable: true
         });
         return publicClassWithWithPublicSetAccessorTypes;
-    })();
+    }());
     privateModule.publicClassWithWithPublicSetAccessorTypes = publicClassWithWithPublicSetAccessorTypes;
-    var privateClassWithWithPrivateSetAccessorTypes = (function () {
+    var privateClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPrivateSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -2364,8 +2365,8 @@ var privateModule;
             configurable: true
         });
         return privateClassWithWithPrivateSetAccessorTypes;
-    })();
-    var privateClassWithWithPublicSetAccessorTypes = (function () {
+    }());
+    var privateClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPublicSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -2393,8 +2394,8 @@ var privateModule;
             configurable: true
         });
         return privateClassWithWithPublicSetAccessorTypes;
-    })();
-    var publicClassWithPrivateModuleGetAccessorTypes = (function () {
+    }());
+    var publicClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
         function publicClassWithPrivateModuleGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -2426,9 +2427,9 @@ var privateModule;
             configurable: true
         });
         return publicClassWithPrivateModuleGetAccessorTypes;
-    })();
+    }());
     privateModule.publicClassWithPrivateModuleGetAccessorTypes = publicClassWithPrivateModuleGetAccessorTypes;
-    var publicClassWithPrivateModuleSetAccessorTypes = (function () {
+    var publicClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
         function publicClassWithPrivateModuleSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -2444,9 +2445,9 @@ var privateModule;
             configurable: true
         });
         return publicClassWithPrivateModuleSetAccessorTypes;
-    })();
+    }());
     privateModule.publicClassWithPrivateModuleSetAccessorTypes = publicClassWithPrivateModuleSetAccessorTypes;
-    var privateClassWithPrivateModuleGetAccessorTypes = (function () {
+    var privateClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
         function privateClassWithPrivateModuleGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -2478,8 +2479,8 @@ var privateModule;
             configurable: true
         });
         return privateClassWithPrivateModuleGetAccessorTypes;
-    })();
-    var privateClassWithPrivateModuleSetAccessorTypes = (function () {
+    }());
+    var privateClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
         function privateClassWithPrivateModuleSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -2495,15 +2496,15 @@ var privateModule;
             configurable: true
         });
         return privateClassWithPrivateModuleSetAccessorTypes;
-    })();
+    }());
 })(privateModule || (privateModule = {}));
 //// [privacyAccessorDeclFile_GlobalFile.js]
-var publicClassInGlobal = (function () {
+var publicClassInGlobal = /** @class */ (function () {
     function publicClassInGlobal() {
     }
     return publicClassInGlobal;
-})();
-var publicClassInGlobalWithPublicGetAccessorTypes = (function () {
+}());
+var publicClassInGlobalWithPublicGetAccessorTypes = /** @class */ (function () {
     function publicClassInGlobalWithPublicGetAccessorTypes() {
     }
     Object.defineProperty(publicClassInGlobalWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -2563,8 +2564,8 @@ var publicClassInGlobalWithPublicGetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassInGlobalWithPublicGetAccessorTypes;
-})();
-var publicClassInGlobalWithWithPublicSetAccessorTypes = (function () {
+}());
+var publicClassInGlobalWithWithPublicSetAccessorTypes = /** @class */ (function () {
     function publicClassInGlobalWithWithPublicSetAccessorTypes() {
     }
     Object.defineProperty(publicClassInGlobalWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -2592,34 +2593,34 @@ var publicClassInGlobalWithWithPublicSetAccessorTypes = (function () {
         configurable: true
     });
     return publicClassInGlobalWithWithPublicSetAccessorTypes;
-})();
+}());
 var publicModuleInGlobal;
 (function (publicModuleInGlobal) {
-    var privateClass = (function () {
+    var privateClass = /** @class */ (function () {
         function privateClass() {
         }
         return privateClass;
-    })();
-    var publicClass = (function () {
+    }());
+    var publicClass = /** @class */ (function () {
         function publicClass() {
         }
         return publicClass;
-    })();
+    }());
     publicModuleInGlobal.publicClass = publicClass;
     var privateModule;
     (function (privateModule) {
-        var privateClass = (function () {
+        var privateClass = /** @class */ (function () {
             function privateClass() {
             }
             return privateClass;
-        })();
-        var publicClass = (function () {
+        }());
+        var publicClass = /** @class */ (function () {
             function publicClass() {
             }
             return publicClass;
-        })();
+        }());
         privateModule.publicClass = publicClass;
-        var publicClassWithWithPrivateGetAccessorTypes = (function () {
+        var publicClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
             function publicClassWithWithPrivateGetAccessorTypes() {
             }
             Object.defineProperty(publicClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -2679,9 +2680,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return publicClassWithWithPrivateGetAccessorTypes;
-        })();
+        }());
         privateModule.publicClassWithWithPrivateGetAccessorTypes = publicClassWithWithPrivateGetAccessorTypes;
-        var publicClassWithWithPublicGetAccessorTypes = (function () {
+        var publicClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
             function publicClassWithWithPublicGetAccessorTypes() {
             }
             Object.defineProperty(publicClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -2741,9 +2742,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return publicClassWithWithPublicGetAccessorTypes;
-        })();
+        }());
         privateModule.publicClassWithWithPublicGetAccessorTypes = publicClassWithWithPublicGetAccessorTypes;
-        var privateClassWithWithPrivateGetAccessorTypes = (function () {
+        var privateClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
             function privateClassWithWithPrivateGetAccessorTypes() {
             }
             Object.defineProperty(privateClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -2803,8 +2804,8 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return privateClassWithWithPrivateGetAccessorTypes;
-        })();
-        var privateClassWithWithPublicGetAccessorTypes = (function () {
+        }());
+        var privateClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
             function privateClassWithWithPublicGetAccessorTypes() {
             }
             Object.defineProperty(privateClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -2864,8 +2865,8 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return privateClassWithWithPublicGetAccessorTypes;
-        })();
-        var publicClassWithWithPrivateSetAccessorTypes = (function () {
+        }());
+        var publicClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
             function publicClassWithWithPrivateSetAccessorTypes() {
             }
             Object.defineProperty(publicClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -2893,9 +2894,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return publicClassWithWithPrivateSetAccessorTypes;
-        })();
+        }());
         privateModule.publicClassWithWithPrivateSetAccessorTypes = publicClassWithWithPrivateSetAccessorTypes;
-        var publicClassWithWithPublicSetAccessorTypes = (function () {
+        var publicClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
             function publicClassWithWithPublicSetAccessorTypes() {
             }
             Object.defineProperty(publicClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -2923,9 +2924,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return publicClassWithWithPublicSetAccessorTypes;
-        })();
+        }());
         privateModule.publicClassWithWithPublicSetAccessorTypes = publicClassWithWithPublicSetAccessorTypes;
-        var privateClassWithWithPrivateSetAccessorTypes = (function () {
+        var privateClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
             function privateClassWithWithPrivateSetAccessorTypes() {
             }
             Object.defineProperty(privateClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -2953,8 +2954,8 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return privateClassWithWithPrivateSetAccessorTypes;
-        })();
-        var privateClassWithWithPublicSetAccessorTypes = (function () {
+        }());
+        var privateClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
             function privateClassWithWithPublicSetAccessorTypes() {
             }
             Object.defineProperty(privateClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -2982,8 +2983,8 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return privateClassWithWithPublicSetAccessorTypes;
-        })();
-        var publicClassWithPrivateModuleGetAccessorTypes = (function () {
+        }());
+        var publicClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
             function publicClassWithPrivateModuleGetAccessorTypes() {
             }
             Object.defineProperty(publicClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -3015,9 +3016,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return publicClassWithPrivateModuleGetAccessorTypes;
-        })();
+        }());
         privateModule.publicClassWithPrivateModuleGetAccessorTypes = publicClassWithPrivateModuleGetAccessorTypes;
-        var publicClassWithPrivateModuleSetAccessorTypes = (function () {
+        var publicClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
             function publicClassWithPrivateModuleSetAccessorTypes() {
             }
             Object.defineProperty(publicClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -3033,9 +3034,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return publicClassWithPrivateModuleSetAccessorTypes;
-        })();
+        }());
         privateModule.publicClassWithPrivateModuleSetAccessorTypes = publicClassWithPrivateModuleSetAccessorTypes;
-        var privateClassWithPrivateModuleGetAccessorTypes = (function () {
+        var privateClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
             function privateClassWithPrivateModuleGetAccessorTypes() {
             }
             Object.defineProperty(privateClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -3067,8 +3068,8 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return privateClassWithPrivateModuleGetAccessorTypes;
-        })();
-        var privateClassWithPrivateModuleSetAccessorTypes = (function () {
+        }());
+        var privateClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
             function privateClassWithPrivateModuleSetAccessorTypes() {
             }
             Object.defineProperty(privateClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -3084,9 +3085,9 @@ var publicModuleInGlobal;
                 configurable: true
             });
             return privateClassWithPrivateModuleSetAccessorTypes;
-        })();
+        }());
     })(privateModule || (privateModule = {}));
-    var publicClassWithWithPrivateGetAccessorTypes = (function () {
+    var publicClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPrivateGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -3146,9 +3147,9 @@ var publicModuleInGlobal;
             configurable: true
         });
         return publicClassWithWithPrivateGetAccessorTypes;
-    })();
+    }());
     publicModuleInGlobal.publicClassWithWithPrivateGetAccessorTypes = publicClassWithWithPrivateGetAccessorTypes;
-    var publicClassWithWithPublicGetAccessorTypes = (function () {
+    var publicClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPublicGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -3208,9 +3209,9 @@ var publicModuleInGlobal;
             configurable: true
         });
         return publicClassWithWithPublicGetAccessorTypes;
-    })();
+    }());
     publicModuleInGlobal.publicClassWithWithPublicGetAccessorTypes = publicClassWithWithPublicGetAccessorTypes;
-    var privateClassWithWithPrivateGetAccessorTypes = (function () {
+    var privateClassWithWithPrivateGetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPrivateGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPrivateGetAccessorTypes, "myPublicStaticMethod", {
@@ -3270,8 +3271,8 @@ var publicModuleInGlobal;
             configurable: true
         });
         return privateClassWithWithPrivateGetAccessorTypes;
-    })();
-    var privateClassWithWithPublicGetAccessorTypes = (function () {
+    }());
+    var privateClassWithWithPublicGetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPublicGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPublicGetAccessorTypes, "myPublicStaticMethod", {
@@ -3331,8 +3332,8 @@ var publicModuleInGlobal;
             configurable: true
         });
         return privateClassWithWithPublicGetAccessorTypes;
-    })();
-    var publicClassWithWithPrivateSetAccessorTypes = (function () {
+    }());
+    var publicClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPrivateSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -3360,9 +3361,9 @@ var publicModuleInGlobal;
             configurable: true
         });
         return publicClassWithWithPrivateSetAccessorTypes;
-    })();
+    }());
     publicModuleInGlobal.publicClassWithWithPrivateSetAccessorTypes = publicClassWithWithPrivateSetAccessorTypes;
-    var publicClassWithWithPublicSetAccessorTypes = (function () {
+    var publicClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
         function publicClassWithWithPublicSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -3390,9 +3391,9 @@ var publicModuleInGlobal;
             configurable: true
         });
         return publicClassWithWithPublicSetAccessorTypes;
-    })();
+    }());
     publicModuleInGlobal.publicClassWithWithPublicSetAccessorTypes = publicClassWithWithPublicSetAccessorTypes;
-    var privateClassWithWithPrivateSetAccessorTypes = (function () {
+    var privateClassWithWithPrivateSetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPrivateSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPrivateSetAccessorTypes, "myPublicStaticMethod", {
@@ -3420,8 +3421,8 @@ var publicModuleInGlobal;
             configurable: true
         });
         return privateClassWithWithPrivateSetAccessorTypes;
-    })();
-    var privateClassWithWithPublicSetAccessorTypes = (function () {
+    }());
+    var privateClassWithWithPublicSetAccessorTypes = /** @class */ (function () {
         function privateClassWithWithPublicSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithWithPublicSetAccessorTypes, "myPublicStaticMethod", {
@@ -3449,8 +3450,8 @@ var publicModuleInGlobal;
             configurable: true
         });
         return privateClassWithWithPublicSetAccessorTypes;
-    })();
-    var publicClassWithPrivateModuleGetAccessorTypes = (function () {
+    }());
+    var publicClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
         function publicClassWithPrivateModuleGetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -3482,9 +3483,9 @@ var publicModuleInGlobal;
             configurable: true
         });
         return publicClassWithPrivateModuleGetAccessorTypes;
-    })();
+    }());
     publicModuleInGlobal.publicClassWithPrivateModuleGetAccessorTypes = publicClassWithPrivateModuleGetAccessorTypes;
-    var publicClassWithPrivateModuleSetAccessorTypes = (function () {
+    var publicClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
         function publicClassWithPrivateModuleSetAccessorTypes() {
         }
         Object.defineProperty(publicClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -3500,9 +3501,9 @@ var publicModuleInGlobal;
             configurable: true
         });
         return publicClassWithPrivateModuleSetAccessorTypes;
-    })();
+    }());
     publicModuleInGlobal.publicClassWithPrivateModuleSetAccessorTypes = publicClassWithPrivateModuleSetAccessorTypes;
-    var privateClassWithPrivateModuleGetAccessorTypes = (function () {
+    var privateClassWithPrivateModuleGetAccessorTypes = /** @class */ (function () {
         function privateClassWithPrivateModuleGetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithPrivateModuleGetAccessorTypes, "myPublicStaticMethod", {
@@ -3534,8 +3535,8 @@ var publicModuleInGlobal;
             configurable: true
         });
         return privateClassWithPrivateModuleGetAccessorTypes;
-    })();
-    var privateClassWithPrivateModuleSetAccessorTypes = (function () {
+    }());
+    var privateClassWithPrivateModuleSetAccessorTypes = /** @class */ (function () {
         function privateClassWithPrivateModuleSetAccessorTypes() {
         }
         Object.defineProperty(privateClassWithPrivateModuleSetAccessorTypes, "myPublicStaticMethod", {
@@ -3551,5 +3552,5 @@ var publicModuleInGlobal;
             configurable: true
         });
         return privateClassWithPrivateModuleSetAccessorTypes;
-    })();
+    }());
 })(publicModuleInGlobal || (publicModuleInGlobal = {}));

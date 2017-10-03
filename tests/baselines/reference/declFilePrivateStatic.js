@@ -1,5 +1,4 @@
 //// [declFilePrivateStatic.ts]
-
 class C {
     private static x = 1;
     static y = 1;
@@ -15,7 +14,7 @@ class C {
 }
 
 //// [declFilePrivateStatic.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.a = function () { };
@@ -43,7 +42,7 @@ var C = (function () {
     C.x = 1;
     C.y = 1;
     return C;
-})();
+}());
 
 
 //// [declFilePrivateStatic.d.ts]
@@ -52,8 +51,8 @@ declare class C {
     static y: number;
     private static a();
     static b(): void;
-    private static c;
-    static d: number;
+    private static readonly c;
+    static readonly d: number;
     private static e;
     static f: any;
 }

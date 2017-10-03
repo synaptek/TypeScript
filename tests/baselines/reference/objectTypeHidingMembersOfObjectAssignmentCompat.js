@@ -26,12 +26,12 @@ var i;
 var o;
 o = i; // error
 i = o; // ok
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.toString = function () { };
     return C;
-})();
+}());
 var c;
 o = c; // error
 c = o; // ok

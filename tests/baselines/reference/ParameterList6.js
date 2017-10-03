@@ -5,8 +5,8 @@ class C {
 }
 
 //// [ParameterList6.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C(C) {
     }
     return C;
-})();
+}());

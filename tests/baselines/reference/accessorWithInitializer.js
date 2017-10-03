@@ -1,12 +1,11 @@
 //// [accessorWithInitializer.ts]
-
 class C {
     set X(v = 0) { }
     static set X(v2 = 0) { }
 }
 
 //// [accessorWithInitializer.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, "X", {
@@ -24,4 +23,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

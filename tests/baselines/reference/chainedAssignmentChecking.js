@@ -23,23 +23,23 @@ c1 = c2 = c3; // Should be error
 
 
 //// [chainedAssignmentChecking.js]
-var X = (function () {
+var X = /** @class */ (function () {
     function X(z) {
         this.z = z;
     }
     return X;
-})();
-var Y = (function () {
+}());
+var Y = /** @class */ (function () {
     function Y(z) {
         this.z = z;
     }
     return Y;
-})();
-var Z = (function () {
+}());
+var Z = /** @class */ (function () {
     function Z() {
     }
     return Z;
-})();
+}());
 var c1 = new X(3);
 var c2 = new Y(5);
 var c3 = new Z();

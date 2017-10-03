@@ -7,15 +7,15 @@ class D {
 }
 
 //// [parserErrorRecovery_SwitchStatement2.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         switch (e) {
         }
-        var D = (function () {
+        var D = /** @class */ (function () {
             function D() {
             }
             return D;
-        })();
+        }());
     }
     return C;
-})();
+}());

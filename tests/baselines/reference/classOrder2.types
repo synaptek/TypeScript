@@ -1,5 +1,4 @@
 === tests/cases/compiler/classOrder2.ts ===
-
 class A extends B {
 >A : A
 >B : B
@@ -8,7 +7,7 @@ class A extends B {
 >foo : () => void
 >this.bar() : void
 >this.bar : () => void
->this : A
+>this : this
 >bar : () => void
 
 }

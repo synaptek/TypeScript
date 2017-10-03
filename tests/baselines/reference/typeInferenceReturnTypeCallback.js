@@ -22,15 +22,15 @@ class Cons<T> implements IList<T>{
 }
 
 //// [typeInferenceReturnTypeCallback.js]
-var Nil = (function () {
+var Nil = /** @class */ (function () {
     function Nil() {
     }
     Nil.prototype.map = function (f) {
         return null;
     };
     return Nil;
-})();
-var Cons = (function () {
+}());
+var Cons = /** @class */ (function () {
     function Cons() {
     }
     Cons.prototype.map = function (f) {
@@ -42,4 +42,4 @@ var Cons = (function () {
         return null;
     };
     return Cons;
-})();
+}());

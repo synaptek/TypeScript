@@ -13,12 +13,12 @@ var x: ShapeFactory = Shape;
 
 
 //// [staticInterfaceAssignmentCompat.js]
-var Shape = (function () {
+var Shape = /** @class */ (function () {
     function Shape() {
     }
     Shape.create = function () {
         return new Shape();
     };
     return Shape;
-})();
+}());
 var x = Shape;

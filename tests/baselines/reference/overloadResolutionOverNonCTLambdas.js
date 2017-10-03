@@ -26,11 +26,11 @@ bug3(function(x:string):string { return x; });
 //// [overloadResolutionOverNonCTLambdas.js]
 var Bugs;
 (function (Bugs) {
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     // replace(searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string;
     function bug2(message) {
         var args = [];

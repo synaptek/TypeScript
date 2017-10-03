@@ -24,16 +24,18 @@ export class BuildResult<A, B, C>{
 
 //// [genericMemberFunction.js]
 define(["require", "exports"], function (require, exports) {
-    var BuildError = (function () {
+    "use strict";
+    exports.__esModule = true;
+    var BuildError = /** @class */ (function () {
         function BuildError() {
         }
         BuildError.prototype.parent = function () {
             return undefined;
         };
         return BuildError;
-    })();
+    }());
     exports.BuildError = BuildError;
-    var FileWithErrors = (function () {
+    var FileWithErrors = /** @class */ (function () {
         function FileWithErrors() {
         }
         FileWithErrors.prototype.errors = function () {
@@ -43,9 +45,9 @@ define(["require", "exports"], function (require, exports) {
             return undefined;
         };
         return FileWithErrors;
-    })();
+    }());
     exports.FileWithErrors = FileWithErrors;
-    var BuildResult = (function () {
+    var BuildResult = /** @class */ (function () {
         function BuildResult() {
         }
         BuildResult.prototype.merge = function (other) {
@@ -56,6 +58,6 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         return BuildResult;
-    })();
+    }());
     exports.BuildResult = BuildResult;
 });

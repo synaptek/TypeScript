@@ -159,12 +159,17 @@ var ccwc = new ChildClassWithoutConstructor(1, "s");
 
 
 //// [es6ClassTest2.js]
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var BasicMonster = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var BasicMonster = /** @class */ (function () {
     function BasicMonster(name, health) {
         this.name = name;
         this.health = health;
@@ -174,13 +179,13 @@ var BasicMonster = (function () {
         // WScript.Echo("Attacks " + target);
     };
     return BasicMonster;
-})();
+}());
 var m1 = new BasicMonster("1", 100);
 var m2 = new BasicMonster("2", 100);
 m1.attack(m2);
 m1.health = 0;
 console.log(m5.isAlive.toString());
-var GetSetMonster = (function () {
+var GetSetMonster = /** @class */ (function () {
     function GetSetMonster(name, _health) {
         this.name = name;
         this._health = _health;
@@ -210,13 +215,13 @@ var GetSetMonster = (function () {
         configurable: true
     });
     return GetSetMonster;
-})();
+}());
 var m3 = new BasicMonster("1", 100);
 var m4 = new BasicMonster("2", 100);
 m3.attack(m4);
 m3.health = 0;
 var x = m5.isAlive.toString();
-var OverloadedMonster = (function () {
+var OverloadedMonster = /** @class */ (function () {
     function OverloadedMonster(name, health) {
         this.name = name;
         this.health = health;
@@ -226,17 +231,17 @@ var OverloadedMonster = (function () {
         //WScript.Echo("Attacks " + target);
     };
     return OverloadedMonster;
-})();
+}());
 var m5 = new OverloadedMonster("1");
 var m6 = new OverloadedMonster("2");
 m5.attack(m6);
 m5.health = 0;
 var y = m5.isAlive.toString();
-var SplatMonster = (function () {
+var SplatMonster = /** @class */ (function () {
     function SplatMonster() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i - 0] = arguments[_i];
+            args[_i] = arguments[_i];
         }
     }
     SplatMonster.prototype.roar = function (name) {
@@ -246,16 +251,16 @@ var SplatMonster = (function () {
         }
     };
     return SplatMonster;
-})();
+}());
 function foo() { return true; }
-var PrototypeMonster = (function () {
+var PrototypeMonster = /** @class */ (function () {
     function PrototypeMonster() {
         this.age = 1;
         this.b = foo();
     }
     return PrototypeMonster;
-})();
-var SuperParent = (function () {
+}());
+var SuperParent = /** @class */ (function () {
     function SuperParent(a) {
     }
     SuperParent.prototype.b = function (b) {
@@ -263,11 +268,11 @@ var SuperParent = (function () {
     SuperParent.prototype.c = function () {
     };
     return SuperParent;
-})();
-var SuperChild = (function (_super) {
+}());
+var SuperChild = /** @class */ (function (_super) {
     __extends(SuperChild, _super);
     function SuperChild() {
-        _super.call(this, 1);
+        return _super.call(this, 1) || this;
     }
     SuperChild.prototype.b = function () {
         _super.prototype.b.call(this, 'str');
@@ -276,8 +281,8 @@ var SuperChild = (function (_super) {
         _super.prototype.c.call(this);
     };
     return SuperChild;
-})(SuperParent);
-var Statics = (function () {
+}(SuperParent));
+var Statics = /** @class */ (function () {
     function Statics() {
     }
     Statics.baz = function () {
@@ -285,16 +290,16 @@ var Statics = (function () {
     };
     Statics.foo = 1;
     return Statics;
-})();
+}());
 var stat = new Statics();
-var ImplementsInterface = (function () {
+var ImplementsInterface = /** @class */ (function () {
     function ImplementsInterface() {
         this.x = 1;
         this.z = "foo";
     }
     return ImplementsInterface;
-})();
-var Visibility = (function () {
+}());
+var Visibility = /** @class */ (function () {
     function Visibility() {
         this.x = 1;
         this.y = 2;
@@ -302,20 +307,20 @@ var Visibility = (function () {
     Visibility.prototype.foo = function () { };
     Visibility.prototype.bar = function () { };
     return Visibility;
-})();
-var BaseClassWithConstructor = (function () {
+}());
+var BaseClassWithConstructor = /** @class */ (function () {
     function BaseClassWithConstructor(x, s) {
         this.x = x;
         this.s = s;
     }
     return BaseClassWithConstructor;
-})();
+}());
 // used to test codegen
-var ChildClassWithoutConstructor = (function (_super) {
+var ChildClassWithoutConstructor = /** @class */ (function (_super) {
     __extends(ChildClassWithoutConstructor, _super);
     function ChildClassWithoutConstructor() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return ChildClassWithoutConstructor;
-})(BaseClassWithConstructor);
+}(BaseClassWithConstructor));
 var ccwc = new ChildClassWithoutConstructor(1, "s");

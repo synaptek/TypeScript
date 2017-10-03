@@ -19,20 +19,20 @@ m.doSomething(v);
 //// [differentTypesWithSameName.js]
 var m;
 (function (m) {
-    var variable = (function () {
+    var variable = /** @class */ (function () {
         function variable() {
         }
         return variable;
-    })();
+    }());
     m.variable = variable;
     function doSomething(v) {
     }
     m.doSomething = doSomething;
 })(m || (m = {}));
-var variable = (function () {
+var variable = /** @class */ (function () {
     function variable() {
     }
     return variable;
-})();
+}());
 var v = new variable();
 m.doSomething(v);

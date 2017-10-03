@@ -13,7 +13,7 @@ class C<T extends Constructable> {
 
 
 //// [typeConstraintsWithConstructSignatures.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C(data, data2) {
         this.data = data;
         this.data2 = data2;
@@ -23,4 +23,4 @@ var C = (function () {
         var x2 = new this.data2(); // should not error
     };
     return C;
-})();
+}());

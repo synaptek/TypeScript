@@ -31,7 +31,7 @@ class Test1 {
 }
 
 //// [classMemberInitializerWithLamdaScoping.js]
-var Test = (function () {
+var Test = /** @class */ (function () {
     function Test(field) {
         var _this = this;
         this.field = field;
@@ -45,9 +45,9 @@ var Test = (function () {
         console.log(field); // Using field here shouldnt be error
     };
     return Test;
-})();
+}());
 var field1;
-var Test1 = (function () {
+var Test1 = /** @class */ (function () {
     function Test1(field1) {
         this.field1 = field1;
         this.messageHandler = function () {
@@ -60,4 +60,4 @@ var Test1 = (function () {
         console.log(field1); // This shouldnt be error as its a static property
     };
     return Test1;
-})();
+}());

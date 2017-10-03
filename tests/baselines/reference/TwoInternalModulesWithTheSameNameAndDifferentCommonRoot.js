@@ -53,13 +53,13 @@ var otherRoot;
         A.Origin = { x: 0, y: 0 };
         var Utils;
         (function (Utils) {
-            var Plane = (function () {
+            var Plane = /** @class */ (function () {
                 function Plane(tl, br) {
                     this.tl = tl;
                     this.br = br;
                 }
                 return Plane;
-            })();
+            }());
             Utils.Plane = Plane;
         })(Utils = A.Utils || (A.Utils = {}));
     })(A = otherRoot.A || (otherRoot.A = {}));

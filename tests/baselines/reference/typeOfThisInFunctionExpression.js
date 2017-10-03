@@ -59,7 +59,7 @@ var t2 = function f() {
     var x = this;
     var x;
 };
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
         this.x = function () {
             var q;
@@ -71,7 +71,7 @@ var C = (function () {
         };
     }
     return C;
-})();
+}());
 var M;
 (function (M) {
     function fn() {

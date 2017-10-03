@@ -8,7 +8,7 @@ class WebControls {
 }
 
 //// [commentOnClassMethod1.js]
-var WebControls = (function () {
+var WebControls = /** @class */ (function () {
     function WebControls() {
     }
     /**
@@ -17,4 +17,4 @@ var WebControls = (function () {
     WebControls.prototype.createControl = function () {
     };
     return WebControls;
-})();
+}());

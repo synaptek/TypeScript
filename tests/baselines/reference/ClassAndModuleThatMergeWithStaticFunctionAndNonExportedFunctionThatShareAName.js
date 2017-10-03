@@ -23,30 +23,28 @@ module A {
 }
 
 //// [ClassAndModuleThatMergeWithStaticFunctionAndNonExportedFunctionThatShareAName.js]
-var Point = (function () {
+var Point = /** @class */ (function () {
     function Point(x, y) {
         this.x = x;
         this.y = y;
     }
     Point.Origin = function () { return { x: 0, y: 0 }; };
     return Point;
-})();
-var Point;
+}());
 (function (Point) {
     function Origin() { return ""; } // not an error, since not exported
 })(Point || (Point = {}));
 var A;
 (function (A) {
-    var Point = (function () {
+    var Point = /** @class */ (function () {
         function Point(x, y) {
             this.x = x;
             this.y = y;
         }
         Point.Origin = function () { return { x: 0, y: 0 }; };
         return Point;
-    })();
+    }());
     A.Point = Point;
-    var Point;
     (function (Point) {
         function Origin() { return ""; } // not an error since not exported
     })(Point = A.Point || (A.Point = {}));

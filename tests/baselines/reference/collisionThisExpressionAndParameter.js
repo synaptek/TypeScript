@@ -94,7 +94,7 @@ declare function f4(_this: number); // no code gen - no error
 declare function f4(_this: string); // no code gen - no error
 
 //// [collisionThisExpressionAndParameter.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     Foo.prototype.x = function () {
@@ -130,8 +130,8 @@ var Foo = (function () {
         };
     };
     return Foo;
-})();
-var Foo1 = (function () {
+}());
+var Foo1 = /** @class */ (function () {
     function Foo1(_this) {
         var _this = this;
         var x2 = {
@@ -141,12 +141,12 @@ var Foo1 = (function () {
         };
     }
     return Foo1;
-})();
+}());
 function f1(_this) {
     var _this = this;
     (function (x) { console.log(_this.x); });
 }
-var Foo3 = (function () {
+var Foo3 = /** @class */ (function () {
     function Foo3(_this) {
         var _this = this;
         var x2 = {
@@ -162,7 +162,7 @@ var Foo3 = (function () {
         };
     };
     return Foo3;
-})();
+}());
 function f3(_this) {
     var _this = this;
     (function (x) { console.log(_this.x); });

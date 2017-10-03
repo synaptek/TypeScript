@@ -28,7 +28,7 @@ function B() {
     var someLocal = {};
     return someLocal;
 }
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     C.prototype.A = function () {
@@ -39,7 +39,7 @@ var C = (function () {
         return someLocal;
     };
     return C;
-})();
+}());
 
 
 //// [implicitAnyAnyReturningFunction.d.ts]
